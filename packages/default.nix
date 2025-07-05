@@ -1,0 +1,31 @@
+{pkgs, ...}:{
+ home.packages = with pkgs; [
+    vscode
+    gh
+    discord
+    wezterm
+    google-chrome
+    git
+    wget
+    pavucontrol
+    neovim
+    wofi
+    fzf
+    ripgrep
+    nodejs_24
+    go
+    ocaml
+    ocamlPackages.findlib
+    ocamlPackages.ocaml-lsp
+    ocamlPackages.batteries
+    opam
+    killall
+    ghostty
+    gnumake
+    gcc15
+    font-awesome
+    zig
+    fastfetch
+    waybar
+  ];
+}
