@@ -1,83 +1,80 @@
 {
   inputs, config, pkgs, ...
 }:{
-  programs.kitty.enable = true; # required for the default Hyprland config
+  imports = [
+    ./binds.nix
+    ./rules.nix
+    ./env.nix
+    ./animations.nix
+  ];
   wayland.windowManager.hyprland.enable = true; # enable Hyprland
-  home.sessionVariables.NIXOS_OZONE_WL = "1";
 
-  wayland.windowManager.hyprland.settings = {
-    "$mod" = "SUPER";
-    monitor = [
-      "DP-6, 5120x1440@240,0x0,1"
-    ];
+  wayland.windowManager.hyprland = {
+    settings = {
+      "$mod" = "SUPER";
+      monitor = [
+        "DP-6, 5120x1440@240,0x0,1"
+      ];
 
-    exec-once = [
-      "waybar"
-      "google-chrome-stable"
-      "discord"
-      "steam"
-      "ghostty"
-    ];
+      misc = {
+        layers_hog_keyboard_focus = true;
+        initial_workspace_tracking = 0;
+        mouse_move_enables_dpms = true;
+        key_press_enables_dpms = false;
+        disable_hyprland_logo = true;
+        disable_splash_rendering = true;
+        enable_swallow = false;
+        vfr = true; # Variable Frame Rate
+        vrr = 2; #Variable Refresh Rate  Might need to set to 0 for NVIDIA/AQ_DRM_DEVICES
+        # Screen flashing to black momentarily or going black when app is fullscreen
+        # Try setting vrr to 0
 
-    input = {
-      kb_layout = "us";
-      kb_variant = "intl";
-      follow_mouse = 1;
-      touchpad = {
-        natural_scroll = true;
+        #  Application not responding (ANR) settings
+        enable_anr_dialog = true;
+        anr_missed_pings = 20;
+      };
+
+
+      ecosystem = {
+        no_donation_nag = true;
+        no_update_news = false;
+      };
+
+      cursor = {
+        sync_gsettings_theme = true;
+        no_hardware_cursors = 2; # change to 1 if want to disable
+        enable_hyprcursor = false;
+        warp_on_change_workspace = 2;
+        no_warps = true;
+      };
+
+      render = {
+        direct_scanout = 1;
+      };
+
+      master = {
+        new_status = "master";
+        new_on_top = 1;
+        mfact = 0.5;
+      };
+
+
+      exec-once = [
+        "waybar"
+        "google-chrome-stable"
+        "discord"
+        "steam"
+        "ghostty"
+      ];
+
+      input = {
+        kb_layout = "us";
+        kb_variant = "intl";
+        follow_mouse = 1;
+        touchpad = {
+          natural_scroll = true;
+        };
       };
     };
-
-    animations = {
-      enabled = true;
-      bezier = [
-        "wind, -1.05, 0.9, 0.1, 1.05"
-        "winIn, -1.1, 1.1, 0.1, 1.1"
-        "winOut, -1.3, -0.3, 0, 1"
-        "liner, 0, 1, 1, 1"
-      ];
-      animation = [
-        "windows, 0, 6, wind, slide"
-        "windowsIn, 0, 6, winIn, slide"
-        "windowsOut, 0, 5, winOut, slide"
-        "windowsMove, 0, 5, wind, slide"
-        "border, 0, 1, liner"
-        "fade, 0, 10, default"
-        "workspaces, 0, 5, wind"
-      ];
-    };
-    bindel = [
-      ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
-      ",XF86AudioLowerVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%-"
-      ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-    ];
-    bind =
-      [
-        "$mod, F, exec, google-chrome-stable"
-        "$mod, Q, exec, ghostty"
-        "$mod, R, exec, wofi --show drun"
-        "$mod, V, togglefloating"
-        "$mod, S, togglespecialworkspace, magic"
-        "$mod SHIFT, S, movetoworkspace, special:magic"
-        "$mod, H, movefocus, l"
-        "$mod, J, movefocus, d"
-        "$mod, K, movefocus, u"
-        "$mod, L, movefocus, r"
-      ]
-      ++ (
-        # workspaces
-        # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
-        builtins.concatLists (builtins.genList (i:
-            let ws = i + 1;
-            in [
-              "$mod, code:1${toString i}, workspace, ${toString ws}"
-              "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
-            ]
-          )
-          9)
-      );
-
   };
-
-
 }

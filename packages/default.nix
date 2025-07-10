@@ -8,17 +8,11 @@
     git
     wget
     pavucontrol
-    neovim
     wofi
     fzf
     ripgrep
     nodejs_24
     go
-    ocaml
-    ocamlPackages.findlib
-    ocamlPackages.ocaml-lsp
-    ocamlPackages.batteries
-    opam
     killall
     ghostty
     gnumake
@@ -27,5 +21,12 @@
     zig
     fastfetch
     waybar
+    gleam
+    pkgs.nerd-fonts.droid-sans-mono
+    pkgs.nerd-fonts.fira-code
+    nil
   ];
+
+  
+  fonts.fontconfig.enable = true;
 }
