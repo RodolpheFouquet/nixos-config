@@ -19,7 +19,7 @@
       enable = true;
     };
 
-    diagnostics = {
+    diagnostic.settings = {
       virtualText = {
         enable = true;
         # Show virtual text for warnings and errors
