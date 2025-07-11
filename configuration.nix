@@ -10,7 +10,10 @@
   ];
 
   # --- System Settings ---
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -42,7 +45,11 @@
   users.users.vachicorne = {
     isNormalUser = true;
     description = "vachicorne";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
+    shell = pkgs.fish;
   };
 
   # --- Services ---
@@ -63,7 +70,7 @@
       };
     };
   };
-
+  programs.fish.enable = true;
   # Set the system state version
   system.stateVersion = "25.05";
 }
