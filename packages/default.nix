@@ -1,5 +1,6 @@
-{pkgs, ...}:{
- home.packages = with pkgs; [
+{ pkgs, ... }:
+{
+  home.packages = with pkgs; [
     vscode
     gh
     discord
@@ -19,14 +20,18 @@
     gcc15
     font-awesome
     zig
+    zls
+    gopls
+    nodePackages.typescript-language-server
+    nodePackages.typescript
+    elixir-ls
     fastfetch
     waybar
     gleam
+    nixfmt-rfc-style
     pkgs.nerd-fonts.droid-sans-mono
     pkgs.nerd-fonts.fira-code
-    nil
   ];
 
-  
   fonts.fontconfig.enable = true;
 }

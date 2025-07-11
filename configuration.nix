@@ -1,32 +1,30 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
-let
-  home-manager = builtins.fetchTarball https://github.com/nix-community/home-manager/archive/master.tar.gz;
 
-    astal.url = "github:aylur/astal";
-
-    ags.url = "github:aylur/ags"; 
-
-in
 {
+  imports = [
+    # Your hardware-specific configuration
+    ./hardware-configuration.nix
+    # Your other custom modules
+    ./steam
+    ./display
+  ];
+
+  # --- System Settings ---
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      (import "${home-manager}/nixos")
-      ./steam
-      ./display
-    ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  networking.hostName = "nixos"; # Define your hostname.
+
+  nixpkgs.config.allowUnfree = true;
+  # --- Networking ---
+  networking.hostName = "nixos";
   networking.networkmanager.enable = true;
+  services.avahi.enable = true;
+
+  # --- Localization ---
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";
+  # (Your extraLocaleSettings remains unchanged)
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_GB.UTF-8";
     LC_IDENTIFICATION = "en_GB.UTF-8";
@@ -40,48 +38,32 @@ in
   };
   console.keyMap = "us";
 
+  # --- User Definition ---
   users.users.vachicorne = {
     isNormalUser = true;
     description = "vachicorne";
     extraGroups = [ "networkmanager" "wheel" ];
   };
-  # Allow unfree packages
-  home-manager.users.vachicorne = { pkgs, ... }: {
-    nixpkgs.config.allowUnfree = true;
-    imports = [
-      ./home.nix
-    ];
-    programs.bash.enable = true;
-    home.stateVersion = "25.05";
-  };
 
-
-  services.avahi.enable = true;
+  # --- Services ---
   security.rtkit.enable = true;
   services.pipewire = {
-    enable = true; # if not already enabled
+    enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = true;
     raopOpenFirewall = true;
-
+    # (Your Pipewire extraConfig remains unchanged)
     extraConfig.pipewire = {
       "10-airplay" = {
         "context.modules" = [
-          {
-            name = "libpipewire-module-raop-discover";
-
-            # increase the buffer size if you get dropouts/glitches
-            # args = {
-            #   "raop.latency.ms" = 500;
-            # };
-          }
+          { name = "libpipewire-module-raop-discover"; }
         ];
       };
     };
   };
 
-  system.stateVersion = "25.05"; # Did you read the comment?
-
+  # Set the system state version
+  system.stateVersion = "25.05";
 }
