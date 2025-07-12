@@ -14,6 +14,7 @@
     ./neovim
     ./tmux
     ./waybar
+    ./hyprpaper
   ];
 
   programs.starship.enable = true;

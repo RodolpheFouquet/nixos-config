@@ -79,6 +79,47 @@
           zig = [ "zig" ];
         };
       };
+      dap = {
+        enable = true;
+        # Configure the debug adapters for each language
+        adapters = {
+          # "pwa-node" = {
+          #   type = "server";
+          #   port = "8008";
+          # Corrected package path for the JS/TS debugger
+          #   executable.command = "${pkgs.vscode-js-debug}/bin/js-debug";
+          #   executable.args = [ "8008" ];
+          # };
+          # go = {
+          #   type = "server";
+          #   port = "\${port}";
+          #  executable.command = "${pkgs.delve}/bin/dlv";
+          # executable.args = [
+          #   "dap"
+          #   "-l"
+          #   "127.0.0.1:\${port}"
+          # ];
+          #};
+          #ocaml = {
+          #  type = "executable";
+          #  command = "${pkgs.vscode-extensions.ocamllabs.ocaml-platform}/bin/ocamlearlybird";
+          #  args = [ "debug" ];
+          #};
+          #codelldb = {
+
+          # type = "server";
+          # port = "\${port}";
+          # Corrected package path for the codelldb adapter
+          # executable.command = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/bin/codelldb";
+          # executable.args = [
+          #   "--port"
+          #   "\${port}"
+          # ];
+          #};
+        };
+      };
+      dap-ui.enable = true;
+
     };
 
     globals.mapleader = " ";
@@ -95,6 +136,54 @@
         action = "<cmd>Telescope live_grep<cr>";
         mode = "n";
         options.desc = "Live Grep";
+      }
+      {
+        key = "<leader>db";
+        action = "<cmd>DapToggleBreakpoint<cr>";
+        mode = "n";
+        options.desc = "Toggle Breakpoint";
+      }
+      {
+        key = "<leader>dc";
+        action = "<cmd>DapContinue<cr>";
+        mode = "n";
+        options.desc = "Continue";
+      }
+      {
+        key = "<leader>do";
+        action = "<cmd>DapStepOver<cr>";
+        mode = "n";
+        options.desc = "Step Over";
+      }
+      {
+        key = "<leader>di";
+        action = "<cmd>DapStepInto<cr>";
+        mode = "n";
+        options.desc = "Step Into";
+      }
+      {
+        key = "<leader>du";
+        action = "<cmd>DapStepOut<cr>";
+        mode = "n";
+        options.desc = "Step Out";
+      }
+      {
+        key = "<leader>dr";
+        action = "<cmd>DapToggleRepl<cr>";
+        mode = "n";
+        options.desc = "Toggle REPL";
+      }
+      {
+        key = "<leader>dl";
+        action = "<cmd>DapRunLast<cr>";
+        mode = "n";
+        options.desc = "Run Last";
+      }
+      {
+        key = "<leader>dt";
+        action = "<cmd>DapTerminate<cr>";
+        mode = "n";
+        options.desc = "Terminate";
       }
     ];
   };
