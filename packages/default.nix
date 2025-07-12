@@ -31,6 +31,34 @@
     pkgs.nerd-fonts.droid-sans-mono
     pkgs.nerd-fonts.fira-code
     bibata-cursors
+    claude-code
+    
+    # System monitoring and management
+    htop
+    btop
+    iotop
+    powertop
+    
+    # File management
+    ranger
+    fd
+    eza
+    
+    # Network tools
+    nmap
+    tcpdump
+    wireshark
+    
+    # Security tools
+    pass
+    gnupg
+    
+    # Additional development tools
+    jq
+    yq
+    tree
+    unzip
+    zip
   ];
 
   fonts.fontconfig.enable = true;

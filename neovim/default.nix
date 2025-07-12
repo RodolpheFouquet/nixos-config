@@ -423,6 +423,7 @@
       python3Packages.debugpy
       delve # Go debugger
       vscode-extensions.vadimcn.vscode-lldb
+      ocamlPackages.earlybird
     ];
 
     extraPlugins = with pkgs.vimPlugins; [

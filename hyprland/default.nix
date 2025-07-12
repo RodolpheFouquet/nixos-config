@@ -7,6 +7,9 @@
     ./rules.nix
     ./env.nix
     ./animations.nix
+    ./hypridle.nix
+    ./hyprlock.nix
+    ./pyprland.nix
   ];
   wayland.windowManager.hyprland.enable = true; # enable Hyprland
 

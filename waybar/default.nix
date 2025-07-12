@@ -21,6 +21,7 @@
         "network"
         "cpu"
         "memory"
+        "temperature"
         "clock"
         "tray"
       ];
@@ -84,6 +85,13 @@
       memory = {
         format = " {}%";
       };
+      temperature = {
+        thermal-zone = 2;
+        hwmon-path = "/sys/class/hwmon/hwmon2/temp1_input";
+        critical-threshold = 80;
+        format-critical = " {temperatureC}°C";
+        format = " {temperatureC}°C";
+      };
     };
   };
 
@@ -119,7 +127,7 @@
         background: #3c3836; /* Gruvbox lighter background */
     }
 
-    #clock, #pulseaudio, #network, #cpu, #memory, #tray {
+    #clock, #pulseaudio, #network, #cpu, #memory, #temperature, #tray {
         padding: 0 10px;
         margin: 0 4px;
         color: #ebdbb2;

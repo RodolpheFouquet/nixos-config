@@ -18,6 +18,7 @@
       "$mod, C, killactive"
       "$mod, S, togglespecialworkspace, magic"
       "$mod SHIFT, S, movetoworkspace, special:magic"
+      "$mod SHIFT, L, exec, hyprlock"
       "$mod, H, movefocus, l"
       "$mod, J, movefocus, d"
       "$mod, K, movefocus, u"
