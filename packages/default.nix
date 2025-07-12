@@ -30,6 +30,7 @@
     nixfmt-rfc-style
     pkgs.nerd-fonts.droid-sans-mono
     pkgs.nerd-fonts.fira-code
+    bibata-cursors
   ];
 
   fonts.fontconfig.enable = true;

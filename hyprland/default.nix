@@ -1,6 +1,7 @@
 {
-  inputs, config, pkgs, ...
-}:{
+  ...
+}:
+{
   imports = [
     ./binds.nix
     ./rules.nix
@@ -25,7 +26,7 @@
         disable_splash_rendering = true;
         enable_swallow = false;
         vfr = true; # Variable Frame Rate
-        vrr = 2; #Variable Refresh Rate  Might need to set to 0 for NVIDIA/AQ_DRM_DEVICES
+        vrr = 2; # Variable Refresh Rate  Might need to set to 0 for NVIDIA/AQ_DRM_DEVICES
         # Screen flashing to black momentarily or going black when app is fullscreen
         # Try setting vrr to 0
 
@@ -33,7 +34,6 @@
         enable_anr_dialog = true;
         anr_missed_pings = 20;
       };
-
 
       ecosystem = {
         no_donation_nag = true;
@@ -43,7 +43,7 @@
       cursor = {
         sync_gsettings_theme = true;
         no_hardware_cursors = 2; # change to 1 if want to disable
-        enable_hyprcursor = false;
+        enable_hyprcursor = true;
         warp_on_change_workspace = 2;
         no_warps = true;
       };
@@ -58,13 +58,13 @@
         mfact = 0.5;
       };
 
-
       exec-once = [
         "waybar"
         "google-chrome-stable"
         "discord"
         "steam"
         "ghostty"
+        "hyprctl setcursor Bibata-Modern-Classic 24"
       ];
 
       input = {
