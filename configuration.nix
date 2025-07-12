@@ -54,6 +54,35 @@
 
   # --- Services ---
   security.rtkit.enable = true;
+  
+  # --- Security Hardening ---
+  security.sudo.wheelNeedsPassword = true;
+  security.polkit.enable = true;
+  
+  # Kernel hardening
+  boot.kernel.sysctl = {
+    # Disable IPv6 if not needed (optional)
+    # "net.ipv6.conf.all.disable_ipv6" = 1;
+    # "net.ipv6.conf.default.disable_ipv6" = 1;
+    
+    # Network security
+    "net.ipv4.conf.all.send_redirects" = 0;
+    "net.ipv4.conf.default.send_redirects" = 0;
+    "net.ipv4.conf.all.accept_redirects" = 0;
+    "net.ipv4.conf.default.accept_redirects" = 0;
+    "net.ipv4.conf.all.accept_source_route" = 0;
+    "net.ipv4.conf.default.accept_source_route" = 0;
+    "net.ipv4.conf.all.log_martians" = 1;
+    "net.ipv4.conf.default.log_martians" = 1;
+    "net.ipv4.icmp_echo_ignore_broadcasts" = 1;
+    "net.ipv4.icmp_ignore_bogus_error_responses" = 1;
+    "net.ipv4.tcp_syncookies" = 1;
+    
+    # Memory protection
+    "kernel.dmesg_restrict" = 1;
+    "kernel.kptr_restrict" = 2;
+    "kernel.yama.ptrace_scope" = 1;
+  };
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -71,6 +100,26 @@
     };
   };
   programs.fish.enable = true;
+  
+  # --- System Optimizations ---
+  # Automatic garbage collection
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+  
+  # Optimize nix store
+  nix.settings.auto-optimise-store = true;
+  
+  # Performance tweaks
+  powerManagement.cpuFreqGovernor = "performance";
+  services.irqbalance.enable = true;
+  
+  # Faster boot
+  boot.tmp.cleanOnBoot = true;
+  boot.tmp.useTmpfs = true;
+  
   # Set the system state version
   system.stateVersion = "25.05";
 }
