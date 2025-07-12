@@ -31,7 +31,6 @@
 
     plugins = {
       lualine.enable = true;
-      telescope.enable = true;
       web-devicons.enable = true;
       lsp = {
         enable = true;
@@ -79,47 +78,32 @@
           zig = [ "zig" ];
         };
       };
+
+      # DAP Configuration
       dap = {
         enable = true;
-        # Configure the debug adapters for each language
-        adapters = {
-          # "pwa-node" = {
-          #   type = "server";
-          #   port = "8008";
-          # Corrected package path for the JS/TS debugger
-          #   executable.command = "${pkgs.vscode-js-debug}/bin/js-debug";
-          #   executable.args = [ "8008" ];
-          # };
-          # go = {
-          #   type = "server";
-          #   port = "\${port}";
-          #  executable.command = "${pkgs.delve}/bin/dlv";
-          # executable.args = [
-          #   "dap"
-          #   "-l"
-          #   "127.0.0.1:\${port}"
-          # ];
-          #};
-          #ocaml = {
-          #  type = "executable";
-          #  command = "${pkgs.vscode-extensions.ocamllabs.ocaml-platform}/bin/ocamlearlybird";
-          #  args = [ "debug" ];
-          #};
-          #codelldb = {
-
-          # type = "server";
-          # port = "\${port}";
-          # Corrected package path for the codelldb adapter
-          # executable.command = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/bin/codelldb";
-          # executable.args = [
-          #   "--port"
-          #   "\${port}"
-          # ];
-          #};
-        };
+        # Adapters and configurations will be set up in extraConfigLua
       };
-      dap-ui.enable = true;
 
+      # DAP UI and extensions
+      dap-ui = {
+        enable = true;
+        # Configuration will be handled in extraConfigLua
+      };
+
+      # Language-specific DAP plugins
+      dap-python = {
+        enable = true;
+        # Remove the adapter line - dap-python sets this up automatically
+      };
+      dap-go.enable = true;
+      dap-virtual-text.enable = true;
+
+      # Telescope
+      telescope = {
+        enable = true;
+        # DAP extension will be configured in extraConfigLua
+      };
     };
 
     globals.mapleader = " ";
@@ -137,11 +121,19 @@
         mode = "n";
         options.desc = "Live Grep";
       }
+
+      # DAP keymaps
       {
         key = "<leader>db";
         action = "<cmd>DapToggleBreakpoint<cr>";
         mode = "n";
         options.desc = "Toggle Breakpoint";
+      }
+      {
+        key = "<leader>dB";
+        action = "<cmd>lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>";
+        mode = "n";
+        options.desc = "Set Conditional Breakpoint";
       }
       {
         key = "<leader>dc";
@@ -185,6 +177,256 @@
         mode = "n";
         options.desc = "Terminate";
       }
+      {
+        key = "<leader>dui";
+        action = "<cmd>lua require('dapui').toggle()<cr>";
+        mode = "n";
+        options.desc = "Toggle DAP UI";
+      }
+
+      # Telescope DAP keymaps
+      {
+        key = "<leader>dcc";
+        action = "<cmd>Telescope dap commands<cr>";
+        mode = "n";
+        options.desc = "DAP Commands";
+      }
+      {
+        key = "<leader>dco";
+        action = "<cmd>Telescope dap configurations<cr>";
+        mode = "n";
+        options.desc = "DAP Configurations";
+      }
+      {
+        key = "<leader>dv";
+        action = "<cmd>Telescope dap variables<cr>";
+        mode = "n";
+        options.desc = "DAP Variables";
+      }
+      {
+        key = "<leader>df";
+        action = "<cmd>Telescope dap frames<cr>";
+        mode = "n";
+        options.desc = "DAP Frames";
+      }
+    ];
+
+    # Additional Lua configuration for DAP
+    extraConfigLua = ''
+      local dap = require('dap')
+      local dapui = require('dapui')
+      local telescope = require('telescope')
+
+      -- Configure DAP UI
+      dapui.setup({
+        icons = {
+          expanded = "▾",
+          collapsed = "▸",
+          current_frame = "▸"
+        },
+        mappings = {
+          expand = { "<CR>", "<2-LeftMouse>" },
+          open = "o",
+          remove = "d",
+          edit = "e",
+          repl = "r",
+          toggle = "t"
+        },
+        layouts = {
+          {
+            elements = {
+              { id = "scopes", size = 0.25 },
+              "breakpoints",
+              "stacks",
+              "watches"
+            },
+            size = 40,
+            position = "left"
+          },
+          {
+            elements = {
+              "repl",
+              "console"
+            },
+            size = 0.25,
+            position = "bottom"
+          }
+        }
+      })
+
+      -- Load telescope DAP extension
+      telescope.load_extension('dap')
+
+      -- Configure debug adapters
+      dap.adapters.pwa_node = {
+        type = "server",
+        host = "localhost",
+        port = 8123,
+        executable = {
+          command = "${pkgs.vscode-js-debug}/bin/js-debug",
+          args = { "8123" }
+        }
+      }
+
+      dap.adapters.codelldb = {
+        type = "server",
+        port = "''${port}",
+        executable = {
+          command = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb",
+          args = { "--port", "''${port}" }
+        }
+      }
+
+      dap.adapters.python = {
+        type = "executable",
+        command = "${pkgs.python3Packages.debugpy}/bin/python",
+        args = { "-m", "debugpy.adapter" }
+      }
+
+      dap.adapters.ocamlearlybird = {
+        type = "server",
+        host = "127.0.0.1",
+        port = 5859
+      }
+
+      -- Auto-open/close DAP UI
+      dap.listeners.after.event_initialized["dapui_config"] = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated["dapui_config"] = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited["dapui_config"] = function()
+        dapui.close()
+      end
+
+      -- All DAP configurations with dynamic input
+      dap.configurations.rust = {
+        {
+          name = 'Launch Rust',
+          type = 'codelldb',
+          request = 'launch',
+          program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')
+          end,
+          cwd = vim.fn.getcwd(),
+          stopOnEntry = false,
+          args = {},
+          runInTerminal = false,
+        },
+      }
+
+      dap.configurations.c = {
+        {
+          name = 'Launch C',
+          type = 'codelldb',
+          request = 'launch',
+          program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+          end,
+          cwd = vim.fn.getcwd(),
+          stopOnEntry = false,
+          args = {},
+        },
+      }
+
+      dap.configurations.cpp = dap.configurations.c
+
+      dap.configurations.python = {
+        {
+          name = 'Launch Python',
+          type = 'python',
+          request = 'launch',
+          program = vim.fn.expand('%:p'),
+          console = 'integratedTerminal',
+          cwd = vim.fn.getcwd(),
+        },
+        {
+          name = 'Launch Python with args',
+          type = 'python',
+          request = 'launch',
+          program = vim.fn.expand('%:p'),
+          args = function()
+            local args_string = vim.fn.input('Arguments: ')
+            return vim.split(args_string, " ", true)
+          end,
+          console = 'integratedTerminal',
+          cwd = vim.fn.getcwd(),
+        },
+      }
+
+      dap.configurations.ocaml = {
+        {
+          name = 'OCaml Debug',
+          type = 'ocamlearlybird',
+          request = 'launch',
+          program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/_build/default/', 'file')
+          end,
+          cwd = vim.fn.getcwd(),
+          stopOnEntry = false,
+          console = 'integratedTerminal',
+          yieldSteps = 4096,
+        },
+      }
+
+      dap.configurations.zig = {
+        {
+          name = 'Launch Zig',
+          type = 'codelldb',
+          request = 'launch',
+          program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/zig-out/bin/', 'file')
+          end,
+          cwd = vim.fn.getcwd(),
+          stopOnEntry = false,
+          args = {},
+        },
+      }
+
+      dap.configurations.typescript = {
+        {
+          name = 'Launch Node.js',
+          type = 'pwa-node',
+          request = 'launch',
+          program = vim.fn.expand('%:p'),
+          cwd = vim.fn.getcwd(),
+          sourceMaps = true,
+          protocol = 'inspector',
+          console = 'integratedTerminal',
+        },
+        {
+          name = 'Attach to Node.js',
+          type = 'pwa-node',
+          request = 'attach',
+          port = 9229,
+          restart = true,
+          sourceMaps = true,
+          cwd = vim.fn.getcwd(),
+        },
+      }
+
+      dap.configurations.javascript = {
+        {
+          name = 'Launch Node.js',
+          type = 'pwa-node',
+          request = 'launch',
+          program = vim.fn.expand('%:p'),
+          cwd = vim.fn.getcwd(),
+          console = 'integratedTerminal',
+        },
+      }
+    '';
+
+    extraPackages = with pkgs; [
+      vscode-js-debug
+      python3Packages.debugpy
+      delve # Go debugger
+      vscode-extensions.vadimcn.vscode-lldb
+    ];
+
+    extraPlugins = with pkgs.vimPlugins; [
+      telescope-dap-nvim
     ];
   };
 }

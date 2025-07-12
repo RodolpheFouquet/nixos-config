@@ -31,7 +31,6 @@
     pkgs.nerd-fonts.droid-sans-mono
     pkgs.nerd-fonts.fira-code
     bibata-cursors
-    vscode-extensions.vadimcn.vscode-lldb
   ];
 
   fonts.fontconfig.enable = true;
