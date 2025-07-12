@@ -60,6 +60,9 @@
     unzip
     zip
     diff-so-fancy
+    
+    mangohud
+    gamescope
   ];
 
   fonts.fontconfig.enable = true;
