@@ -116,6 +116,9 @@
   powerManagement.cpuFreqGovernor = "performance";
   services.irqbalance.enable = true;
   
+  # Gaming optimizations
+  boot.kernel.sysctl."vm.max_map_count" = 2147483642;
+  
   # Faster boot
   boot.tmp.cleanOnBoot = true;
   boot.tmp.useTmpfs = true;
