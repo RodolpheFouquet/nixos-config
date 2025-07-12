@@ -15,6 +15,7 @@
     ./tmux
     ./waybar
     ./hyprpaper
+    ./git
   ];
 
   programs.starship.enable = true;
@@ -54,6 +55,7 @@
       fi
     '';
   };
+
 
   home.stateVersion = "25.05";
   programs.home-manager.enable = true;

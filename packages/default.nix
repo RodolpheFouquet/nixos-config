@@ -59,6 +59,7 @@
     tree
     unzip
     zip
+    diff-so-fancy
   ];
 
   fonts.fontconfig.enable = true;
