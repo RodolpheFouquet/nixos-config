@@ -13,6 +13,7 @@
     ./hyprland
     ./neovim
     ./tmux
+    ./waybar
   ];
 
   programs.starship.enable = true;

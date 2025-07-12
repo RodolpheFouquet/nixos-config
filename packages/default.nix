@@ -26,7 +26,6 @@
     nodePackages.typescript
     elixir-ls
     fastfetch
-    waybar
     gleam
     nixfmt-rfc-style
     pkgs.nerd-fonts.droid-sans-mono
