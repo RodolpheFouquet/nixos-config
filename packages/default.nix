@@ -43,10 +43,8 @@
     ranger
     fd
     eza
+    zoxide
     
-    # Music
-    mpd
-    ncmpcpp
     
     # Network tools
     nmap
