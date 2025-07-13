@@ -24,24 +24,33 @@
     enable = true;
     shellInit = ''
       starship init fish | source
+      zoxide init fish | source
     '';
   };
   programs.fish.functions."sessionizer" = ''
     function sessionizer
         if test -z "$argv"
-            set -l selected_dir (find ~/Code ~/.config -mindepth 1 -maxdepth 1 -type d | fzf)
+            # Use fd for faster directory discovery and include deeper nesting in ~/Code
+            set -l selected_dir (fd . ~/Code ~/.config --type d --max-depth 2 --min-depth 1 | fzf)
         else
             set -l selected_dir $argv[1]
         end
 
         if test -n "$selected_dir"
-            set -l selected_name (basename "$selected_dir" | tr . _)
+            # Add to zoxide database
+            z --add "$selected_dir" 2>/dev/null
+            
+            set -l selected_name (basename "$selected_dir" | tr .-/ _)
             
             if not tmux has-session -t=$selected_name 2> /dev/null
                 tmux new-session -ds $selected_name -c $selected_dir
             end
             
-            tmux switch-client -t $selected_name
+            if test -n "$TMUX"
+                tmux switch-client -t $selected_name
+            else
+                tmux attach-session -t $selected_name
+            end
         end
     end
   '';

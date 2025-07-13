@@ -65,7 +65,7 @@ The configuration follows a modular architecture where each component is separat
 - **NixVim** with comprehensive LSP support for multiple languages
 - **Debug Adapter Protocol (DAP)** for interactive debugging
 - **Git workflow optimizations** with diff-so-fancy and smart aliases
-- **Terminal tools** including tmux, fish shell with starship prompt
+- **Terminal tools** including tmux with sessionizer, fish shell with starship prompt, and zoxide smart navigation
 
 ### 🖥️ Desktop Experience
 - **Hyprland** with custom Vi-style keybindings (HJKL navigation)
@@ -113,18 +113,52 @@ This configuration includes optimizations specifically for NVIDIA gaming:
 
 Launch games with MangoHUD: `mangohud %command%` in Steam launch options.
 
-## ⌨️ Key Shortcuts
+## ⌨️ Hyprland Key Shortcuts
 
+### Window Management
+| Shortcut | Action |
+|----------|--------|
+| `SUPER + H/J/K/L` | Move focus (Vi-style navigation) |
+| `SUPER + SHIFT + H/J/K/L` | Move active window |
+| `SUPER + V` | Toggle floating mode |
+| `SUPER + C` | Close active window |
+
+### Workspace Management
+| Shortcut | Action |
+|----------|--------|
+| `SUPER + 1-9` | Switch to workspace 1-9 |
+| `SUPER + SHIFT + 1-9` | Move window to workspace 1-9 |
+| `SUPER + S` | Toggle special workspace |
+| `SUPER + SHIFT + S` | Move window to special workspace |
+
+### Application Launchers
 | Shortcut | Action |
 |----------|--------|
 | `SUPER + Q` | Open terminal (Ghostty) |
 | `SUPER + F` | Open browser (Chrome) |
 | `SUPER + R` | Application launcher (Wofi) |
+
+### System Controls
+| Shortcut | Action |
+|----------|--------|
 | `SUPER + SHIFT + L` | Lock screen |
-| `SUPER + H/J/K/L` | Move focus (Vi-style) |
-| `SUPER + SHIFT + H/J/K/L` | Move window |
-| `SUPER + 1-9` | Switch workspace |
-| `SUPER + S` | Toggle scratchpad |
+| `XF86AudioRaiseVolume` | Increase volume 5% |
+| `XF86AudioLowerVolume` | Decrease volume 5% |
+| `XF86AudioMute` | Toggle mute |
+
+### Scratchpad Terminals
+| Shortcut | Action |
+|----------|--------|
+| `SUPER + T` | Toggle terminal scratchpad |
+| `SUPER + E` | Toggle file manager scratchpad (ranger) |
+| `SUPER + M` | Toggle music player scratchpad (ncmpcpp) |
+| `SUPER + Z` | Toggle zoom/magnify |
+
+### Mouse Controls
+| Action | Binding |
+|--------|---------|
+| `SUPER + Left Click` | Move window |
+| `SUPER + Right Click` | Resize window |
 
 ## 🛠️ Git Workflow
 
@@ -135,13 +169,54 @@ Enhanced git experience with:
 - Pull with rebase enabled by default
 - Rerere for automatic conflict resolution
 
+## 📟 Tmux & Terminal Workflow
+
+### Tmux Configuration
+- **Prefix key**: `Ctrl-a` (instead of default `Ctrl-b`)
+- **Mouse support**: Enabled for pane selection and resizing
+- **Session persistence**: Automatic restore with resurrect and continuum plugins
+- **Base index**: Windows and panes start from 1
+- **Theme**: Gruvbox color scheme
+
+### Sessionizer Function
+Quickly create and switch to tmux sessions for your projects:
+
+```fish
+sessionizer [directory]
+```
+
+- **Without arguments**: Opens fzf to select from ~/Code and ~/.config directories
+- **With directory**: Creates/switches to session for specific directory
+- **Features**:
+  - Searches projects up to 2 levels deep in ~/Code
+  - Automatically adds visited directories to zoxide database
+  - Smart session naming (handles dots, dashes, slashes)
+  - Works both inside and outside tmux
+
+### Zoxide Integration
+Smart directory jumping with learning:
+- `z <partial-name>` - Jump to frequently visited directories
+- `zi` - Interactive directory selection with fzf
+- Automatically learns from sessionizer usage
+
+### Key Tmux Shortcuts
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl-a c` | Create new window |
+| `Ctrl-a ,` | Rename current window |
+| `Ctrl-a %` | Split pane horizontally |
+| `Ctrl-a "` | Split pane vertically |
+| `Ctrl-a h/j/k/l` | Navigate panes (if configured) |
+| `Ctrl-a d` | Detach from session |
+| `Ctrl-a s` | List and switch sessions |
+
 ## 📦 Included Software
 
 ### Development
 - **Neovim** with LSPs for Nix, Python, Rust, Go, TypeScript, Elixir, Zig, OCaml
 - **Debug adapters** for multiple languages
 - **Git tools** with diff-so-fancy
-- **Terminal utilities**: ranger, fd, eza, fzf, ripgrep
+- **Terminal utilities**: ranger, fd, eza, fzf, ripgrep, zoxide
 
 ### Gaming & Graphics
 - **Steam** with Proton-GE
