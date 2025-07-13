@@ -44,6 +44,10 @@
     fd
     eza
     
+    # Music
+    mpd
+    ncmpcpp
+    
     # Network tools
     nmap
     tcpdump

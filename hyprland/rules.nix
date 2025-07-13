@@ -9,11 +9,17 @@
 
     windowrulev2 = [
       "workspace 1, class:^(google-chrome)$"
-      "workspace 1, class:^(com.mitchellh.ghostty)$"
       "workspace 2 silent, class:^(discord)$"
       "workspace 3 silent, class:(steam)$"
       "workspace 4, class:^(steam_app_.*)$"
       "workspace 4, xwayland:1,class:^(gamescope)$"
+      "float, title:^(scratchpad-term)$"
+      "workspace special silent, title:^(scratchpad-term)$"
+      "float, title:^(scratchpad-files)$"
+      "workspace special silent, title:^(scratchpad-files)$"
+      "float, title:^(scratchpad-music)$"
+      "workspace special silent, title:^(scratchpad-music)$"
+      "workspace 1, class:^(com.mitchellh.ghostty)$,title:^(?!scratchpad-).*$"
     ];
 
   };
