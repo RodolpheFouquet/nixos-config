@@ -30,8 +30,8 @@
   programs.fish.functions."sessionizer" = ''
     function sessionizer
         if test -z "$argv"
-            # Use fd for faster directory discovery and include deeper nesting in ~/Code
-            set -l selected_dir (fd . ~/Code ~/.config --type d --max-depth 2 --min-depth 1 | fzf)
+            # Find git repositories only
+            set -l selected_dir (fd . ~/Code ~/.config --type d --max-depth 2 --min-depth 1 -x test -d {}/.git | fzf)
         else
             set -l selected_dir $argv[1]
         end

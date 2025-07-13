@@ -1,5 +1,9 @@
 { config, pkgs, ... }:
 
+let
+  vars = import ./variables.nix;
+in
+
 {
   imports = [
     # Your hardware-specific configuration
@@ -42,9 +46,9 @@
   console.keyMap = "us";
 
   # --- User Definition ---
-  users.users.vachicorne = {
+  users.users.${vars.username} = {
     isNormalUser = true;
-    description = "vachicorne";
+    description = "${vars.username}";
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -121,7 +125,6 @@
   
   # Faster boot
   boot.tmp.cleanOnBoot = true;
-  boot.tmp.useTmpfs = true;
   
   # Set the system state version
   system.stateVersion = "25.05";

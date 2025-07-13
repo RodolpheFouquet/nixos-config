@@ -9,6 +9,12 @@
       extraCompatPackages = with pkgs; [
         proton-ge-bin
       ];
+      extraPackages = with pkgs; [ mangohud ];
+      package = pkgs.steam.override {
+        extraEnv = {
+          MANGOHUD = "1";
+        };
+      };
     };
     gamescope = {
       enable = true;
@@ -29,12 +35,4 @@
     mangohud
   ];
 
-  environment.sessionVariables = {
-    DXVK_ENABLE_NVAPI = "1";
-    PROTON_ENABLE_NVAPI = "1";
-    __GL_SHADER_DISK_CACHE = "1";
-    __GL_SHADER_DISK_CACHE_SKIP_CLEANUP = "1";
-    __GL_SHADER_DISK_CACHE_SIZE = "10737418240";
-    MANGOHUD = "1";
-  };
 }

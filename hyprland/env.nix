@@ -1,4 +1,8 @@
-{ ... }:
+{ config, ... }:
+
+let
+  vars = import ../variables.nix;
+in
 {
   wayland.windowManager.hyprland.settings = {
     env = [
@@ -20,6 +24,12 @@
       "TERMINAL,ghostty"
       "XDG_TERMINAL_EMULATOR,ghostty"
       "HYPRCURSOR_THEME,Bibata-Modern-Classic"
+      "DXVK_ENABLE_NVAPI,1"
+      "PROTON_ENABLE_NVAPI,1"
+      "__GL_SHADER_DISK_CACHE,1"
+      "__GL_SHADER_DISK_CACHE_SKIP_CLEANUP,1"
+      "__GL_SHADER_DISK_CACHE_SIZE,10737418240"
+      "__GL_SHADER_DISK_CACHE_PATH,${vars.userHome vars.username}/.shaders"
     ];
   };
 }
