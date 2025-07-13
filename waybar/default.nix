@@ -12,6 +12,7 @@
       position = "top";
       height = 35;
       modules-left = [
+        "custom/cow"
         "hyprland/workspaces"
         "hyprland/mode"
       ];
@@ -22,11 +23,15 @@
         "cpu"
         "memory"
         "temperature"
+        "custom/gpu-temp"
         "clock"
         "tray"
       ];
 
       # --- Module Configurations ---
+      "custom/cow" = {
+        format = "󰆚 ";
+      };
 
       "hyprland/workspaces" = {
         format = "{name}";
@@ -92,6 +97,13 @@
         format-critical = " {temperatureC}°C";
         format = " {temperatureC}°C";
       };
+
+      "custom/gpu-temp" = {
+        exec = "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits";
+        format = " {}°C";
+        interval = 2;
+        tooltip = false;
+      };
     };
   };
 
@@ -127,7 +139,7 @@
         background: #3c3836; /* Gruvbox lighter background */
     }
 
-    #clock, #pulseaudio, #network, #cpu, #memory, #temperature, #tray {
+    #clock, #pulseaudio, #network, #cpu, #memory, #temperature, #custom-gpu-temp, #tray {
         padding: 0 10px;
         margin: 0 4px;
         color: #ebdbb2;
@@ -135,6 +147,13 @@
 
     #window {
         font-weight: bold;
+    }
+
+    #custom-cow {
+        padding: 0 15px;
+        margin: 0 8px;
+        font-size: 18px;
+        color: #fe8019; /* Gruvbox light orange */
     }
   '';
 }
