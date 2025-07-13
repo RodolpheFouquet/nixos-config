@@ -119,9 +119,9 @@
   # Gaming optimizations
   boot.kernel.sysctl."vm.max_map_count" = 2147483642;
   
-  # Faster boot
+  # Clean tmp on boot (using disk instead of tmpfs for more space)
   boot.tmp.cleanOnBoot = true;
-  boot.tmp.useTmpfs = true;
+  boot.tmp.useTmpfs = false;
   
   # Set the system state version
   system.stateVersion = "25.05";
