@@ -1,11 +1,13 @@
 # Vachicorne's NixOS Configuration
 
 ```
-      \   ^__^
-       \  (oo)\_______
-          (__)\       )\/\
-              ||----w |
-              ||     ||
+< Welcome to Vachicorne's NixOS! >
+ ----------------------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
 ```
 
 Welcome to my personal NixOS configuration! This repository contains a comprehensive, modular, and production-ready NixOS setup optimized for development, gaming, and daily computing.
