@@ -45,6 +45,12 @@ in
   };
   console.keyMap = "us";
 
+  # Udev rule for monitor hotplug detection
+  services.udev.extraRules = ''
+    # KVM monitor hotplug detection
+    SUBSYSTEM=="drm", ACTION=="change", RUN+="${pkgs.systemd}/bin/systemd-run --user --no-block /home/vachicorne/.config/nixos/scripts/monitor-hotplug.sh"
+  '';
+
   # --- User Definition ---
   users.users.${vars.username} = {
     isNormalUser = true;

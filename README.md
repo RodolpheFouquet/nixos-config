@@ -65,7 +65,7 @@ The configuration follows a modular architecture where each component is separat
 - **NixVim** with comprehensive LSP support for multiple languages
 - **Debug Adapter Protocol (DAP)** for interactive debugging
 - **Git workflow optimizations** with diff-so-fancy and smart aliases
-- **Terminal tools** including tmux with sessionizer, fish shell with starship prompt, and zoxide smart navigation
+- **Terminal tools** including tmux with sessionizer, fish shell with starship prompt, yazi file manager, and zoxide smart navigation
 
 ### 🖥️ Desktop Experience
 - **Hyprland** with custom Vi-style keybindings (HJKL navigation)
@@ -150,7 +150,7 @@ Launch games with MangoHUD: `mangohud %command%` in Steam launch options.
 | Shortcut | Action |
 |----------|--------|
 | `SUPER + T` | Toggle terminal scratchpad |
-| `SUPER + E` | Toggle file manager scratchpad (ranger) |
+| `SUPER + E` | Toggle file manager scratchpad (yazi) |
 | `SUPER + M` | Toggle music player scratchpad (ncmpcpp) |
 | `SUPER + Z` | Toggle zoom/magnify |
 
@@ -217,7 +217,7 @@ Smart directory jumping with learning:
 - **Neovim** with LSPs for Nix, Python, Rust, Go, TypeScript, Elixir, Zig, OCaml
 - **Debug adapters** for multiple languages
 - **Git tools** with diff-so-fancy
-- **Terminal utilities**: ranger, fd, eza, fzf, ripgrep, zoxide
+- **Terminal utilities**: yazi, fd, eza, fzf, ripgrep, zoxide
 
 ### Gaming & Graphics
 - **Steam** with Proton-GE

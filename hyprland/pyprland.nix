@@ -19,7 +19,7 @@
 
     [scratchpads.files]
     animation = "fromTop" 
-    command = "ghostty --title=scratchpad-files -e ranger"
+    command = "ghostty --title=scratchpad-files -e yazi"
     title = "scratchpad-files"
     match_by = "title"
     size = "75% 60%"

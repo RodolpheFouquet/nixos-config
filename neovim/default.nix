@@ -104,6 +104,12 @@
         enable = true;
         # DAP extension will be configured in extraConfigLua
       };
+
+      # Harpoon
+      harpoon = {
+        enable = true;
+        enableTelescope = true;
+      };
     };
 
     globals.mapleader = " ";
@@ -120,6 +126,44 @@
         action = "<cmd>Telescope live_grep<cr>";
         mode = "n";
         options.desc = "Live Grep";
+      }
+
+      # Harpoon keymaps
+      {
+        key = "<leader>a";
+        action = "<cmd>lua require('harpoon.mark').add_file()<cr>";
+        mode = "n";
+        options.desc = "Harpoon Add File";
+      }
+      {
+        key = "<C-e>";
+        action = "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>";
+        mode = "n";
+        options.desc = "Harpoon Quick Menu";
+      }
+      {
+        key = "<C-h>";
+        action = "<cmd>lua require('harpoon.ui').nav_file(1)<cr>";
+        mode = "n";
+        options.desc = "Harpoon File 1";
+      }
+      {
+        key = "<C-j>";
+        action = "<cmd>lua require('harpoon.ui').nav_file(2)<cr>";
+        mode = "n";
+        options.desc = "Harpoon File 2";
+      }
+      {
+        key = "<C-k>";
+        action = "<cmd>lua require('harpoon.ui').nav_file(3)<cr>";
+        mode = "n";
+        options.desc = "Harpoon File 3";
+      }
+      {
+        key = "<C-l>";
+        action = "<cmd>lua require('harpoon.ui').nav_file(4)<cr>";
+        mode = "n";
+        options.desc = "Harpoon File 4";
       }
 
       # DAP keymaps

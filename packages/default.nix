@@ -40,7 +40,7 @@
     powertop
     
     # File management
-    ranger
+    yazi
     fd
     eza
     zoxide

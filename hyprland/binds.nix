@@ -25,6 +25,9 @@
       "$mod SHIFT, T, exec, pypr toggle_special term"
       "$mod, Z, exec, pypr zoom"
       "$mod SHIFT, Z, exec, pypr zoom ++0.5"
+      
+      # Monitor resolution fix for KVM switching
+      "$mod SHIFT, R, exec, /home/vachicorne/.config/nixos/scripts/monitor-hotplug.sh"
       "$mod, H, movefocus, l"
       "$mod, J, movefocus, d"
       "$mod, K, movefocus, u"
