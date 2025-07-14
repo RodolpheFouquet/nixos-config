@@ -16,9 +16,8 @@
   wayland.windowManager.hyprland = {
     settings = {
       "$mod" = "SUPER";
-      monitor = [
-        "DP-6, 5120x1440@240,0x0,1"
-      ];
+      # Monitor configuration is now handled by host-specific files
+      # See hosts/{desktop,laptop}/monitor.nix
 
       misc = {
         layers_hog_keyboard_focus = true;
@@ -63,6 +62,7 @@
 
       exec-once = [
         "waybar"
+        "hyprpaper"
         "google-chrome-stable"
         "discord"
         "steam"

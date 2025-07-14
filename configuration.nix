@@ -6,8 +6,7 @@ in
 
 {
   imports = [
-    # Your hardware-specific configuration
-    ./hardware-configuration.nix
+    # Hardware-specific configuration is now imported in flake.nix per host
     # Your other custom modules
     ./steam
     ./display
@@ -24,7 +23,8 @@ in
 
   nixpkgs.config.allowUnfree = true;
   # --- Networking ---
-  networking.hostName = "nixos";
+  # Hostname is now set in individual host configurations
+  # networking.hostName will be set per host
   networking.networkmanager.enable = true;
   services.avahi.enable = true;
 

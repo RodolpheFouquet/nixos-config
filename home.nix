@@ -2,6 +2,7 @@
   inputs,
   config,
   pkgs,
+  hostType ? "desktop",
   ...
 }:
 
@@ -17,6 +18,8 @@
     ./hyprpaper
     ./git
     ./wofi
+    # Import host-specific monitor configuration
+    (./hosts + "/${hostType}/monitor.nix")
   ];
 
   programs.starship.enable = true;

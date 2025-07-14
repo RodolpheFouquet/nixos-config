@@ -19,26 +19,52 @@
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      # This makes `inputs` available to your other .nix files
-      specialArgs = { inherit inputs; };
+    nixosConfigurations = {
+      # Desktop configuration
+      desktop = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
 
-      modules = [
-        # Import your main system configuration
-        ./configuration.nix
+        modules = [
+          ./configuration.nix
+          ./hosts/desktop/hardware-configuration.nix
+          ./hosts/desktop/host.nix
 
-        # Import the Home Manager NixOS module
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.vachicorne = import ./home.nix;
+            home-manager.extraSpecialArgs = { 
+              inherit inputs; 
+              hostType = "desktop";
+            };
+          }
+        ];
+      };
 
-          # Define your user and point to their dedicated home.nix
-          home-manager.users.vachicorne = import ./home.nix;
-          home-manager.extraSpecialArgs = { inherit inputs; };
-        }
-      ];
+      # Laptop configuration  
+      laptop = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+
+        modules = [
+          ./configuration.nix
+          ./hosts/laptop/hardware-configuration.nix
+          ./hosts/laptop/host.nix
+
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.vachicorne = import ./home.nix;
+            home-manager.extraSpecialArgs = { 
+              inherit inputs; 
+              hostType = "laptop";
+            };
+          }
+        ];
+      };
     };
   };
 }

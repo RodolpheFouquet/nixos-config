@@ -29,7 +29,15 @@ The configuration follows a modular architecture where each component is separat
 ├── configuration.nix          # Main system configuration
 ├── home.nix                  # Home Manager entry point
 ├── flake.nix                 # Flake configuration with inputs
-├── hardware-configuration.nix # Hardware-specific settings
+├── hosts/                    # Host-specific configurations
+│   ├── desktop/             # Desktop machine configuration
+│   │   ├── hardware-configuration.nix # Desktop hardware settings
+│   │   ├── host.nix         # Desktop hostname and host-specific settings
+│   │   └── monitor.nix      # Desktop monitor configuration (5120x1440@240)
+│   └── laptop/              # Laptop machine configuration
+│       ├── hardware-configuration.nix # Laptop hardware settings
+│       ├── host.nix         # Laptop hostname and host-specific settings
+│       └── monitor.nix      # Laptop monitor configuration (2560x1440@60)
 ├── display/                  # Display and graphics configuration
 ├── git/                      # Git configuration and aliases
 ├── hyprland/                 # Hyprland window manager setup
@@ -41,9 +49,12 @@ The configuration follows a modular architecture where each component is separat
 ├── hyprpaper/               # Wallpaper management
 ├── neovim/                  # Neovim configuration with LSPs and DAP
 ├── packages/                # System and user packages
+├── scripts/                 # Utility scripts
+│   └── monitor-hotplug.sh   # KVM monitor resolution fix script
 ├── steam/                   # Gaming and Steam optimizations
 ├── tmux/                    # Terminal multiplexer setup
-└── waybar/                  # Status bar configuration
+├── waybar/                  # Status bar configuration
+└── wofi/                    # Application launcher with Gruvbox theme
 ```
 
 ## ✨ Key Features
@@ -80,6 +91,9 @@ The configuration follows a modular architecture where each component is separat
 
 ## 🚀 Quick Start
 
+This configuration supports multiple machines through a host-based system. Choose your setup:
+
+### 🖥️ Desktop Setup
 1. **Clone this repository**:
    ```bash
    git clone https://github.com/RodolpheFouquet/nixos-config.git /home/$USER/.config/nixos
@@ -88,18 +102,41 @@ The configuration follows a modular architecture where each component is separat
 2. **Update hardware configuration**:
    ```bash
    sudo nixos-generate-config --root /mnt
-   cp /mnt/etc/nixos/hardware-configuration.nix /home/$USER/.config/nixos/
+   cp /mnt/etc/nixos/hardware-configuration.nix /home/$USER/.config/nixos/hosts/desktop/
    ```
 
 3. **Customize for your system**:
-   - Update monitor configuration in `hyprland/default.nix`
+   - Update monitor configuration in `hosts/desktop/monitor.nix`
    - Adjust thermal zone in `waybar/default.nix` for temperature monitoring
    - Modify user details in `git/default.nix`
 
 4. **Apply the configuration**:
    ```bash
-   sudo nixos-rebuild switch --flake /home/$USER/.config/nixos
+   sudo nixos-rebuild switch --flake /home/$USER/.config/nixos#desktop
    ```
+
+### 💻 Laptop Setup
+1. **Follow steps 1 and 3 from desktop setup**
+
+2. **Update hardware configuration**:
+   ```bash
+   sudo nixos-generate-config --root /mnt
+   cp /mnt/etc/nixos/hardware-configuration.nix /home/$USER/.config/nixos/hosts/laptop/
+   ```
+
+3. **Update laptop monitor configuration**:
+   - Modify `hosts/laptop/monitor.nix` for your laptop's display specs
+
+4. **Apply the configuration**:
+   ```bash
+   sudo nixos-rebuild switch --flake /home/$USER/.config/nixos#laptop
+   ```
+
+### 🔄 Multi-Host Features
+- **Shared software**: Same packages and configurations across all machines
+- **Host-specific hardware**: Separate hardware configurations per machine
+- **Smart monitor detection**: KVM switching support with automatic resolution restoration
+- **Hostname management**: `vachicorne-desktop` and `vachicorne-laptop` automatically assigned
 
 ## 🎮 Gaming Setup
 
@@ -146,6 +183,7 @@ Launch games with MangoHUD: `mangohud %command%` in Steam launch options.
 | `XF86AudioMute` | Toggle mute |
 | `Print` | Screenshot selection (save to ~/Pictures/Screenshots) |
 | `SUPER + Print` | Screenshot full screen (save to ~/Pictures/Screenshots) |
+| `SUPER + SHIFT + R` | Fix monitor resolution (KVM switching) |
 
 ### Scratchpad Terminals
 | Shortcut | Action |

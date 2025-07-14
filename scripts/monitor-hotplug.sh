@@ -3,9 +3,29 @@
 # Monitor hotplug detection script for KVM switching
 # This script detects when the monitor is reconnected and restores the correct resolution
 
-# Configuration
-MONITOR_NAME="DP-6"
-PREFERRED_RESOLUTION="5120x1440@240"
+# Configuration - detect host type and set accordingly
+if [ -f "/etc/hostname" ]; then
+    HOSTNAME=$(cat /etc/hostname)
+else
+    HOSTNAME="unknown"
+fi
+
+case "$HOSTNAME" in
+    *desktop*)
+        MONITOR_NAME="DP-6"
+        PREFERRED_RESOLUTION="5120x1440@240"
+        ;;
+    *laptop*)
+        MONITOR_NAME="eDP-1"
+        PREFERRED_RESOLUTION="2560x1440@60"
+        ;;
+    *)
+        # Default to desktop config if unknown
+        MONITOR_NAME="DP-6"
+        PREFERRED_RESOLUTION="5120x1440@240"
+        ;;
+esac
+
 POSITION="0x0"
 SCALE="1"
 LOG_FILE="/tmp/monitor-hotplug.log"
@@ -60,7 +80,8 @@ if is_monitor_connected; then
     log_message "Monitor $MONITOR_NAME detected with resolution: $current_res"
     
     # Check if the resolution is incorrect (typical low resolution after KVM switch)
-    if [[ "$current_res" != "5120x1440" ]]; then
+    expected_res=$(echo "$PREFERRED_RESOLUTION" | cut -d'@' -f1)
+    if [[ "$current_res" != "$expected_res" ]]; then
         log_message "Incorrect resolution detected ($current_res), restoring correct configuration"
         restore_monitor_config
     else
