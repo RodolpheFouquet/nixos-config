@@ -209,6 +209,7 @@ Smart directory jumping with learning:
 | `Ctrl-a h/j/k/l` | Navigate panes (if configured) |
 | `Ctrl-a d` | Detach from session |
 | `Ctrl-a s` | List and switch sessions |
+| `Ctrl-a f` | Open sessionizer in new window |
 
 ## 📦 Included Software
 

@@ -28,6 +28,9 @@
 
       # Configure continuum plugin
       set -g @continuum-restore 'on'
+
+      # Sessionizer shortcut
+      bind-key f run-shell "tmux new-window 'sessionizer'"
     '';
   };
 }

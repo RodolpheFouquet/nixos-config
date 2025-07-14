@@ -28,30 +28,32 @@
     '';
   };
   programs.fish.functions."sessionizer" = ''
-    function sessionizer
-        if test -z "$argv"
-            # Find git repositories only
-            set -l selected_dir (fd . ~/Code ~/.config --type d --max-depth 2 --min-depth 1 -x test -d {}/.git | fzf)
-        else
-            set -l selected_dir $argv[1]
-        end
+    if test (count $argv) -eq 1
+        set selected $argv[1]
+    else
+        set selected (find ~/Code ~/.config -mindepth 1 -maxdepth 1 -type d -exec test -d {}/.git \; -print | fzf)
+    end
 
-        if test -n "$selected_dir"
-            # Add to zoxide database
-            z --add "$selected_dir" 2>/dev/null
-            
-            set -l selected_name (basename "$selected_dir" | tr .-/ _)
-            
-            if not tmux has-session -t=$selected_name 2> /dev/null
-                tmux new-session -ds $selected_name -c $selected_dir
-            end
-            
-            if test -n "$TMUX"
-                tmux switch-client -t $selected_name
-            else
-                tmux attach-session -t $selected_name
-            end
-        end
+    if test -z "$selected"
+        return 0
+    end
+
+    set selected_name (basename "$selected" | tr . _)
+    set tmux_running (pgrep tmux)
+
+    if test -z "$TMUX" -a -z "$tmux_running"
+        tmux new-session -s $selected_name -c $selected
+        return 0
+    end
+
+    if not tmux has-session -t=$selected_name 2>/dev/null
+        tmux new-session -ds $selected_name -c $selected
+    end
+
+    if test -z "$TMUX"
+        tmux attach -t $selected_name
+    else
+        tmux switch-client -t $selected_name
     end
   '';
 
@@ -64,7 +66,6 @@
       fi
     '';
   };
-
 
   home.stateVersion = "25.05";
   programs.home-manager.enable = true;
