@@ -30,8 +30,8 @@
       "$mod SHIFT, R, exec, /home/vachicorne/.config/nixos/scripts/monitor-hotplug.sh"
       
       # Screenshots
-      ", Print, exec, grim -g \"$(slurp)\" - | wl-copy"
-      "$mod, Print, exec, grim - | wl-copy"
+      ", Print, exec, mkdir -p ~/Pictures/Screenshots && grim -g \"$(slurp)\" ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png"
+      "$mod, Print, exec, mkdir -p ~/Pictures/Screenshots && grim ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png"
       "$mod, H, movefocus, l"
       "$mod, J, movefocus, d"
       "$mod, K, movefocus, u"

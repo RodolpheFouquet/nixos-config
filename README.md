@@ -144,8 +144,8 @@ Launch games with MangoHUD: `mangohud %command%` in Steam launch options.
 | `XF86AudioRaiseVolume` | Increase volume 5% |
 | `XF86AudioLowerVolume` | Decrease volume 5% |
 | `XF86AudioMute` | Toggle mute |
-| `Print` | Screenshot selection (copy to clipboard) |
-| `SUPER + Print` | Screenshot full screen (copy to clipboard) |
+| `Print` | Screenshot selection (save to ~/Pictures/Screenshots) |
+| `SUPER + Print` | Screenshot full screen (save to ~/Pictures/Screenshots) |
 
 ### Scratchpad Terminals
 | Shortcut | Action |

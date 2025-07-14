@@ -16,6 +16,7 @@
     ./waybar
     ./hyprpaper
     ./git
+    ./wofi
   ];
 
   programs.starship.enable = true;
