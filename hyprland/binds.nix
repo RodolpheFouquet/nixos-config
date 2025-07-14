@@ -28,6 +28,10 @@
       
       # Monitor resolution fix for KVM switching
       "$mod SHIFT, R, exec, /home/vachicorne/.config/nixos/scripts/monitor-hotplug.sh"
+      
+      # Screenshots
+      ", Print, exec, grim -g \"$(slurp)\" - | wl-copy"
+      "$mod, Print, exec, grim - | wl-copy"
       "$mod, H, movefocus, l"
       "$mod, J, movefocus, d"
       "$mod, K, movefocus, u"

@@ -12,6 +12,9 @@
     wofi
     fzf
     ripgrep
+    grim
+    slurp
+    wl-clipboard
     nodejs_24
     go
     killall

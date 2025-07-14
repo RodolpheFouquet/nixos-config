@@ -77,7 +77,6 @@ The configuration follows a modular architecture where each component is separat
 - **CPU performance governor** for maximum responsiveness
 - **IRQ balancing** across cores for better multithreading
 - **Automatic nix store optimization** with weekly garbage collection
-- **tmpfs boot** for faster startup times
 
 ## 🚀 Quick Start
 
@@ -145,6 +144,8 @@ Launch games with MangoHUD: `mangohud %command%` in Steam launch options.
 | `XF86AudioRaiseVolume` | Increase volume 5% |
 | `XF86AudioLowerVolume` | Decrease volume 5% |
 | `XF86AudioMute` | Toggle mute |
+| `Print` | Screenshot selection (copy to clipboard) |
+| `SUPER + Print` | Screenshot full screen (copy to clipboard) |
 
 ### Scratchpad Terminals
 | Shortcut | Action |
