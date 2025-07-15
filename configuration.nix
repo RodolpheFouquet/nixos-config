@@ -124,19 +124,19 @@ in
 
   services.snapper = {
     configs = {
-      root = {
-        SUBVOLUME = "/";
+      home = {
+        SUBVOLUME = "/home";
         ALLOW_USERS = [ "vachicorne" ];
         TIMELINE_CREATE = true;
         TIMELINE_CLEANUP = true;
         NUMBER_CLEANUP = true;
         NUMBER_MIN_AGE = 1800;
-        NUMBER_LIMIT = 30;
-        NUMBER_LIMIT_IMPORTANT = 5;
-        TIMELINE_LIMIT_HOURLY = 12;
+        NUMBER_LIMIT = 50;
+        NUMBER_LIMIT_IMPORTANT = 10;
+        TIMELINE_LIMIT_HOURLY = 24;
         TIMELINE_LIMIT_DAILY = 7;
         TIMELINE_LIMIT_WEEKLY = 4;
-        TIMELINE_LIMIT_MONTHLY = 2;
+        TIMELINE_LIMIT_MONTHLY = 3;
       };
     };
   };

@@ -254,14 +254,14 @@ Smart directory jumping with learning:
 
 ## 📸 BTRFS Snapshots & Data Protection
 
-This configuration uses BTRFS snapshots to automatically protect your data. Since `/home` is part of the root subvolume, snapshots include the entire system, but you can selectively restore only user data when needed.
+This configuration uses BTRFS snapshots to automatically protect your user data in `/home`. The `/home` directory is configured as a separate BTRFS subvolume, allowing for efficient snapshots of only user data while the system can be rebuilt from NixOS configuration files.
 
 ### Automatic Snapshots
-- **Hourly snapshots**: 12 retained
+- **Hourly snapshots**: 24 retained
 - **Daily snapshots**: 7 retained  
 - **Weekly snapshots**: 4 retained
-- **Monthly snapshots**: 2 retained
-- **Total snapshots**: Up to 30 with automatic cleanup
+- **Monthly snapshots**: 3 retained
+- **Total snapshots**: Up to 50 with automatic cleanup
 
 ### Snapshot Management Commands
 
@@ -296,39 +296,6 @@ snapundo 5..0 /home/vachicorne/Documents/important.txt
 snapback 5
 sudo reboot
 ```
-
-### Selective Home Directory Restoration
-
-Since snapshots include the entire system, use these patterns to restore only user data:
-
-**Restore entire user directory:**
-```bash
-snapundo 5..0 /home/vachicorne
-```
-
-**Restore specific directories:**
-```bash
-# Documents only
-snapundo 5..0 /home/vachicorne/Documents
-
-# Configuration files only  
-snapundo 5..0 /home/vachicorne/.config
-
-# Code projects only
-snapundo 5..0 /home/vachicorne/Code
-```
-
-**Restore with exclusions (advanced):**
-```bash
-# Exclude cache and temporary files
-sudo snapper -c root undochange 5..0 \
-  --exclude="/tmp/*" \
-  --exclude="/var/cache/*" \
-  --exclude="/home/vachicorne/.cache/*" \
-  /home/vachicorne
-```
-
-⚠️ **Important**: Avoid restoring system directories (`/etc`, `/usr`, `/nix`) since NixOS manages these declaratively.
 
 ## 📦 Included Software
 

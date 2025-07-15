@@ -38,11 +38,11 @@
     '';
     shellAliases = {
       # BTRFS snapshot aliases
-      snaplist = "sudo snapper -c root list";
-      snapdiff = "sudo snapper -c root diff";
-      snapback = "sudo snapper -c root rollback";
-      snapcreate = "sudo snapper -c root create --description";
-      snapundo = "sudo snapper -c root undochange";
+      snaplist = "sudo snapper -c home list";
+      snapdiff = "sudo snapper -c home diff";
+      snapback = "sudo snapper -c home rollback";
+      snapcreate = "sudo snapper -c home create --description";
+      snapundo = "sudo snapper -c home undochange";
     };
   };
   programs.fish.functions."sessionizer" = ''

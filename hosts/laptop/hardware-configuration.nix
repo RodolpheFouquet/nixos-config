@@ -19,6 +19,12 @@
     fsType = "ext4";
   };
 
+  fileSystems."/home" = {
+    device = "/dev/disk/by-uuid/REPLACE-WITH-ACTUAL-UUID";
+    fsType = "btrfs";
+    options = [ "subvol=@home" "compress=zstd" "noatime" ];
+  };
+
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/REPLACE-WITH-ACTUAL-UUID";
     fsType = "vfat";
