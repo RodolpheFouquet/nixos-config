@@ -23,6 +23,12 @@
   ];
 
   programs.starship.enable = true;
+  
+  # Direnv integration
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
 
   programs.fish = {
     enable = true;
@@ -30,6 +36,14 @@
       starship init fish | source
       zoxide init fish | source
     '';
+    shellAliases = {
+      # BTRFS snapshot aliases
+      snaplist = "sudo snapper -c root list";
+      snapdiff = "sudo snapper -c root diff";
+      snapback = "sudo snapper -c root rollback";
+      snapcreate = "sudo snapper -c root create --description";
+      snapundo = "sudo snapper -c root undochange";
+    };
   };
   programs.fish.functions."sessionizer" = ''
     if test (count $argv) -eq 1

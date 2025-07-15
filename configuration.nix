@@ -64,17 +64,17 @@ in
 
   # --- Services ---
   security.rtkit.enable = true;
-  
+
   # --- Security Hardening ---
   security.sudo.wheelNeedsPassword = true;
   security.polkit.enable = true;
-  
+
   # Kernel hardening
   boot.kernel.sysctl = {
     # Disable IPv6 if not needed (optional)
     # "net.ipv6.conf.all.disable_ipv6" = 1;
     # "net.ipv6.conf.default.disable_ipv6" = 1;
-    
+
     # Network security
     "net.ipv4.conf.all.send_redirects" = 0;
     "net.ipv4.conf.default.send_redirects" = 0;
@@ -87,7 +87,7 @@ in
     "net.ipv4.icmp_echo_ignore_broadcasts" = 1;
     "net.ipv4.icmp_ignore_bogus_error_responses" = 1;
     "net.ipv4.tcp_syncookies" = 1;
-    
+
     # Memory protection
     "kernel.dmesg_restrict" = 1;
     "kernel.kptr_restrict" = 2;
@@ -110,7 +110,37 @@ in
     };
   };
   programs.fish.enable = true;
-  
+
+  # Container support
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+    defaultNetwork.settings.dns_enabled = true;
+  };
+
+  # Container networking
+  networking.firewall.interfaces."podman+".allowedUDPPorts = [ 53 ];
+  networking.firewall.interfaces."podman+".allowedTCPPorts = [ 53 ];
+
+  services.snapper = {
+    configs = {
+      root = {
+        SUBVOLUME = "/";
+        ALLOW_USERS = [ "vachicorne" ];
+        TIMELINE_CREATE = true;
+        TIMELINE_CLEANUP = true;
+        NUMBER_CLEANUP = true;
+        NUMBER_MIN_AGE = 1800;
+        NUMBER_LIMIT = 30;
+        NUMBER_LIMIT_IMPORTANT = 5;
+        TIMELINE_LIMIT_HOURLY = 12;
+        TIMELINE_LIMIT_DAILY = 7;
+        TIMELINE_LIMIT_WEEKLY = 4;
+        TIMELINE_LIMIT_MONTHLY = 2;
+      };
+    };
+  };
+
   # --- System Optimizations ---
   # Automatic garbage collection
   nix.gc = {
@@ -118,20 +148,39 @@ in
     dates = "weekly";
     options = "--delete-older-than 30d";
   };
-  
+
+  # Automatic system updates
+  system.autoUpgrade = {
+    enable = true;
+    dates = "04:00";
+    randomizedDelaySec = "45min";
+    persistent = true;
+    flake = "/home/vachicorne/.config/nixos";
+    flags = [
+      "--update-input"
+      "nixpkgs"
+      "--no-write-lock-file"
+      "-L" # print build logs
+    ];
+    rebootWindow = {
+      lower = "01:00";
+      upper = "05:00";
+    };
+  };
+
   # Optimize nix store
   nix.settings.auto-optimise-store = true;
-  
+
   # Performance tweaks
   powerManagement.cpuFreqGovernor = "performance";
   services.irqbalance.enable = true;
-  
+
   # Gaming optimizations
   boot.kernel.sysctl."vm.max_map_count" = 2147483642;
-  
+
   # Faster boot
   boot.tmp.cleanOnBoot = true;
-  
+
   # Set the system state version
   system.stateVersion = "25.05";
 }

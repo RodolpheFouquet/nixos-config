@@ -15,6 +15,25 @@
     grim
     slurp
     wl-clipboard
+    
+    # Clipboard manager
+    cliphist
+    
+    # Screen recording
+    obs-studio
+    wf-recorder
+    
+    # PDF viewer with vim bindings
+    zathura
+    
+    # Development tools
+    direnv
+    podman
+    podman-compose
+    
+    # BTRFS tools
+    btrfs-progs
+    snapper
     nodejs_24
     go
     killall

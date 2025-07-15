@@ -252,6 +252,84 @@ Smart directory jumping with learning:
 | `Ctrl-a s` | List and switch sessions |
 | `Ctrl-a f` | Open sessionizer in new window |
 
+## 📸 BTRFS Snapshots & Data Protection
+
+This configuration uses BTRFS snapshots to automatically protect your data. Since `/home` is part of the root subvolume, snapshots include the entire system, but you can selectively restore only user data when needed.
+
+### Automatic Snapshots
+- **Hourly snapshots**: 12 retained
+- **Daily snapshots**: 7 retained  
+- **Weekly snapshots**: 4 retained
+- **Monthly snapshots**: 2 retained
+- **Total snapshots**: Up to 30 with automatic cleanup
+
+### Snapshot Management Commands
+
+| Command | Action |
+|---------|--------|
+| `snaplist` | List all snapshots |
+| `snapdiff 5..0` | Show changes between snapshot 5 and current |
+| `snapcreate "description"` | Create manual snapshot with description |
+| `snapundo 5..0 /path/to/file` | Restore specific file from snapshot 5 |
+| `snapback 5` | Rollback entire /home to snapshot 5 |
+
+### Common Snapshot Workflows
+
+**Before major changes:**
+```bash
+snapcreate "Before installing new software"
+```
+
+**Check what changed:**
+```bash
+snaplist
+snapdiff 10..0  # Compare snapshot 10 to current
+```
+
+**Restore a deleted file:**
+```bash
+snapundo 5..0 /home/vachicorne/Documents/important.txt
+```
+
+**Full rollback (requires reboot):**
+```bash
+snapback 5
+sudo reboot
+```
+
+### Selective Home Directory Restoration
+
+Since snapshots include the entire system, use these patterns to restore only user data:
+
+**Restore entire user directory:**
+```bash
+snapundo 5..0 /home/vachicorne
+```
+
+**Restore specific directories:**
+```bash
+# Documents only
+snapundo 5..0 /home/vachicorne/Documents
+
+# Configuration files only  
+snapundo 5..0 /home/vachicorne/.config
+
+# Code projects only
+snapundo 5..0 /home/vachicorne/Code
+```
+
+**Restore with exclusions (advanced):**
+```bash
+# Exclude cache and temporary files
+sudo snapper -c root undochange 5..0 \
+  --exclude="/tmp/*" \
+  --exclude="/var/cache/*" \
+  --exclude="/home/vachicorne/.cache/*" \
+  /home/vachicorne
+```
+
+⚠️ **Important**: Avoid restoring system directories (`/etc`, `/usr`, `/nix`) since NixOS manages these declaratively.
+
 ## 📦 Included Software
 
 ### Development
@@ -270,6 +348,12 @@ Smart directory jumping with learning:
 - **htop, btop, iotop** for system monitoring
 - **powertop** for power management
 - **Waybar** with CPU temperature display
+
+### Productivity & Media
+- **Clipboard manager** (cliphist) for persistent clipboard history
+- **Screen recording** (OBS Studio, wf-recorder) for content creation
+- **PDF viewer** (Zathura) with vim-style keybindings
+- **Container support** (Podman) with Docker compatibility
 
 ## 🔧 Customization
 
