@@ -18,6 +18,7 @@
     ./hyprpaper
     ./git
     ./wofi
+    ./ghostty
     # Import host-specific monitor configuration
     (./hosts + "/${hostType}/monitor.nix")
   ];
@@ -35,6 +36,7 @@
     shellInit = ''
       starship init fish | source
       zoxide init fish | source
+      bind \cf sessionizer
     '';
     shellAliases = {
       # BTRFS snapshot aliases
