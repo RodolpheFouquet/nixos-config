@@ -88,7 +88,6 @@
 
     mangohud
     gamescope
-
   ];
 
   fonts.fontconfig.enable = true;

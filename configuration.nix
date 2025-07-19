@@ -58,12 +58,15 @@ in
     extraGroups = [
       "networkmanager"
       "wheel"
+      "plugdev"
     ];
     shell = pkgs.fish;
   };
 
   # --- Services ---
   security.rtkit.enable = true;
+
+  services.hardware.openrgb.enable = true;
 
   # --- Security Hardening ---
   security.sudo.wheelNeedsPassword = true;
@@ -183,4 +186,6 @@ in
 
   # Set the system state version
   system.stateVersion = "25.05";
+  environment.systemPackages = with pkgs; [ openrgb-with-all-plugins ];
+
 }
