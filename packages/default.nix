@@ -88,6 +88,11 @@
 
     mangohud
     gamescope
+
+    bambu-studio
+    orca-slicer
+
+    prismlauncher
   ];
 
   fonts.fontconfig.enable = true;

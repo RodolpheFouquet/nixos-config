@@ -19,6 +19,7 @@
     ./git
     ./wofi
     ./ghostty
+    ./fastfetch
     # Import host-specific monitor configuration
     (./hosts + "/${hostType}/monitor.nix")
   ];
@@ -37,6 +38,8 @@
       starship init fish | source
       zoxide init fish | source
       bind \cf sessionizer
+      fastfetch
+      set fish_greeting
     '';
     shellAliases = {
       # BTRFS snapshot aliases

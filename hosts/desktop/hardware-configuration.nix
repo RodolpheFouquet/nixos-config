@@ -34,6 +34,16 @@
     open = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.beta;
+    
+    # Enable NVIDIA offload
+    prime = {
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+      amdgpuBusId = "PCI:11:0:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
   };
 
   fileSystems."/" = {

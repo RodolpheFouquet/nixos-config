@@ -1,8 +1,8 @@
-# Vachicorne's NixOS Configuration
+# Vachicorne's VachixOS Configuration
 
 ```
-< Welcome to Vachicorne's NixOS! >
- ----------------------------------
+< Welcome to Vachicorne's VachixOS! >
+ -----------------------------------
         \   ^__^
          \  (oo)\_______
             (__)\       )\/\
@@ -10,7 +10,7 @@
                 ||     ||
 ```
 
-Welcome to my personal NixOS configuration! This repository contains a comprehensive, modular, and production-ready NixOS setup optimized for development, gaming, and daily computing.
+Welcome to my personal VachixOS configuration! This repository contains a comprehensive, modular, and production-ready custom NixOS setup optimized for development, gaming, and daily computing.
 
 ## 🎯 Overview
 

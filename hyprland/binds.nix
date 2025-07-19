@@ -15,6 +15,7 @@
       "$mod, Q, exec, ghostty"
       "$mod, R, exec, wofi --show drun"
       "$mod, V, togglefloating"
+      "$mod, X, fullscreen, 1"
       "$mod, C, killactive"
       "$mod, S, togglespecialworkspace, magic"
       "$mod SHIFT, S, movetoworkspace, special:magic"
@@ -43,7 +44,7 @@
     ]
     ++ (
       # workspaces
-      # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
+      # binds $mod + [shift +] {1..5} to [move to] workspace {1..5}
       builtins.concatLists (builtins.genList (i:
           let ws = i + 1;
           in [
@@ -51,7 +52,7 @@
             "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
           ]
         )
-        9)
+        5)
     );
   };
 }

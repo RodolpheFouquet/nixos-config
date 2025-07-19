@@ -35,9 +35,8 @@
 
       "hyprland/workspaces" = {
         format = "{name}";
-        # To show all workspaces, even empty ones, you can add:
-        # all-outputs = true;
-        # persistent_workspaces = { "*": [1, 2, 3, 4, 5] };
+        all-outputs = true;
+        persistent_workspaces = { "*" = [ 1 2 3 4 5 ]; };
       };
 
       "hyprland/window" = {

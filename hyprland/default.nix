@@ -37,6 +37,14 @@
         anr_missed_pings = 20;
       };
 
+      workspace = [
+        "1, name:work, persistent:true"
+        "2, name:chat, persistent:true"
+        "3, name:steam, persistent:true"
+        "4, name:games, persistent:true"
+        "5, name:DIY, persistent:true"
+      ];
+
       ecosystem = {
         no_donation_nag = true;
         no_update_news = false;

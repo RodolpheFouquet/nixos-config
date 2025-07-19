@@ -114,6 +114,24 @@ in
   };
   programs.fish.enable = true;
 
+  # Set yazi as default file manager in Ghostty terminal
+  xdg.mime.defaultApplications = {
+    "inode/directory" = "yazi-terminal.desktop";
+  };
+
+  # Create custom desktop entry for yazi in Ghostty
+  environment.etc."xdg/applications/yazi-terminal.desktop".text = ''
+    [Desktop Entry]
+    Type=Application
+    Name=Yazi File Manager
+    Comment=Blazing fast terminal file manager
+    Exec=ghostty -e yazi %f
+    Icon=folder
+    Terminal=false
+    MimeType=inode/directory;
+    Categories=System;FileTools;FileManager;
+  '';
+
   # Container support
   virtualisation.podman = {
     enable = true;
@@ -122,8 +140,9 @@ in
   };
 
   # Container networking
-  networking.firewall.interfaces."podman+".allowedUDPPorts = [ 53 ];
-  networking.firewall.interfaces."podman+".allowedTCPPorts = [ 53 ];
+  #networking.firewall.interfaces."podman+".allowedUDPPorts = [ 53 ];
+  #networking.firewall.interfaces."podman+".allowedTCPPorts = [ 53 ];
+  networking.firewall.enable = false;
 
   services.snapper = {
     configs = {
