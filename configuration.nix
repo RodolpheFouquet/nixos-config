@@ -62,6 +62,10 @@ in
     ];
     shell = pkgs.fish;
   };
+  services.xserver.windowManager.xmonad = {
+    enable = true;
+    enableContribAndExtras = true;
+  };
 
   # --- Services ---
   security.rtkit.enable = true;

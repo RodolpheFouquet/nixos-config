@@ -4,7 +4,7 @@
     {
       "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/json_schema.json",
       "logo": {
-        "source": "🐄"
+        "source": "/home/vachicorne/.config/nixos/cow.txt"
       },
       "display": {
         "separator": " -> "

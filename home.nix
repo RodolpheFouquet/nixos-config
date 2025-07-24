@@ -9,6 +9,7 @@
 {
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
+    inputs.walker.homeManagerModules.walker
 
     ./packages
     ./hyprland
@@ -17,7 +18,7 @@
     ./waybar
     ./hyprpaper
     ./git
-    ./wofi
+    ./walker
     ./ghostty
     ./fastfetch
     # Import host-specific monitor configuration
@@ -25,7 +26,7 @@
   ];
 
   programs.starship.enable = true;
-  
+
   # Direnv integration
   programs.direnv = {
     enable = true;

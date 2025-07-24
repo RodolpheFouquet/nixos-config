@@ -9,7 +9,6 @@
     git
     wget
     pavucontrol
-    wofi
     fzf
     ripgrep
     grim
