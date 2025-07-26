@@ -26,7 +26,21 @@ in
   # Hostname is now set in individual host configurations
   # networking.hostName will be set per host
   networking.networkmanager.enable = true;
-  services.avahi.enable = true;
+  
+  # Avahi for network device discovery
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+    publish = {
+      enable = true;
+      addresses = true;
+      domain = true;
+      hinfo = true;
+      userServices = true;
+      workstation = true;
+    };
+  };
 
   # --- Localization ---
   time.timeZone = "Europe/London";
@@ -59,6 +73,8 @@ in
       "networkmanager"
       "wheel"
       "plugdev"
+      "scanner"
+      "lp"
     ];
     shell = pkgs.fish;
   };
@@ -71,6 +87,41 @@ in
   security.rtkit.enable = true;
 
   services.hardware.openrgb.enable = true;
+
+  # Bluetooth
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  services.blueman.enable = true;
+
+  # --- Printing & Scanning ---
+  # CUPS for printing
+  services.printing = {
+    enable = true;
+    drivers = with pkgs; [
+      gutenprint
+      gutenprintBin
+      hplip
+      epson-escpr
+      epson-escpr2
+      canon-cups-ufr2
+      brlaser
+      brgenml1lpr
+      brgenml1cupswrapper
+      # Lexmark printer drivers
+      postscript-lexmark
+    ];
+  };
+
+  # SANE for scanning
+  hardware.sane = {
+    enable = true;
+    extraBackends = with pkgs; [
+      hplipWithPlugin
+      sane-airscan
+      epkowa
+    ];
+  };
+
 
   # --- Security Hardening ---
   security.sudo.wheelNeedsPassword = true;

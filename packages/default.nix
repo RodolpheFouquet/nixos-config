@@ -62,6 +62,7 @@
 
     # File management
     yazi
+    xfce.thunar
     fd
     eza
     zoxide
@@ -76,6 +77,15 @@
     # Security tools
     pass
     gnupg
+
+    # Bluetooth utilities
+    bluez
+    bluez-tools
+    blueman
+
+    # Printing and scanning
+    simple-scan
+    system-config-printer
 
     # Additional development tools
     jq
@@ -92,6 +102,27 @@
     orca-slicer
 
     prismlauncher
+
+    # ZMK firmware build toolchain
+    python3
+    python3Packages.pip
+    python3Packages.west
+    cmake
+    ninja
+    ccache
+    dtc
+    gcc-arm-embedded
+    gperf
+    python3Packages.pyelftools
+    python3Packages.pykwalify
+    python3Packages.canopen
+    python3Packages.packaging
+    python3Packages.progress
+    python3Packages.psutil
+    python3Packages.pylink-square
+    python3Packages.pyserial
+    python3Packages.pyyaml
+    python3Packages.zcbor
   ];
 
   fonts.fontconfig.enable = true;

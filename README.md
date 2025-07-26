@@ -41,6 +41,9 @@ The configuration follows a modular architecture where each component is separat
 │       ├── host.nix         # Laptop hostname and host-specific settings
 │       └── monitor.nix      # Laptop monitor configuration (2560x1440@60)
 ├── display/                  # Display and graphics configuration
+├── emacs/                    # Emacs configuration with terminal mode and Vim-like bindings
+├── fastfetch/                # System information display configuration
+├── ghostty/                  # Ghostty terminal configuration
 ├── git/                      # Git configuration and aliases
 ├── hyprland/                 # Hyprland window manager setup
 │   ├── animations.nix        # Custom animations and transitions
@@ -55,8 +58,8 @@ The configuration follows a modular architecture where each component is separat
 │   └── monitor-hotplug.sh   # KVM monitor resolution fix script
 ├── steam/                   # Gaming and Steam optimizations
 ├── tmux/                    # Terminal multiplexer setup
-├── waybar/                  # Status bar configuration
-└── wofi/                    # Application launcher with Gruvbox theme
+├── walker/                  # Walker application launcher with Gruvbox theme
+└── waybar/                  # Status bar configuration
 ```
 
 ## ✨ Key Features
@@ -76,15 +79,17 @@ The configuration follows a modular architecture where each component is separat
 
 ### 💻 Development Environment
 - **NixVim** with comprehensive LSP support for multiple languages
-- **Debug Adapter Protocol (DAP)** for interactive debugging
+- **Emacs** with terminal mode, Evil (Vim emulation), and comprehensive language support
+- **Debug Adapter Protocol (DAP)** for interactive debugging in both editors
 - **Git workflow optimizations** with diff-so-fancy and smart aliases
-- **Terminal tools** including tmux with sessionizer, fish shell with starship prompt, yazi file manager, and zoxide smart navigation
+- **Terminal tools** including tmux with sessionizer, fish shell with starship prompt, yazi file manager, zoxide smart navigation, and fastfetch system information display
 
 ### 🖥️ Desktop Experience
 - **Hyprland** with custom Vi-style keybindings (HJKL navigation)
 - **Waybar** with system monitoring including CPU temperature
 - **Gruvbox theming** throughout the desktop environment
 - **Custom animations** and smooth transitions
+- **OpenRGB integration** with purple lighting profile for RGB peripherals
 
 ### ⚡ Performance Tuning
 - **CPU performance governor** for maximum responsiveness
@@ -174,7 +179,7 @@ Launch games with MangoHUD: `mangohud %command%` in Steam launch options.
 |----------|--------|
 | `SUPER + Q` | Open terminal (Ghostty) |
 | `SUPER + F` | Open browser (Chrome) |
-| `SUPER + R` | Application launcher (Wofi) |
+| `SUPER + R` | Application launcher (Walker) |
 
 ### System Controls
 | Shortcut | Action |
@@ -209,6 +214,76 @@ Enhanced git experience with:
 - `gs` - Git status
 - Pull with rebase enabled by default
 - Rerere for automatic conflict resolution
+
+## 📝 Emacs Configuration
+
+This configuration includes a comprehensive Emacs setup that mirrors many Neovim features while running in terminal mode.
+
+### Emacs Features
+- **Terminal mode**: Emacs runs with `-nw` flag, no GUI window
+- **Evil mode**: Full Vim emulation with familiar keybindings
+- **Gruvbox theme**: Consistent with the rest of the desktop environment
+- **LSP support**: Language servers for Nix, Python, Rust, Go, TypeScript, Elixir, Zig, OCaml
+- **Debug adapters**: DAP and dape for interactive debugging
+- **File management**: Helm (similar to Telescope) and Treemacs file explorer
+- **Git integration**: Magit for advanced git workflows
+
+### Emacs Key Bindings
+
+#### Leader Key: `SPACE` (in Normal mode)
+
+#### File Navigation
+| Shortcut | Action |
+|----------|--------|
+| `SPC f f` | Find files (Helm) |
+| `SPC f g` | Grep in files |
+| `SPC b` | Switch buffers |
+| `SPC p` | Project files (Helm Projectile) |
+| `SPC e` | Toggle Treemacs file explorer |
+
+#### LSP Commands
+| Shortcut | Action |
+|----------|--------|
+| `g d` | Go to definition |
+| `g D` | Go to declaration |
+| `g r` | Find references |
+| `g i` | Go to implementation |
+| `K` | Show documentation |
+| `SPC c a` | Code actions |
+
+#### Debug Commands (DAP)
+| Shortcut | Action |
+|----------|--------|
+| `SPC d b` | Toggle breakpoint |
+| `SPC d B` | Conditional breakpoint |
+| `SPC d c` | Continue debugging |
+| `SPC d o` | Step over |
+| `SPC d i` | Step into |
+| `SPC d u` | Step out |
+| `SPC d r` | Open REPL |
+
+#### Alternative Debugger (Dape)
+| Shortcut | Action |
+|----------|--------|
+| `SPC D a` | Start debugging session |
+| `SPC D b` | Toggle breakpoint |
+| `SPC D c` | Continue |
+| `SPC D n` | Next line |
+| `SPC D s` | Step into |
+| `SPC D o` | Step out |
+
+#### Terminal & Utilities
+| Shortcut | Action |
+|----------|--------|
+| `C-c t` | Open vterm terminal |
+| `C-x g` | Magit status |
+| `M-x` | Command palette (Helm) |
+
+### Starting Emacs
+Emacs automatically starts in terminal mode thanks to the shell alias:
+```bash
+emacs filename.txt  # Opens in terminal, not GUI
+```
 
 ## 📟 Tmux & Terminal Workflow
 
@@ -301,15 +376,17 @@ sudo reboot
 
 ### Development
 - **Neovim** with LSPs for Nix, Python, Rust, Go, TypeScript, Elixir, Zig, OCaml
-- **Debug adapters** for multiple languages
-- **Git tools** with diff-so-fancy
-- **Terminal utilities**: yazi, fd, eza, fzf, ripgrep, zoxide
+- **Emacs** with Evil mode, LSPs, and terminal integration (emacs-nox)
+- **Debug adapters** for multiple languages (DAP and dape)
+- **Git tools** with diff-so-fancy and Magit
+- **Terminal utilities**: yazi, fd, eza, fzf, ripgrep, zoxide, fastfetch
 
 ### Gaming & Graphics
 - **Steam** with Proton-GE
 - **MangoHUD** performance overlay
 - **Gamescope** compositor
 - **NVIDIA drivers** (beta branch)
+- **OpenRGB** for RGB peripheral control
 
 ### System Monitoring
 - **htop, btop, iotop** for system monitoring
@@ -317,6 +394,8 @@ sudo reboot
 - **Waybar** with CPU temperature display
 
 ### Productivity & Media
+- **Application launcher** (Walker) with Gruvbox theme
+- **Terminal emulator** (Ghostty) with modern features
 - **Clipboard manager** (cliphist) for persistent clipboard history
 - **Screen recording** (OBS Studio, wf-recorder) for content creation
 - **PDF viewer** (Zathura) with vim-style keybindings
@@ -339,7 +418,7 @@ This configuration is designed to be easily customizable:
 - **Status Bar**: Waybar
 - **Terminal**: Ghostty
 - **Shell**: Fish with Starship prompt
-- **Editor**: Neovim (NixVim)
+- **Editor**: Neovim (NixVim) + Emacs
 - **Theme**: Gruvbox
 
 ## 🤝 Contributing
