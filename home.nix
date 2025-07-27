@@ -14,7 +14,6 @@
     ./packages
     ./hyprland
     ./neovim
-    ./emacs
     ./tmux
     ./waybar
     ./hyprpaper
@@ -50,8 +49,6 @@
       snapback = "sudo snapper -c home rollback";
       snapcreate = "sudo snapper -c home create --description";
       snapundo = "sudo snapper -c home undochange";
-      # Emacs terminal mode
-      emacs = "emacs -nw";
     };
   };
   programs.fish.functions."sessionizer" = ''
