@@ -199,6 +199,13 @@ in
   #networking.firewall.interfaces."podman+".allowedTCPPorts = [ 53 ];
   networking.firewall.enable = false;
 
+  # Automatic USB mounting
+  services.udisks2 = {
+    enable = true;
+    mountOnMedia = true;
+  };
+  services.devmon.enable = true;
+
   services.snapper = {
     configs = {
       home = {

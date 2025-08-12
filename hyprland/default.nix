@@ -71,6 +71,7 @@
       exec-once = [
         "waybar"
         "hyprpaper"
+        "mako"
         "blueman-applet"
         "google-chrome-stable"
         "discord"

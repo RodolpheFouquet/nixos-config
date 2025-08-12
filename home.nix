@@ -21,6 +21,7 @@
     ./walker
     ./ghostty
     ./fastfetch
+    ./mako
     # Import host-specific monitor configuration
     (./hosts + "/${hostType}/monitor.nix")
   ];
@@ -31,6 +32,9 @@
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
+    config.whitelist = {
+      prefix = [ "/home/vachicorne/Code" ];
+    };
   };
 
   programs.fish = {

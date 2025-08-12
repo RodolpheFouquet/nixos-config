@@ -1,6 +1,7 @@
 { ... }:
 let
-  wallpaper = "~/.config/nixos/assets/wallpaper.png";
+  variables = import ../variables.nix;
+  wallpaper = "${variables.userHome variables.username}/.config/nixos/assets/wallpaper.png";
 in
 {
   services.hyprpaper = {
