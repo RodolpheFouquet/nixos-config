@@ -62,6 +62,31 @@
         direct_scanout = 1;
       };
 
+      decoration = {
+        rounding = 10;
+        
+        active_opacity = 1.0;
+        inactive_opacity = 1.0;
+        
+        blur = {
+          enabled = true;
+          size = 3;
+          passes = 1;
+          vibrancy = 0.1696;
+        };
+      };
+
+      general = {
+        gaps_in = 5;
+        gaps_out = 20;
+        border_size = 2;
+        "col.active_border" = "rgba(d79921ee) rgba(cc241dee) 45deg";
+        "col.inactive_border" = "rgba(3c3836aa)";
+        resize_on_border = false;
+        allow_tearing = false;
+        layout = "dwindle";
+      };
+
       master = {
         new_status = "master";
         new_on_top = 1;
@@ -91,5 +116,22 @@
         };
       };
     };
+    
+    extraConfig = ''
+      # Resize submap
+      submap = resize
+      bind = , Right, resizeactive, 10 0
+      bind = , Left, resizeactive, -10 0
+      bind = , Up, resizeactive, 0 -10
+      bind = , Down, resizeactive, 0 10
+      bind = SHIFT, Right, resizeactive, 50 0
+      bind = SHIFT, Left, resizeactive, -50 0
+      bind = SHIFT, Up, resizeactive, 0 -50
+      bind = SHIFT, Down, resizeactive, 0 50
+      bind = , escape, submap, reset
+      bind = , Return, submap, reset
+      bind = SUPER, W, submap, reset
+      submap = reset
+    '';
   };
 }

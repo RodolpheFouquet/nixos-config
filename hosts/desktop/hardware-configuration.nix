@@ -33,17 +33,20 @@
     powerManagement.finegrained = false;
     open = true;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
     
-    # Enable NVIDIA offload
-    # prime = {
-    #   offload = {
-    #     enable = true;
-    #     enableOffloadCmd = true;
-    #   };
-    #   amdgpuBusId = "PCI:11:0:0";
-    #   nvidiaBusId = "PCI:1:0:0";
-    # };
+    # Enable NVIDIA Prime/Optimus for AMD CPU + NVIDIA GPU
+    prime = {
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+      # Alternative: Enable sync mode for always-on NVIDIA
+      # sync.enable = true;
+      
+      amdgpuBusId = "PCI:11:0:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
   };
 
   fileSystems."/" = {

@@ -55,11 +55,21 @@
       snapundo = "sudo snapper -c home undochange";
     };
   };
+  # WinApps desktop integration
+  xdg.desktopEntries.winapps = {
+    name = "WinApps Manager";
+    comment = "Manage Windows applications in Linux";
+    exec = "winapps";
+    icon = "application-x-ms-dos-executable";
+    categories = [ "System" "Utility" ];
+    terminal = true;
+  };
+
   programs.fish.functions."sessionizer" = ''
     if test (count $argv) -eq 1
         set selected $argv[1]
     else
-        set selected (find ~/Code ~/.config -mindepth 1 -maxdepth 1 -type d -exec test -d {}/.git \; -print | fzf)
+        set selected (begin; echo ~; find ~/Code ~/.config -mindepth 1 -maxdepth 1 -type d -exec test -d {}/.git \; -print; end | fzf)
     end
 
     if test -z "$selected"

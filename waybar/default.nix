@@ -154,5 +154,14 @@
         font-size: 18px;
         color: #fe8019; /* Gruvbox light orange */
     }
+
+    #mode {
+        padding: 0 10px;
+        margin: 0 4px;
+        background: #fabd2f; /* Gruvbox yellow */
+        color: #282828; /* Dark text on yellow */
+        font-weight: bold;
+        border-radius: 3px;
+    }
   '';
 }

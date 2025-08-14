@@ -89,6 +89,7 @@ The configuration follows a modular architecture where each component is separat
 - **Custom animations** and smooth transitions
 - **OpenRGB integration** with purple lighting profile for RGB peripherals
 
+
 ### ⚡ Performance Tuning
 - **CPU performance governor** for maximum responsiveness
 - **IRQ balancing** across cores for better multithreading
@@ -154,15 +155,25 @@ This configuration includes optimizations specifically for NVIDIA gaming:
 
 Launch games with MangoHUD: `mangohud %command%` in Steam launch options.
 
+
 ## ⌨️ Hyprland Key Shortcuts
 
 ### Window Management
 | Shortcut | Action |
 |----------|--------|
-| `SUPER + H/J/K/L` | Move focus (Vi-style navigation) |
-| `SUPER + SHIFT + H/J/K/L` | Move active window |
+| `SUPER + Arrow Keys` | Move focus between windows |
+| `SUPER + SHIFT + Arrow Keys` | Move active window |
 | `SUPER + V` | Toggle floating mode |
 | `SUPER + C` | Close active window |
+| `SUPER + W` | Enter resize mode |
+
+### Resize Mode
+Once in resize mode (activated with `SUPER + W`):
+| Key | Action |
+|-----|--------|
+| `Arrow Keys` | Resize window by 10px |
+| `SHIFT + Arrow Keys` | Resize window by 50px (faster) |
+| `Escape`, `Enter`, or `SUPER + W` | Exit resize mode |
 
 ### Workspace Management
 | Shortcut | Action |

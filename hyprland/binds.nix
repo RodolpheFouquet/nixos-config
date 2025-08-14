@@ -31,17 +31,25 @@
         # Monitor resolution fix for KVM switching
         "$mod SHIFT, R, exec, /home/vachicorne/.config/nixos/scripts/monitor-hotplug.sh"
 
+        # WinApps and virtualization shortcuts
+        "$mod CTRL, W, exec, virsh start WinApps"
+        "$mod CTRL, V, exec, virt-viewer WinApps"
+        "$mod CTRL, M, exec, virt-manager"
+
         # Screenshots
         ", Print, exec, mkdir -p ~/Pictures/Screenshots && grim -g \"$(slurp)\" ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png"
         "$mod, Print, exec, mkdir -p ~/Pictures/Screenshots && grim ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png"
-        "$mod, H, movefocus, l"
-        "$mod, J, movefocus, d"
-        "$mod, K, movefocus, u"
-        "$mod, L, movefocus, r"
-        "$mod SHIFT, H, movewindow, l"
-        "$mod SHIFT, J, movewindow, d"
-        "$mod SHIFT, K, movewindow, u"
-        "$mod SHIFT, L, movewindow, r"
+        "$mod, Left, movefocus, l"
+        "$mod, Down, movefocus, d"
+        "$mod, Up, movefocus, u"
+        "$mod, Right, movefocus, r"
+        "$mod SHIFT, Left, movewindow, l"
+        "$mod SHIFT, Down, movewindow, d"
+        "$mod SHIFT, Up, movewindow, u"
+        "$mod SHIFT, Right, movewindow, r"
+        
+        # Resize mode
+        "$mod, W, submap, resize"
       ]
       ++ (
         # workspaces
@@ -59,5 +67,6 @@
           ) 5
         )
       );
+    
   };
 }
