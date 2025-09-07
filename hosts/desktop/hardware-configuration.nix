@@ -33,20 +33,20 @@
     powerManagement.finegrained = false;
     open = true;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
     
     # Enable NVIDIA Prime/Optimus for AMD CPU + NVIDIA GPU
-    prime = {
-      offload = {
-        enable = true;
-        enableOffloadCmd = true;
-      };
-      # Alternative: Enable sync mode for always-on NVIDIA
-      # sync.enable = true;
-      
-      amdgpuBusId = "PCI:11:0:0";
-      nvidiaBusId = "PCI:1:0:0";
-    };
+    # prime = {
+    #   offload = {
+    #     enable = true;
+    #     enableOffloadCmd = true;
+    #   };
+    #   # Alternative: Enable sync mode for always-on NVIDIA
+    #   # sync.enable = true;
+    #   
+    #   amdgpuBusId = "PCI:11:0:0";
+    #   nvidiaBusId = "PCI:1:0:0";
+    # };
   };
 
   fileSystems."/" = {
@@ -70,6 +70,19 @@
     options = [
       "fmask=0077"
       "dmask=0077"
+    ];
+  };
+
+  fileSystems."/shared" = {
+    device = "/dev/disk/by-uuid/EEFF-D72D";
+    fsType = "exfat";
+    options = [
+      "defaults"
+      "uid=1000"
+      "gid=100"
+      "umask=0002"
+      "fmask=0113"
+      "dmask=0002"
     ];
   };
 

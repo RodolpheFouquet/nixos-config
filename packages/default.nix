@@ -29,6 +29,7 @@
     direnv
     podman
     podman-compose
+    freerdp
 
     # BTRFS tools
     btrfs-progs
@@ -77,11 +78,16 @@
     # Security tools
     pass
     gnupg
+    _1password-gui
+    proton-pass
 
     # Bluetooth utilities
     bluez
     bluez-tools
     blueman
+
+    # Notification daemon
+    libnotify
 
     # Printing and scanning
     simple-scan
@@ -94,6 +100,7 @@
     unzip
     zip
     diff-so-fancy
+    bc
 
     mangohud
     gamescope
@@ -102,6 +109,9 @@
     orca-slicer
 
     prismlauncher
+
+    # Raspberry Pi imaging utility
+    rpi-imager
 
     # ZMK firmware build toolchain
     python3
@@ -123,6 +133,8 @@
     python3Packages.pyserial
     python3Packages.pyyaml
     python3Packages.zcbor
+
+    protonvpn-gui
   ];
 
   fonts.fontconfig.enable = true;

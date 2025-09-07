@@ -28,6 +28,9 @@
 
   programs.starship.enable = true;
 
+  # Add ~/.local/bin to PATH
+  home.sessionPath = [ "$HOME/.local/bin" ];
+
   # Direnv integration
   programs.direnv = {
     enable = true;

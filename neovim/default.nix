@@ -70,7 +70,6 @@
           nix = [ "nixfmt" ];
           python = [ "ruff_format" ];
           rust = [ "rustfmt" ];
-          ocaml = [ "ocamlformat" ];
           gleam = [ "gleam" ];
           go = [ "gofmt" ];
           typescript = [ "prettier" ];

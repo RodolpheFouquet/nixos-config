@@ -32,8 +32,8 @@
         "$mod SHIFT, R, exec, /home/vachicorne/.config/nixos/scripts/monitor-hotplug.sh"
 
         # WinApps and virtualization shortcuts
-        "$mod CTRL, W, exec, virsh start WinApps"
-        "$mod CTRL, V, exec, virt-viewer WinApps"
+        "$mod CTRL, W, exec, virsh --connect qemu:///system start WinApps"
+        "$mod CTRL, V, exec, virt-viewer --connect qemu:///system WinApps"
         "$mod CTRL, M, exec, virt-manager"
 
         # Screenshots

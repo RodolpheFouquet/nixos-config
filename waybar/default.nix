@@ -14,7 +14,6 @@
       modules-left = [
         "custom/cow"
         "hyprland/workspaces"
-        "hyprland/mode"
       ];
       modules-center = [ "hyprland/window" ];
       modules-right = [
@@ -96,6 +95,7 @@
         format-critical = " {temperatureC}°C";
         format = " {temperatureC}°C";
       };
+
 
       "custom/gpu-temp" = {
         exec = "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits";

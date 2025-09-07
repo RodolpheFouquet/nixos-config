@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 let
   vars = import ./variables.nix;
@@ -10,6 +15,7 @@ in
     # Your other custom modules
     ./steam
     ./display
+    ./virtualization
   ];
 
   # --- System Settings ---
@@ -20,13 +26,21 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelModules = [
+    "ip_tables"
+    "iptable_nat"
+  ];
+  boot.supportedFilesystems = [ "exfat" ];
+  
+  # Enable cross compilation for ARM64 and other architectures
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" "riscv64-linux" "armv7l-linux" ];
 
   nixpkgs.config.allowUnfree = true;
   # --- Networking ---
   # Hostname is now set in individual host configurations
   # networking.hostName will be set per host
   networking.networkmanager.enable = true;
-  
+
   # Avahi for network device discovery
   services.avahi = {
     enable = true;
@@ -75,8 +89,14 @@ in
       "plugdev"
       "scanner"
       "lp"
+      "kvm"
     ];
     shell = pkgs.fish;
+  };
+
+  # Add ~/.local/bin to PATH
+  environment.variables = {
+    PATH = "$PATH:/home/vachicorne/.local/bin";
   };
   services.xserver.windowManager.xmonad = {
     enable = true;
@@ -121,7 +141,6 @@ in
       epkowa
     ];
   };
-
 
   # --- Security Hardening ---
   security.sudo.wheelNeedsPassword = true;
@@ -267,6 +286,10 @@ in
 
   # Set the system state version
   system.stateVersion = "25.05";
-  environment.systemPackages = with pkgs; [ openrgb-with-all-plugins ];
+  environment.systemPackages = with pkgs; [
+    openrgb-with-all-plugins
+    inputs.winapps.packages.${pkgs.system}.winapps
+    inputs.winapps.packages.${pkgs.system}.winapps-launcher
+  ];
 
 }
