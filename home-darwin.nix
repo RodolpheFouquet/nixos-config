@@ -2,26 +2,20 @@
   inputs,
   config,
   pkgs,
-  hostType ? "desktop",
+  hostType ? "mac-mini",
   ...
 }:
 
 {
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
-    inputs.walker.homeManagerModules.walker
-
+    
     ./packages/shared.nix
-    ./hyprland
     ./neovim
     ./tmux
-    ./waybar
-    ./hyprpaper
     ./git
-    ./walker
     ./ghostty
     ./fastfetch
-    ./mako
     # Import host-specific monitor configuration
     (./hosts + "/${hostType}/monitor.nix")
   ];
@@ -36,7 +30,7 @@
     enable = true;
     nix-direnv.enable = true;
     config.whitelist = {
-      prefix = [ "/home/vachicorne/Code" ];
+      prefix = [ "$HOME/Code" ];
     };
   };
 
@@ -49,18 +43,6 @@
       fastfetch
       set fish_greeting
     '';
-  };
-  # WinApps desktop integration
-  xdg.desktopEntries.winapps = {
-    name = "WinApps Manager";
-    comment = "Manage Windows applications in Linux";
-    exec = "winapps";
-    icon = "application-x-ms-dos-executable";
-    categories = [
-      "System"
-      "Utility"
-    ];
-    terminal = true;
   };
 
   programs.fish.functions."sessionizer" = ''

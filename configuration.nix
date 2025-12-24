@@ -25,12 +25,53 @@ in
   ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  
+  # Dual boot configuration
+  boot.loader.grub = {
+    enable = false; # We're using systemd-boot, not GRUB
+  };
+  
+  # Configure systemd-boot for dual boot
+  boot.loader.systemd-boot.configurationLimit = 10;
+  boot.loader.timeout = 10;
+  
+  # Add Windows boot entry
+  boot.loader.systemd-boot.extraEntries."windows.conf" = ''
+    title Windows 11
+    efi /EFI/Microsoft/Boot/bootmgfw.efi
+  '';
+  
+  # Mount Windows EFI partition to make it available
+  fileSystems."/boot/windows-efi" = {
+    device = "/dev/nvme1n1p1";
+    fsType = "vfat";
+    options = [ "umask=0077" "dmask=0077" "fmask=0177" "uid=1000" "gid=1000" "nofail" ];
+  };
+  
+  # TrueNAS SMB share mount for backups
+  fileSystems."/mnt/truenas-backup" = {
+    device = "//192.168.1.27/vachicorne";
+    fsType = "cifs";
+    options = [ 
+      "noauto"                    # Don't mount at boot
+      "user"                      # Allow user to mount
+      "uid=vachicorne"            # Set ownership to your user
+      "gid=users"                 # Set group ownership
+      "iocharset=utf8"            # Character encoding
+      "file_mode=0644"            # File permissions
+      "dir_mode=0755"             # Directory permissions
+      "credentials=/etc/nixos/smb-credentials"  # Credentials file
+      "nofail"                    # Don't fail boot if unavailable
+      "x-systemd.automount"       # Auto-mount on access
+      "x-systemd.idle-timeout=60" # Unmount after 60s idle
+    ];
+  };
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [
     "ip_tables"
     "iptable_nat"
   ];
-  boot.supportedFilesystems = [ "exfat" ];
+  boot.supportedFilesystems = [ "exfat" "ntfs" ];
 
   # Enable cross compilation for ARM64 and other architectures
   boot.binfmt.emulatedSystems = [
@@ -243,7 +284,7 @@ in
     dates = "04:00";
     randomizedDelaySec = "45min";
     persistent = true;
-    flake = "/home/vachicorne/.config/nixos";
+    flake = "/home/vachicorne/Code/nixos-config";
     flags = [
       "--update-input"
       "nixpkgs"
@@ -269,12 +310,39 @@ in
   # Faster boot
   boot.tmp.cleanOnBoot = true;
 
+  # Restic backup service
+  systemd.services.restic-backup = {
+    description = "Restic Home Directory Backup";
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+      ExecStart = "/home/vachicorne/.config/nixos/scripts/restic-backup.sh";
+    };
+    path = with pkgs; [ restic cifs-utils bash coreutils ];
+  };
+
+  # Restic backup timer (daily at 2 AM)
+  systemd.timers.restic-backup = {
+    description = "Run Restic backup daily";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "02:00";
+      Persistent = true;
+      RandomizedDelaySec = "30m";
+    };
+  };
+
   # Set the system state version
   system.stateVersion = "25.11";
   environment.systemPackages = with pkgs; [
     openrgb-with-all-plugins
     inputs.winapps.packages.${pkgs.system}.winapps
     inputs.winapps.packages.${pkgs.system}.winapps-launcher
+    
+    # Backup tools
+    restic
+    cifs-utils
+    samba
   ];
 
 }
