@@ -49,14 +49,6 @@
       fastfetch
       set fish_greeting
     '';
-    shellAliases = {
-      # BTRFS snapshot aliases
-      snaplist = "sudo snapper -c home list";
-      snapdiff = "sudo snapper -c home diff";
-      snapback = "sudo snapper -c home rollback";
-      snapcreate = "sudo snapper -c home create --description";
-      snapundo = "sudo snapper -c home undochange";
-    };
   };
   # WinApps desktop integration
   xdg.desktopEntries.winapps = {
@@ -64,7 +56,10 @@
     comment = "Manage Windows applications in Linux";
     exec = "winapps";
     icon = "application-x-ms-dos-executable";
-    categories = [ "System" "Utility" ];
+    categories = [
+      "System"
+      "Utility"
+    ];
     terminal = true;
   };
 

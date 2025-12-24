@@ -18,13 +18,31 @@
     "nvme"
     "xhci_pci"
     "ahci"
-    "usbhid"
     "usb_storage"
+    "usbhid"
     "sd_mod"
   ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/31c1e818-9da1-43a6-8298-6fd89dffe8d3";
+    fsType = "ext4";
+  };
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/52F9-47DE";
+    fsType = "vfat";
+    options = [
+      "fmask=0077"
+      "dmask=0077"
+    ];
+  };
+
+  swapDevices = [
+    { device = "/dev/disk/by-uuid/743706e8-95b3-41c2-bc51-9fd4a7ca0962"; }
+  ];
 
   hardware.graphics.enable = true;
   hardware.nvidia = {
@@ -34,68 +52,14 @@
     open = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
-    
-    # Enable NVIDIA Prime/Optimus for AMD CPU + NVIDIA GPU
-    # prime = {
-    #   offload = {
-    #     enable = true;
-    #     enableOffloadCmd = true;
-    #   };
-    #   # Alternative: Enable sync mode for always-on NVIDIA
-    #   # sync.enable = true;
-    #   
-    #   amdgpuBusId = "PCI:11:0:0";
-    #   nvidiaBusId = "PCI:1:0:0";
-    # };
   };
-
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/d7056739-4032-4351-b769-31086135b35e";
-    fsType = "btrfs";
-    options = [
-      "subvol=@"
-      "compress=zstd"
-    ];
-  };
-
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/705eab83-f75d-4f6b-9a25-14096b94e5bd";
-    fsType = "btrfs";
-    options = [ "compress=zstd" ];
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/E18D-383F";
-    fsType = "vfat";
-    options = [
-      "fmask=0077"
-      "dmask=0077"
-    ];
-  };
-
-  fileSystems."/shared" = {
-    device = "/dev/disk/by-uuid/EEFF-D72D";
-    fsType = "exfat";
-    options = [
-      "defaults"
-      "uid=1000"
-      "gid=100"
-      "umask=0002"
-      "fmask=0113"
-      "dmask=0002"
-    ];
-  };
-
-  swapDevices = [
-    { device = "/dev/disk/by-uuid/a3b42eb3-71b4-4be0-b5ed-4097d445d8cc"; }
-  ];
-
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp12s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlp11s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

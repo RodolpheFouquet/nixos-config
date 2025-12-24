@@ -58,7 +58,7 @@
 
   programs.fish.shellAliases = {
     g = "git";
-    gs = "git status";
+    # gs = "git status";
     ga = "git add";
     gap = "git add --patch";
     gaa = "git add --all";
@@ -71,3 +71,4 @@
     gpl = "git pull";
   };
 }
+

@@ -33,7 +33,6 @@
 
     # BTRFS tools
     btrfs-progs
-    snapper
     nodejs_24
     go
     killall
@@ -135,6 +134,10 @@
     python3Packages.zcbor
 
     protonvpn-gui
+    bacon
+
+    yt-dlp
+    ffmpeg
   ];
 
   fonts.fontconfig.enable = true;

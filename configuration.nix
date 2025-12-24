@@ -31,9 +31,13 @@ in
     "iptable_nat"
   ];
   boot.supportedFilesystems = [ "exfat" ];
-  
+
   # Enable cross compilation for ARM64 and other architectures
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" "riscv64-linux" "armv7l-linux" ];
+  boot.binfmt.emulatedSystems = [
+    "aarch64-linux"
+    "riscv64-linux"
+    "armv7l-linux"
+  ];
 
   nixpkgs.config.allowUnfree = true;
   # --- Networking ---
@@ -225,25 +229,6 @@ in
   };
   services.devmon.enable = true;
 
-  services.snapper = {
-    configs = {
-      home = {
-        SUBVOLUME = "/home";
-        ALLOW_USERS = [ "vachicorne" ];
-        TIMELINE_CREATE = true;
-        TIMELINE_CLEANUP = true;
-        NUMBER_CLEANUP = true;
-        NUMBER_MIN_AGE = 1800;
-        NUMBER_LIMIT = 50;
-        NUMBER_LIMIT_IMPORTANT = 10;
-        TIMELINE_LIMIT_HOURLY = 24;
-        TIMELINE_LIMIT_DAILY = 7;
-        TIMELINE_LIMIT_WEEKLY = 4;
-        TIMELINE_LIMIT_MONTHLY = 3;
-      };
-    };
-  };
-
   # --- System Optimizations ---
   # Automatic garbage collection
   nix.gc = {
@@ -285,7 +270,7 @@ in
   boot.tmp.cleanOnBoot = true;
 
   # Set the system state version
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
   environment.systemPackages = with pkgs; [
     openrgb-with-all-plugins
     inputs.winapps.packages.${pkgs.system}.winapps

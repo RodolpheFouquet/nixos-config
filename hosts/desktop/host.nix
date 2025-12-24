@@ -5,9 +5,9 @@
   networking.hostName = "vachicorne-desktop";
 
   # BTRFS autoscrub configuration
-  services.btrfs.autoScrub = {
-    enable = true;
-    fileSystems = [ "/" ];
-    interval = "monthly";
-  };
+ # services.btrfs.autoScrub = {
+ #   enable = true;
+ #   fileSystems = [ "/" ];
+ #   interval = "monthly";
+ # };
 }
