@@ -124,7 +124,6 @@ let
     system-config-printer
     mangohud
     gamescope
-    bambu-studio
     orca-slicer
     prismlauncher
     rpi-imager

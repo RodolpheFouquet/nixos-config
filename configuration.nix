@@ -91,6 +91,41 @@ in
   ];
 
   nixpkgs.config.allowUnfree = true;
+
+  # Overlays
+  nixpkgs.overlays = [
+    (final: prev: {
+      bambu-studio = prev.appimageTools.wrapType2 rec {
+        pname = "bambu-studio";
+        version = "02.04.00.70";
+
+        src = prev.fetchurl {
+          url = "https://github.com/bambulab/BambuStudio/releases/download/v${version}/Bambu_Studio_ubuntu-24.04_PR-8834.AppImage";
+          hash = "sha256-JrwH3MsE3y5GKx4Do3ZlCSAcRuJzEqFYRPb11/3x3r0=";
+        };
+
+        profile = ''
+          export SSL_CERT_FILE="${prev.cacert}/etc/ssl/certs/ca-bundle.crt"
+          export GIO_MODULE_DIR="${prev.glib-networking}/lib/gio/modules/"
+          export WEBKIT_DISABLE_DMABUF_RENDERER=1
+          export __GLX_VENDOR_LIBRARY_NAME=nvidia
+          export MESA_LOADER_DRIVER_OVERRIDE=nvidia
+        '';
+
+        extraPkgs = pkgs: with pkgs; [
+          cacert
+          curl
+          glib
+          glib-networking
+          gst_all_1.gst-plugins-bad
+          gst_all_1.gst-plugins-base
+          gst_all_1.gst-plugins-good
+          webkitgtk_4_1
+        ];
+      };
+    })
+  ];
+
   # --- Networking ---
   # Hostname is now set in individual host configurations
   # networking.hostName will be set per host
@@ -358,6 +393,7 @@ in
     restic
     cifs-utils
     samba
+    bambu-studio
   ];
 
 }

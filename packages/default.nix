@@ -105,7 +105,6 @@
     mangohud
     gamescope
 
-    bambu-studio
     orca-slicer
 
     prismlauncher
