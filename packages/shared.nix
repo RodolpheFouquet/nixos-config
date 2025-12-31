@@ -1,4 +1,8 @@
-{ pkgs, hostType ? "desktop", ... }:
+{
+  pkgs,
+  hostType ? "desktop",
+  ...
+}:
 
 let
   # Packages that work on both Linux and macOS
@@ -24,26 +28,26 @@ let
     gleam
     nixfmt-rfc-style
     claude-code
-    
+
     # System monitoring (cross-platform)
     htop
     btop
-    
+
     # File management
     yazi
     fd
     eza
     zoxide
     ncdu
-    
+
     # Network tools
     nmap
     tcpdump
-    
+
     # Security tools
     pass
     gnupg
-    
+
     # Development utilities
     jq
     yq
@@ -53,12 +57,12 @@ let
     diff-so-fancy
     bc
     bacon
-    
+
     # Media tools
     yt-dlp
     ffmpeg
     fastfetch
-    
+
     # Programming languages and tools
     python3
     python3Packages.pip
@@ -83,21 +87,28 @@ let
     wf-recorder
     zathura
     ghostty
-    
+    dig
+    busybox
+    ghostscript
+    dnslookup
+    itch
+    niri
+    niriswitcher
+
     # Container tools
     podman
     podman-compose
     freerdp
-    
+
     # BTRFS tools
     btrfs-progs
-    
+
     # Fonts
     font-awesome
     pkgs.nerd-fonts.droid-sans-mono
     pkgs.nerd-fonts.fira-code
     bibata-cursors
-    
+
     # Additional system tools
     iotop
     powertop
@@ -119,7 +130,7 @@ let
     rpi-imager
     protonvpn-gui
     xfce.thunar
-    
+
     # ZMK firmware build toolchain (Linux-specific)
     python3Packages.west
     dtc
@@ -140,16 +151,16 @@ let
   # macOS-specific packages
   macPackages = with pkgs; [
     # macOS-compatible alternatives
-    rectangle  # Window management
-    raycast    # Spotlight alternative (if available in nixpkgs)
-    
+    rectangle # Window management
+    raycast # Spotlight alternative (if available in nixpkgs)
+
     # Development tools that work well on macOS
     # Most GUI apps on macOS should be installed via Homebrew casks
   ];
 
-in {
-  home.packages = commonPackages ++ 
-    (if hostType == "mac-mini" then macPackages else linuxPackages);
-  
+in
+{
+  home.packages = commonPackages ++ (if hostType == "mac-mini" then macPackages else linuxPackages);
+
   fonts.fontconfig.enable = true;
 }

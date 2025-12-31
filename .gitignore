@@ -1,0 +1,29 @@
+# Backup credentials and sensitive files
+*credentials*
+*password*
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Backup directories
+backup-secrets/
+.secrets/
+
+# Build outputs
+result
+result-*
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
