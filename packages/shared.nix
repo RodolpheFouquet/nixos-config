@@ -124,7 +124,6 @@ let
     system-config-printer
     mangohud
     gamescope
-    orca-slicer
     prismlauncher
     rpi-imager
     protonvpn-gui

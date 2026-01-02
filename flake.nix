@@ -29,6 +29,10 @@
       url = "github:winapps-org/winapps";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-flatpak = {
+      url = "github:gmodena/nix-flatpak";
+    };
   };
 
   outputs =
@@ -50,6 +54,7 @@
             ./configuration.nix
             ./hosts/desktop/hardware-configuration.nix
             ./hosts/desktop/host.nix
+            inputs.nix-flatpak.nixosModules.nix-flatpak
 
             home-manager.nixosModules.home-manager
             {

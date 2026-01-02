@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   inputs,
   ...
 }:
@@ -95,34 +96,60 @@ in
   # Overlays
   nixpkgs.overlays = [
     (final: prev: {
-      bambu-studio = prev.appimageTools.wrapType2 rec {
-        pname = "bambu-studio";
-        version = "02.04.00.70";
+      cider = prev.callPackage (
+        { lib
+        , appimageTools
+        , requireFile
+        }:
 
-        src = prev.fetchurl {
-          url = "https://github.com/bambulab/BambuStudio/releases/download/v${version}/Bambu_Studio_ubuntu-24.04_PR-8834.AppImage";
-          hash = "sha256-JrwH3MsE3y5GKx4Do3ZlCSAcRuJzEqFYRPb11/3x3r0=";
-        };
+        appimageTools.wrapType2 rec {
+          pname = "cider";
+          version = "3.1.8";
 
-        profile = ''
-          export SSL_CERT_FILE="${prev.cacert}/etc/ssl/certs/ca-bundle.crt"
-          export GIO_MODULE_DIR="${prev.glib-networking}/lib/gio/modules/"
-          export WEBKIT_DISABLE_DMABUF_RENDERER=1
-          export __GLX_VENDOR_LIBRARY_NAME=nvidia
-          export MESA_LOADER_DRIVER_OVERRIDE=nvidia
-        '';
+          src = requireFile {
+            name = "cider-v${version}-linux-x64.AppImage";
+            url = "https://taproom.ciderapp.sh/";
+            sha256 = "1b5qllzk1r7jpxw19a90p87kpc6rh05nc8zdr22bcl630xh8ql5k";
+          };
 
-        extraPkgs = pkgs: with pkgs; [
-          cacert
-          curl
-          glib
-          glib-networking
-          gst_all_1.gst-plugins-bad
-          gst_all_1.gst-plugins-base
-          gst_all_1.gst-plugins-good
-          webkitgtk_4_1
-        ];
-      };
+          extraInstallCommands =
+            let contents = appimageTools.extract { inherit pname version src; };
+            in ''
+              # Find the actual binary name in the extracted contents
+              if [ -f $out/bin/${pname}-${version} ]; then
+                mv $out/bin/${pname}-${version} $out/bin/${pname}
+              elif [ -f $out/bin/AppRun ]; then
+                mv $out/bin/AppRun $out/bin/${pname}
+              fi
+
+              # Install desktop file if it exists
+              if [ -f ${contents}/${pname}.desktop ]; then
+                install -m 444 -D ${contents}/${pname}.desktop -t $out/share/applications
+                substituteInPlace $out/share/applications/${pname}.desktop \
+                  --replace 'Exec=AppRun' 'Exec=${pname}'
+              fi
+              
+              # Copy icons if they exist
+              if [ -d ${contents}/usr/share/icons ]; then
+                cp -r ${contents}/usr/share/icons $out/share
+              fi
+            '';
+
+          meta = with lib; {
+            description = "A new look into listening and enjoying Apple Music in style and performance.";
+            homepage = "https://cider.sh/";
+            maintainers = [ maintainers.nicolaivds ];
+            platforms = [ "x86_64-linux" ];
+          };
+        }
+      ) {};
+
+      install-orca-slicer = prev.writeShellScriptBin "install-orca-slicer" (let
+        orcaSlicerVersion = "2.3.1";
+      in ''
+        ${prev.flatpak}/bin/flatpak install --user -y \
+          https://github.com/OrcaSlicer/OrcaSlicer/releases/download/v${orcaSlicerVersion}/OrcaSlicer-Linux-flatpak_V${orcaSlicerVersion}_x86_64.flatpak
+      '');
     })
   ];
 
@@ -303,6 +330,21 @@ in
     defaultNetwork.settings.dns_enabled = true;
   };
 
+  # Flatpak support
+  services.flatpak.enable = true;
+  
+  # Declarative flatpak packages
+  services.flatpak.packages = [
+    "com.github.tchx84.Flatseal"
+    "com.bambulab.BambuStudio"
+  ];
+  
+  # For local .flatpak files, you can also use:
+  # services.flatpak.packages = [
+  #   { appId = "com.example.App"; origin = "flathub"; }
+  #   { flatpakref = "https://example.com/app.flatpakref"; }
+  # ];
+
   # Container networking
   #networking.firewall.interfaces."podman+".allowedUDPPorts = [ 53 ];
   #networking.firewall.interfaces."podman+".allowedTCPPorts = [ 53 ];
@@ -393,7 +435,8 @@ in
     restic
     cifs-utils
     samba
-    bambu-studio
+    cider
+    install-orca-slicer
   ];
 
 }

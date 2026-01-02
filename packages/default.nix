@@ -105,7 +105,6 @@
     mangohud
     gamescope
 
-    orca-slicer
 
     prismlauncher
 
