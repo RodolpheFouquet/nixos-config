@@ -97,9 +97,10 @@ in
   nixpkgs.overlays = [
     (final: prev: {
       cider = prev.callPackage (
-        { lib
-        , appimageTools
-        , requireFile
+        {
+          lib,
+          appimageTools,
+          requireFile,
         }:
 
         appimageTools.wrapType2 rec {
@@ -113,8 +114,10 @@ in
           };
 
           extraInstallCommands =
-            let contents = appimageTools.extract { inherit pname version src; };
-            in ''
+            let
+              contents = appimageTools.extract { inherit pname version src; };
+            in
+            ''
               # Find the actual binary name in the extracted contents
               if [ -f $out/bin/${pname}-${version} ]; then
                 mv $out/bin/${pname}-${version} $out/bin/${pname}
@@ -128,7 +131,7 @@ in
                 substituteInPlace $out/share/applications/${pname}.desktop \
                   --replace 'Exec=AppRun' 'Exec=${pname}'
               fi
-              
+
               # Copy icons if they exist
               if [ -d ${contents}/usr/share/icons ]; then
                 cp -r ${contents}/usr/share/icons $out/share
@@ -142,14 +145,17 @@ in
             platforms = [ "x86_64-linux" ];
           };
         }
-      ) {};
+      ) { };
 
-      install-orca-slicer = prev.writeShellScriptBin "install-orca-slicer" (let
-        orcaSlicerVersion = "2.3.1";
-      in ''
-        ${prev.flatpak}/bin/flatpak install --user -y \
-          https://github.com/OrcaSlicer/OrcaSlicer/releases/download/v${orcaSlicerVersion}/OrcaSlicer-Linux-flatpak_V${orcaSlicerVersion}_x86_64.flatpak
-      '');
+      install-orca-slicer = prev.writeShellScriptBin "install-orca-slicer" (
+        let
+          orcaSlicerVersion = "2.3.1";
+        in
+        ''
+          ${prev.flatpak}/bin/flatpak install --user -y \
+            https://github.com/OrcaSlicer/OrcaSlicer/releases/download/v${orcaSlicerVersion}/OrcaSlicer-Linux-flatpak_V${orcaSlicerVersion}_x86_64.flatpak
+        ''
+      );
     })
   ];
 
@@ -304,6 +310,7 @@ in
     };
   };
   programs.fish.enable = true;
+  programs.niri.enable = true;
 
   # Set yazi as default file manager in Ghostty terminal
   xdg.mime.defaultApplications = {
@@ -332,13 +339,13 @@ in
 
   # Flatpak support
   services.flatpak.enable = true;
-  
+
   # Declarative flatpak packages
   services.flatpak.packages = [
     "com.github.tchx84.Flatseal"
     "com.bambulab.BambuStudio"
   ];
-  
+
   # For local .flatpak files, you can also use:
   # services.flatpak.packages = [
   #   { appId = "com.example.App"; origin = "flathub"; }
