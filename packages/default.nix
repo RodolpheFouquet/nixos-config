@@ -63,7 +63,7 @@
 
     # File management
     yazi
-    xfce.thunar
+    thunar
     fd
     eza
     zoxide

@@ -14,8 +14,12 @@
       modules-left = [
         "custom/cow"
         "hyprland/workspaces"
+        "niri/workspaces"
       ];
-      modules-center = [ "hyprland/window" ];
+      modules-center = [
+        "hyprland/window"
+        "niri/window"
+      ];
       modules-right = [
         "pulseaudio"
         "network"
@@ -35,10 +39,28 @@
       "hyprland/workspaces" = {
         format = "{name}";
         all-outputs = true;
-        persistent_workspaces = { "*" = [ 1 2 3 4 5 ]; };
+        persistent_workspaces = {
+          "*" = [
+            1
+            2
+            3
+            4
+            5
+          ];
+        };
       };
 
       "hyprland/window" = {
+        format = "{}";
+        max-length = 50;
+      };
+
+      "niri/workspaces" = {
+        format = "{name}";
+        all-outputs = true;
+      };
+
+      "niri/window" = {
         format = "{}";
         max-length = 50;
       };
@@ -95,7 +117,6 @@
         format-critical = " {temperatureC}°C";
         format = " {temperatureC}°C";
       };
-
 
       "custom/gpu-temp" = {
         exec = "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits";

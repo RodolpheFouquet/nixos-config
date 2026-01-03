@@ -261,7 +261,6 @@ in
     extraBackends = with pkgs; [
       hplipWithPlugin
       sane-airscan
-      epkowa
     ];
   };
 
@@ -311,10 +310,11 @@ in
   };
   programs.fish.enable = true;
   programs.niri.enable = true;
+  programs.xwayland.enable = true;
 
-  # Set yazi as default file manager in Ghostty terminal
+  # Set thunar as default file manager
   xdg.mime.defaultApplications = {
-    "inode/directory" = "yazi-terminal.desktop";
+    "inode/directory" = "thunar.desktop";
   };
 
   # Create custom desktop entry for yazi in Ghostty
@@ -362,7 +362,6 @@ in
     enable = true;
     mountOnMedia = true;
   };
-  services.devmon.enable = true;
 
   # --- System Optimizations ---
   # Automatic garbage collection
@@ -435,8 +434,8 @@ in
   system.stateVersion = "25.11";
   environment.systemPackages = with pkgs; [
     openrgb-with-all-plugins
-    inputs.winapps.packages.${pkgs.system}.winapps
-    inputs.winapps.packages.${pkgs.system}.winapps-launcher
+    inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system}.winapps
+    inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system}.winapps-launcher
     (pkgs.mumble.override { pulseSupport = true; })
     # Backup tools
     restic
@@ -444,6 +443,9 @@ in
     samba
     cider
     install-orca-slicer
+    xwayland-satellite
+    niri
+    niriswitcher
   ];
 
 }

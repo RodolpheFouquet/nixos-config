@@ -91,9 +91,6 @@ let
     busybox
     ghostscript
     dnslookup
-    itch
-    niri
-    niriswitcher
 
     # Container tools
     podman
@@ -127,7 +124,7 @@ let
     prismlauncher
     rpi-imager
     protonvpn-gui
-    xfce.thunar
+    thunar
 
     # ZMK firmware build toolchain (Linux-specific)
     python3Packages.west

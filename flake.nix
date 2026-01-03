@@ -47,10 +47,10 @@
       nixosConfigurations = {
         # Desktop configuration
         desktop = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
           specialArgs = { inherit inputs; };
 
           modules = [
+            { nixpkgs.hostPlatform = "x86_64-linux"; }
             ./configuration.nix
             ./hosts/desktop/hardware-configuration.nix
             ./hosts/desktop/host.nix
@@ -75,10 +75,10 @@
       darwinConfigurations = {
         # Mac Mini configuration
         mac-mini = darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
           specialArgs = { inherit inputs; };
           
           modules = [
+            { nixpkgs.hostPlatform = "aarch64-darwin"; }
             ./hosts/mac-mini/host.nix
             
             home-manager.darwinModules.home-manager

@@ -5,7 +5,7 @@
     enable = true;
     settings = {
       # Theme
-      theme = "GruvboxDark";
+      theme = "Gruvbox Dark";
 
       # Font configuration
       font-family = "JetBrains Mono Nerd Font";
@@ -29,4 +29,3 @@
     };
   };
 }
-

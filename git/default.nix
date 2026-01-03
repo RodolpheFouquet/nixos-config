@@ -3,9 +3,11 @@
 {
   programs.git = {
     enable = true;
-    userName = "Rodolphe Fouquet";
-    userEmail = "rodolphe@unicowd.com";
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Rodolphe Fouquet";
+        email = "rodolphe@unicowd.com";
+      };
       core = {
         editor = "nvim";
       };

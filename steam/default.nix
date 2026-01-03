@@ -61,7 +61,7 @@
     gamemode
     gamescope
     mangohud
-    protonup
+    protonup-ng
   ];
 
 }

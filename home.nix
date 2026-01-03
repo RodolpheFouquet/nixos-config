@@ -8,11 +8,12 @@
 
 {
   imports = [
-    inputs.nixvim.homeManagerModules.nixvim
+    inputs.nixvim.homeModules.nixvim
     inputs.walker.homeManagerModules.walker
 
     ./packages/shared.nix
     ./hyprland
+    ./niri
     ./neovim
     ./tmux
     ./waybar

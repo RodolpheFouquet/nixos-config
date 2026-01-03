@@ -21,6 +21,7 @@
         "$mod, S, togglespecialworkspace, magic"
         "$mod SHIFT, S, movetoworkspace, special:magic"
         "$mod SHIFT, L, exec, hyprlock"
+        "$mod SHIFT, N, exec, hyprctl dispatch exit"
         "$mod, T, exec, pypr toggle term"
         "$mod, E, exec, pypr toggle files"
         "$mod SHIFT, E, exec, thunar"
@@ -37,8 +38,8 @@
         "$mod CTRL, M, exec, virt-manager"
 
         # Screenshots
-        ", Print, exec, mkdir -p ~/Pictures/Screenshots && grim -g \"$(slurp)\" ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png"
-        "$mod, Print, exec, mkdir -p ~/Pictures/Screenshots && grim ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png"
+        "$mod, P, exec, mkdir -p ~/Pictures/Screenshots && grim -g \"$(slurp)\" ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png"
+        "$mod SHIFT, P, exec, mkdir -p ~/Pictures/Screenshots && grim ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png"
         "$mod, Left, movefocus, l"
         "$mod, Down, movefocus, d"
         "$mod, Up, movefocus, u"
