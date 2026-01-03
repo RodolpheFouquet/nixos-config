@@ -24,7 +24,7 @@
       "workspace special silent, title:^(scratchpad-files)$"
       "float, title:^(scratchpad-music)$"
       "workspace special silent, title:^(scratchpad-music)$"
-      "workspace 1, class:^(com.mitchellh.ghostty)$,title:^(?!scratchpad-).*$"
+      "workspace 1, class:^(org.wezfurlong.wezterm)$,title:^(?!scratchpad-).*$"
     ];
 
   };

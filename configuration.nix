@@ -317,13 +317,13 @@ in
     "inode/directory" = "thunar.desktop";
   };
 
-  # Create custom desktop entry for yazi in Ghostty
+  # Create custom desktop entry for yazi in wezterm
   environment.etc."xdg/applications/yazi-terminal.desktop".text = ''
     [Desktop Entry]
     Type=Application
     Name=Yazi File Manager
     Comment=Blazing fast terminal file manager
-    Exec=ghostty -e yazi %f
+    Exec=wezterm start -- yazi %f
     Icon=folder
     Terminal=false
     MimeType=inode/directory;

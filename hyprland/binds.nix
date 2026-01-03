@@ -13,7 +13,7 @@
     bind =
       [
         "$mod, F, exec, google-chrome-stable"
-        "$mod, Q, exec, ghostty"
+        "$mod, Q, exec, wezterm"
         "$mod, R, exec, walker"
         "$mod, V, togglefloating"
         "$mod, X, fullscreen, 1"

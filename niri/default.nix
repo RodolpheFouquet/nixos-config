@@ -4,6 +4,10 @@
   # This file provides niri config via XDG config files
 
   xdg.configFile."niri/config.kdl".text = ''
+    hotkey-overlay {
+      skip-at-startup
+    }
+
     input {
         keyboard {
             xkb {
@@ -45,7 +49,7 @@
     spawn-at-startup "google-chrome-stable"
     spawn-at-startup "discord"
     spawn-sh-at-startup "env DISPLAY=:0 steam"
-    spawn-at-startup "ghostty"
+    spawn-at-startup "wezterm"
     spawn-at-startup "openrgb" "--mode" "static" "--color" "8000FF"
 
 
@@ -54,21 +58,13 @@
         Mod+L { focus-column-right; }
         Mod+J { focus-window-down; }
         Mod+K { focus-window-up; }
-        Mod+Left { focus-column-left; }
-        Mod+Down { focus-window-down; }
-        Mod+Up { focus-window-up; }
-        Mod+Right { focus-column-right; }
 
         Mod+Ctrl+H { move-column-left; }
         Mod+Ctrl+L { move-column-right; }
         Mod+Ctrl+J { move-window-down; }
         Mod+Ctrl+K { move-window-up; }
-        Mod+Ctrl+Left { move-column-left; }
-        Mod+Ctrl+Down { move-window-down; }
-        Mod+Ctrl+Up { move-window-up; }
-        Mod+Ctrl+Right { move-column-right; }
 
-        Mod+Q { spawn "ghostty"; }
+        Mod+Q { spawn "wezterm"; }
         Mod+F { spawn "google-chrome-stable"; }
         Mod+R { spawn "walker"; }
         Mod+E { spawn "thunar"; }
@@ -82,25 +78,24 @@
         Mod+Plus { set-column-width "+10%"; }
         Mod+Equal { set-column-width "+10%"; }
 
-        Mod+1 { focus-workspace 1; }
-        Mod+2 { focus-workspace 2; }
-        Mod+3 { focus-workspace 3; }
-        Mod+4 { focus-workspace 4; }
-        Mod+5 { focus-workspace 5; }
+        Mod+1 { focus-workspace "browser"; }
+        Mod+2 { focus-workspace "chat"; }
+        Mod+3 { focus-workspace "steam"; }
+        Mod+4 { focus-workspace "games"; }
+        Mod+5 { focus-workspace "diy"; }
 
-        Mod+Shift+1 { move-column-to-workspace 1; }
-        Mod+Shift+2 { move-column-to-workspace 2; }
-        Mod+Shift+3 { move-column-to-workspace 3; }
-        Mod+Shift+4 { move-column-to-workspace 4; }
-        Mod+Shift+5 { move-column-to-workspace 5; }
+        Mod+Shift+1 { move-column-to-workspace "browser"; }
+        Mod+Shift+2 { move-column-to-workspace "chat"; }
+        Mod+Shift+3 { move-column-to-workspace "steam"; }
+        Mod+Shift+4 { move-column-to-workspace "games"; }
+        Mod+Shift+5 { move-column-to-workspace "diy"; }
 
         // Workspace navigation
-        Mod+Page_Up { focus-workspace-up; }
-        Mod+Page_Down { focus-workspace-down; }
+        Mod+Shift+Up { focus-workspace-up; }
+        Mod+Shift+Down { focus-workspace-down; }
         
-        // Move column to workspace up/down
-        Mod+Shift+Page_Up { move-column-to-workspace-up; }
-        Mod+Shift+Page_Down { move-column-to-workspace-down; }
+      //  Mod+Ctrl+Up { move-window-to-workspace-up; }
+     //   Mod+Ctrl+Right { move-column-to-workspace-right; }
         
         // Column management  
         Mod+M { maximize-column; }
@@ -118,7 +113,7 @@
         Mod+Shift+P { spawn "sh" "-c" "mkdir -p ~/Pictures/Screenshots && grim ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png"; }
 
         Mod+Shift+N { quit; }
-        Ctrl+Alt+Delete { quit; }
+        Mod+W { toggle-column-tabbed-display; }
     }
 
 
@@ -139,7 +134,7 @@
     }
 
     window-rule {
-        match app-id="com.mitchellh.ghostty"
+        match app-id="org.wezfurlong.wezterm"
         open-on-workspace "browser"
     }
 
@@ -151,6 +146,12 @@
     window-rule {
         match app-id="steam"
         open-on-workspace "steam"
+    }
+
+    window-rule {
+      match app-id=r#"^(Minecraft.*|mincreaft)"#
+      open-on-workspace "games"
+
     }
 
     window-rule {

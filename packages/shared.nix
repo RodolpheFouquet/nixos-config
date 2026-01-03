@@ -86,7 +86,6 @@ let
     obs-studio
     wf-recorder
     zathura
-    ghostty
     dig
     busybox
     ghostscript

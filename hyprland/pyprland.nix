@@ -10,7 +10,7 @@
 
     [scratchpads.term]
     animation = "fromTop"
-    command = "ghostty --title=scratchpad-term"
+    command = "wezterm start --class scratchpad-term"
     title = "scratchpad-term"
     match_by = "title"
     size = "75% 60%"
@@ -18,8 +18,8 @@
     margin = 50
 
     [scratchpads.files]
-    animation = "fromTop" 
-    command = "ghostty --title=scratchpad-files -e yazi"
+    animation = "fromTop"
+    command = "wezterm start --class scratchpad-files -- yazi"
     title = "scratchpad-files"
     match_by = "title"
     size = "75% 60%"

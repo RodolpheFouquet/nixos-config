@@ -101,7 +101,7 @@
         "google-chrome-stable"
         "discord"
         "steam"
-        "ghostty"
+        "wezterm"
         "pypr"
         "hyprctl setcursor Bibata-Modern-Classic 24"
         "openrgb --mode static --color 8000FF"

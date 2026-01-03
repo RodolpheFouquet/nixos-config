@@ -9,12 +9,12 @@
 {
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
-    
+
     ./packages/shared.nix
     ./neovim
     ./tmux
     ./git
-    ./ghostty
+    ./wezterm
     ./fastfetch
     # Import host-specific monitor configuration
     (./hosts + "/${hostType}/monitor.nix")

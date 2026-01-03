@@ -37,7 +37,6 @@
     nodejs_24
     go
     killall
-    ghostty
     gnumake
     gcc15
     font-awesome

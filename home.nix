@@ -20,9 +20,9 @@
     ./hyprpaper
     ./git
     ./walker
-    ./ghostty
     ./fastfetch
     ./mako
+    ./wezterm
     # Import host-specific monitor configuration
     (./hosts + "/${hostType}/monitor.nix")
   ];
