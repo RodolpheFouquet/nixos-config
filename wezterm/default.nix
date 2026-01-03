@@ -8,6 +8,12 @@
       local sessionizer = wezterm.plugin.require "https://github.com/mikkasendke/sessionizer.wezterm"
       local config = {}
 
+      local sessionizer_schema = {
+        sessionizer.DefaultWorkspace {},
+        sessionizer.AllActiveWorkspaces {},
+        sessionizer.FdSearch "/home/vachicorne/Code",
+      }
+
       if wezterm.config_builder then
         config = wezterm.config_builder()
       end
@@ -39,10 +45,18 @@
         {
           key = 'f',
           mods = 'CTRL',
-          action = wezterm.action.Multiple {
-            wezterm.action.SendString '\x1b[24~f', -- Trigger fish sessionizer binding
-          },
+          action = sessionizer.show(sessionizer_schema),
         },
+        {
+          key = 'u',
+          mods = 'CTRL',
+          action = wezterm.action.SplitPane { direction = 'Down'},
+        },
+        {
+          key = 'y',
+          mods = 'CTRL',
+          action = wezterm.action.SplitPane { direction = 'Left'},
+        }
       }
 
       return config
