@@ -28,6 +28,8 @@ let
     gleam
     nixfmt-rfc-style
     claude-code
+    gemini-cli-bin
+    antigravity
 
     # System monitoring (cross-platform)
     htop
