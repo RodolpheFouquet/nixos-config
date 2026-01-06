@@ -124,11 +124,15 @@
           Mod+Shift+Slash { show-hotkey-overlay; }
 
           Mod+P { screenshot show-pointer=false; }
-          Mod+Shift+P { screenshot-screen show-pointer=false }
+          Mod+Shift+P { screenshot-screen show-pointer=false; }
 
           Mod+Shift+N { quit; }
           Mod+W { toggle-column-tabbed-display; }
-      }
+          
+          XF86AudioRaiseVolume { spawn "wpctl" "set-volume" "-l" "1" "@DEFAULT_AUDIO_SINK@" "5%+"; }
+          XF86AudioLowerVolume { spawn "wpctl" "set-volume" "-l" "1" "@DEFAULT_AUDIO_SINK@" "5%-"; }
+          XF86AudioMute { spawn "wpctl" "set-volume" "-l" "1" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+     }
 
 
       workspace "browser"
