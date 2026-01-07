@@ -310,6 +310,7 @@ in
   };
   programs.fish.enable = true;
   programs.niri.enable = true;
+  programs.mangowc.enable = true;
   programs.xwayland.enable = true;
 
   # Set thunar as default file manager

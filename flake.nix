@@ -8,7 +8,7 @@
     # Home Manager
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    
+
     # nix-darwin for macOS
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -33,6 +33,8 @@
     nix-flatpak = {
       url = "github:gmodena/nix-flatpak";
     };
+
+    xremap-flake.url = "github:xremap/nix-flake";
   };
 
   outputs =
@@ -70,17 +72,17 @@
         };
 
       };
-      
+
       # Darwin configurations
       darwinConfigurations = {
         # Mac Mini configuration
         mac-mini = darwin.lib.darwinSystem {
           specialArgs = { inherit inputs; };
-          
+
           modules = [
             { nixpkgs.hostPlatform = "aarch64-darwin"; }
             ./hosts/mac-mini/host.nix
-            
+
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;

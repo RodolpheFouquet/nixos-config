@@ -9,7 +9,6 @@
 {
   imports = [
     inputs.nixvim.homeModules.nixvim
-    inputs.walker.homeManagerModules.walker
 
     ./packages/shared.nix
     ./hyprland
@@ -19,7 +18,7 @@
     ./waybar
     ./hyprpaper
     ./git
-    ./walker
+    ./fuzzel
     ./fastfetch
     ./mako
     ./wezterm

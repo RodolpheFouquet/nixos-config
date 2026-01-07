@@ -110,7 +110,7 @@ let
     # Additional system tools
     iotop
     powertop
-    parted
+    partedpac
     wireshark
     _1password-gui
     proton-pass

@@ -76,14 +76,14 @@
           Mod+Ctrl+J { move-window-down; }
           Mod+Ctrl+K { move-window-up; }
 
-          Mod+Q { spawn "wezterm"; }
-          Mod+F { spawn "google-chrome-stable"; }
-          Mod+R { spawn "walker"; }
+          Mod+Return { spawn "wezterm"; }
+          Mod+G { spawn "google-chrome-stable"; }
+          Mod+R { spawn "sh" "-c" "pkill -x fuzzel || fuzzel"; }
           Mod+E { spawn "thunar"; }
 
-          Mod+C { close-window; }
-          Mod+V { toggle-window-floating; }
-          Mod+Shift+F { fullscreen-window; }
+          Mod+D { close-window; }
+          Mod+W { toggle-window-floating; }
+          Mod+F { fullscreen-window; }
           Mod+Shift+L { spawn "hyprlock"; }
 
           Mod+Minus { set-column-width "-10%"; }
@@ -127,7 +127,7 @@
           Mod+Shift+P { screenshot-screen show-pointer=false; }
 
           Mod+Shift+N { quit; }
-          Mod+W { toggle-column-tabbed-display; }
+          Mod+T { toggle-column-tabbed-display; }
           
           XF86AudioRaiseVolume { spawn "wpctl" "set-volume" "-l" "1" "@DEFAULT_AUDIO_SINK@" "5%+"; }
           XF86AudioLowerVolume { spawn "wpctl" "set-volume" "-l" "1" "@DEFAULT_AUDIO_SINK@" "5%-"; }
