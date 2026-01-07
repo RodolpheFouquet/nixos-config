@@ -11,7 +11,6 @@
     inputs.nixvim.homeModules.nixvim
 
     ./packages/shared.nix
-    ./hyprland
     ./niri
     ./neovim
     ./tmux
