@@ -14,13 +14,13 @@
     ./niri
     ./neovim
     ./tmux
-    ./waybar
+    ./noctalia
     ./hyprpaper
     ./git
-    ./fuzzel
     ./fastfetch
-    ./mako
-    ./wezterm
+
+    ./foot
+    ./mangowc
     # Import host-specific monitor configuration
     (./hosts + "/${hostType}/monitor.nix")
   ];
@@ -44,7 +44,7 @@
     shellInit = ''
       starship init fish | source
       zoxide init fish | source
-      bind \cf sessionizer
+      bind \cf tms
       fastfetch
       set fish_greeting
     '';
@@ -61,36 +61,6 @@
     ];
     terminal = true;
   };
-
-  programs.fish.functions."sessionizer" = ''
-    if test (count $argv) -eq 1
-        set selected $argv[1]
-    else
-        set selected (begin; echo ~; find ~/Code ~/.config -mindepth 1 -maxdepth 1 -type d -exec test -d {}/.git \; -print; end | fzf)
-    end
-
-    if test -z "$selected"
-        return 0
-    end
-
-    set selected_name (basename "$selected" | tr . _)
-    set tmux_running (pgrep tmux)
-
-    if test -z "$TMUX" -a -z "$tmux_running"
-        tmux new-session -s $selected_name -c $selected
-        return 0
-    end
-
-    if not tmux has-session -t=$selected_name 2>/dev/null
-        tmux new-session -ds $selected_name -c $selected
-    end
-
-    if test -z "$TMUX"
-        tmux attach -t $selected_name
-    else
-        tmux switch-client -t $selected_name
-    end
-  '';
 
   programs.bash = {
     initExtra = ''

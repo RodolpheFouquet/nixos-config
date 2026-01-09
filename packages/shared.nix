@@ -71,6 +71,7 @@ let
     cmake
     ninja
     ccache
+    tmux-sessionizer
   ];
 
   # Linux-specific packages
@@ -78,7 +79,7 @@ let
     # GUI applications
     vscode
     discord
-    wezterm
+    foot
     google-chrome
     pavucontrol
     grim
@@ -110,7 +111,6 @@ let
     # Additional system tools
     iotop
     powertop
-    partedpac
     wireshark
     _1password-gui
     proton-pass
@@ -125,7 +125,7 @@ let
     prismlauncher
     rpi-imager
     protonvpn-gui
-    thunar
+    kdePackages.dolphin
 
     # ZMK firmware build toolchain (Linux-specific)
     python3Packages.west
@@ -142,6 +142,7 @@ let
     python3Packages.pyserial
     python3Packages.pyyaml
     python3Packages.zcbor
+    noctalia-shell
   ];
 
   # macOS-specific packages

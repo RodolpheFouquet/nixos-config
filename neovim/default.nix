@@ -16,6 +16,10 @@
     };
 
     colorschemes.gruvbox = {
+      enable = false;
+    };
+
+    colorschemes.tokyonight = {
       enable = true;
     };
 

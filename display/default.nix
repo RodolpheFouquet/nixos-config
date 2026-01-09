@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -8,10 +8,6 @@
   };
   services.xserver.enable = true;
   services.displayManager.ly.enable = true;
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
 
   # Environment variables for NVIDIA Optimus
   environment.variables = {
@@ -33,28 +29,29 @@
   ];
 
   # NVIDIA application profiles for niri compositor optimization
-  environment.etc."nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool-in-wayland-compositors.json".text = ''
-    {
-        "rules": [
-            {
-                "pattern": {
-                    "feature": "procname",
-                    "matches": "niri"
-                },
-                "profile": "Limit Free Buffer Pool On Wayland Compositors"
-            }
-        ],
-        "profiles": [
-            {
-                "name": "Limit Free Buffer Pool On Wayland Compositors",
-                "settings": [
-                    {
-                        "key": "GLVidHeapReuseRatio",
-                        "value": 0
-                    }
-                ]
-            }
-        ]
-    }
-  '';
+  environment.etc."nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool-in-wayland-compositors.json".text =
+    ''
+      {
+          "rules": [
+              {
+                  "pattern": {
+                      "feature": "procname",
+                      "matches": "niri"
+                  },
+                  "profile": "Limit Free Buffer Pool On Wayland Compositors"
+              }
+          ],
+          "profiles": [
+              {
+                  "name": "Limit Free Buffer Pool On Wayland Compositors",
+                  "settings": [
+                      {
+                          "key": "GLVidHeapReuseRatio",
+                          "value": 0
+                      }
+                  ]
+              }
+          ]
+      }
+    '';
 }

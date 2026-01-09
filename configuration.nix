@@ -221,15 +221,12 @@ in
   environment.variables = {
     PATH = "$PATH:/home/vachicorne/.local/bin";
   };
-  services.xserver.windowManager.xmonad = {
-    enable = true;
-    enableContribAndExtras = true;
-  };
 
   # --- Services ---
   security.rtkit.enable = true;
 
   services.hardware.openrgb.enable = true;
+  services.upower.enable = true;
 
   # Bluetooth
   hardware.bluetooth.enable = true;
@@ -310,12 +307,11 @@ in
   };
   programs.fish.enable = true;
   programs.niri.enable = true;
-  programs.mangowc.enable = true;
   programs.xwayland.enable = true;
 
-  # Set thunar as default file manager
+  # Set dolphin as default file manager
   xdg.mime.defaultApplications = {
-    "inode/directory" = "thunar.desktop";
+    "inode/directory" = "org.kde.dolphin.desktop";
   };
 
   # Create custom desktop entry for yazi in wezterm
@@ -324,7 +320,7 @@ in
     Type=Application
     Name=Yazi File Manager
     Comment=Blazing fast terminal file manager
-    Exec=wezterm start -- yazi %f
+    Exec=foot yazi %f
     Icon=folder
     Terminal=false
     MimeType=inode/directory;
@@ -447,6 +443,23 @@ in
     xwayland-satellite
     niri
     niriswitcher
+    mangowc
+  ];
+
+  services.displayManager.sessionPackages = [
+    (pkgs.writeTextFile {
+      name = "mangowc-session";
+      destination = "/share/wayland-sessions/mangowc.desktop";
+      text = ''
+        [Desktop Entry]
+        Name=MangoWC
+        Exec=mango
+        Type=Application
+      '';
+      derivationArgs = {
+        passthru.providedSessions = [ "mangowc" ];
+      };
+    })
   ];
 
 }
