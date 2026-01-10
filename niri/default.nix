@@ -152,7 +152,6 @@
      window-rule {
          match app-id="google-chrome"
          open-on-workspace "browser"
-         default-window-height { proportion 0.5; }
          default-column-width { proportion 0.5; }
      }
 
@@ -177,7 +176,7 @@
          open-maximized false
          open-maximized-to-edges false
      }
-
+     
      window-rule {
        match app-id=r#"^(Minecraft.*|mincreaft)$"#
        match app-id=r#"steam_app_.*"#

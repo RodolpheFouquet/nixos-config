@@ -147,15 +147,6 @@ in
         }
       ) { };
 
-      install-orca-slicer = prev.writeShellScriptBin "install-orca-slicer" (
-        let
-          orcaSlicerVersion = "2.3.1";
-        in
-        ''
-          ${prev.flatpak}/bin/flatpak install --user -y \
-            https://github.com/OrcaSlicer/OrcaSlicer/releases/download/v${orcaSlicerVersion}/OrcaSlicer-Linux-flatpak_V${orcaSlicerVersion}_x86_64.flatpak
-        ''
-      );
     })
   ];
 
@@ -439,7 +430,7 @@ in
     cifs-utils
     samba
     cider
-    install-orca-slicer
+
     xwayland-satellite
     niri
     niriswitcher

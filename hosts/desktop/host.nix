@@ -29,6 +29,12 @@
             "Super-z" = "Ctrl-z";
             "Super-Shift-z" = "Ctrl-Shift-z";
             "Super-s" = "Ctrl-s";
+            "Super-a" = "Ctrl-a";
+            "Super-Left" = "Home";
+            "Super-Right" = "End";
+            "Alt-Left" = "Ctrl-Left";
+            "Alt-Right" = "Ctrl-Right";
+            "Super-Backspace" = "Ctrl-Backspace";
           };
         }
       ];

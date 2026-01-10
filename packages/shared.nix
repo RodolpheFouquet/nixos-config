@@ -143,6 +143,8 @@ let
     python3Packages.pyyaml
     python3Packages.zcbor
     noctalia-shell
+    libsForQt5.qtstyleplugin-kvantum
+    kdePackages.qtstyleplugin-kvantum
   ];
 
   # macOS-specific packages

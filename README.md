@@ -16,7 +16,8 @@ Welcome to my personal VachixOS configuration! This repository contains a compre
 
 This configuration transforms a standard NixOS installation into a powerful, secure, and efficient workstation featuring:
 
-- **Hyprland** as the Wayland compositor with custom animations and keybinds
+- **Niri** as the Scrollable Tiling Wayland Compositor
+- **Noctalia** for the desktop shell and panel
 - **NVIDIA gaming optimizations** with persistent shader caching
 - **Security hardening** with automatic screen locking and system protections
 - **Development environment** with Neovim, debugging tools, and git workflow optimizations
@@ -33,340 +34,137 @@ The configuration follows a modular architecture where each component is separat
 ├── flake.nix                 # Flake configuration with inputs
 ├── hosts/                    # Host-specific configurations
 │   ├── desktop/             # Desktop machine configuration
-│   │   ├── hardware-configuration.nix # Desktop hardware settings
-│   │   ├── host.nix         # Desktop hostname and host-specific settings
-│   │   └── monitor.nix      # Desktop monitor configuration (5120x1440@240)
 │   └── laptop/              # Laptop machine configuration
-│       ├── hardware-configuration.nix # Laptop hardware settings
-│       ├── host.nix         # Laptop hostname and host-specific settings
-│       └── monitor.nix      # Laptop monitor configuration (2560x1440@60)
 ├── display/                  # Display and graphics configuration
 ├── fastfetch/                # System information display configuration
-├── ghostty/                  # Ghostty terminal configuration
+├── foot/                     # Foot terminal configuration
 ├── git/                      # Git configuration and aliases
-├── hyprland/                 # Hyprland window manager setup
-│   ├── animations.nix        # Custom animations and transitions
-│   ├── binds.nix            # Keybindings and shortcuts
-│   ├── hypridle.nix         # Idle management and timeouts
-│   ├── hyprlock.nix         # Screen locking configuration
-│   └── pyprland.nix         # Pyprland extensions (scratchpads)
-├── hyprpaper/               # Wallpaper management
-├── neovim/                  # Neovim configuration with LSPs and DAP
-├── packages/                # System and user packages
-├── scripts/                 # Utility scripts
-│   └── monitor-hotplug.sh   # KVM monitor resolution fix script
-├── steam/                   # Gaming and Steam optimizations
-├── tmux/                    # Terminal multiplexer setup
-├── walker/                  # Walker application launcher with Gruvbox theme
-└── waybar/                  # Status bar configuration
+├── niri/                     # Niri compositor configuration and keybinds
+├── noctalia/                 # Noctalia shell configuration
+├── hyprpaper/                # Wallpaper management
+├── mangowc/                  # MangoWC session
+├── neovim/                   # Neovim configuration with LSPs and DAP
+├── packages/                 # System and user packages
+├── scripts/                  # Utility scripts
+├── steam/                    # Gaming and Steam optimizations
+└── tmux/                     # Terminal multiplexer setup
 ```
 
 ## ✨ Key Features
 
+### 💻 Niri Desktop Experience
+- **Infinite Scrollable Tiling**: Windows are arranged in columns on an infinite horizontal strip.
+- **Noctalia Shell**: Provides the top panel, launcher, and system indicators.
+- **XWayland Satellite**: For excellent X11 application support.
+- **Kvantum Theming**: Tokyo Night theme applied to Qt applications.
+- **Animations**: Smooth window opening, closing, and movement.
+
 ### 🔒 Security & Privacy
-- **Automatic screen locking** after 10 minutes of inactivity
-- **Progressive idle management** (dim → lock → display off → suspend)
+- **Automatic screen locking** (Hyprlock)
 - **Kernel hardening** with network and memory protections
 - **Sudo password requirements** and privilege escalation controls
 
 ### 🎮 Gaming Optimizations
 - **10GB persistent NVIDIA shader cache** to eliminate recompilation
-- **Proton-GE** compatibility layer for enhanced game support
+- **Proton-GE** compatibility layer
 - **MangoHUD** for real-time performance monitoring
-- **Gamescope** with RT priority for optimal gaming performance
-- **NVIDIA beta drivers** for latest gaming features
+- **Gamescope** for optimal gaming performance
 
-### 💻 Development Environment
-- **NixVim** with comprehensive LSP support for multiple languages
-- **Debug Adapter Protocol (DAP)** for interactive debugging
+### 🛠️ Development Environment
+- **NixVim** with comprehensive LSP support
 - **Git workflow optimizations** with diff-so-fancy and smart aliases
-- **Terminal tools** including tmux with sessionizer, fish shell with starship prompt, yazi file manager, zoxide smart navigation, and fastfetch system information display
-
-### 🖥️ Desktop Experience
-- **Hyprland** with custom Vi-style keybindings (HJKL navigation)
-- **Waybar** with system monitoring including CPU temperature
-- **Gruvbox theming** throughout the desktop environment
-- **Custom animations** and smooth transitions
-- **OpenRGB integration** with purple lighting profile for RGB peripherals
-
-
-### ⚡ Performance Tuning
-- **CPU performance governor** for maximum responsiveness
-- **IRQ balancing** across cores for better multithreading
-- **Automatic nix store optimization** with weekly garbage collection
+- **Tmux** with sessionizer for rapid project switching
+- **Foot** terminal with fast GPU acceleration
 
 ## 🚀 Quick Start
 
-This configuration supports multiple machines through a host-based system. Choose your setup:
-
-### 🖥️ Desktop Setup
+### Desktop Setup
 1. **Clone this repository**:
    ```bash
    git clone https://github.com/RodolpheFouquet/nixos-config.git /home/$USER/.config/nixos
    ```
 
-2. **Update hardware configuration**:
+2. **Generate Hardware Config**:
    ```bash
    sudo nixos-generate-config --root /mnt
    cp /mnt/etc/nixos/hardware-configuration.nix /home/$USER/.config/nixos/hosts/desktop/
    ```
 
-3. **Customize for your system**:
-   - Update monitor configuration in `hosts/desktop/monitor.nix`
-   - Adjust thermal zone in `waybar/default.nix` for temperature monitoring
-   - Modify user details in `git/default.nix`
-
-4. **Apply the configuration**:
+3. **Apply Configuration**:
    ```bash
-   sudo nixos-rebuild switch --flake /home/$USER/.config/nixos#desktop
+   sudo nixos-rebuild switch --flake .#desktop
    ```
 
-### 💻 Laptop Setup
-1. **Follow steps 1 and 3 from desktop setup**
+## ⌨️ Niri Key Shortcuts
 
-2. **Update hardware configuration**:
-   ```bash
-   sudo nixos-generate-config --root /mnt
-   cp /mnt/etc/nixos/hardware-configuration.nix /home/$USER/.config/nixos/hosts/laptop/
-   ```
-
-3. **Update laptop monitor configuration**:
-   - Modify `hosts/laptop/monitor.nix` for your laptop's display specs
-
-4. **Apply the configuration**:
-   ```bash
-   sudo nixos-rebuild switch --flake /home/$USER/.config/nixos#laptop
-   ```
-
-### 🔄 Multi-Host Features
-- **Shared software**: Same packages and configurations across all machines
-- **Host-specific hardware**: Separate hardware configurations per machine
-- **Smart monitor detection**: KVM switching support with automatic resolution restoration
-- **Hostname management**: `vachicorne-desktop` and `vachicorne-laptop` automatically assigned
-
-## 🎮 Gaming Setup
-
-This configuration includes optimizations specifically for NVIDIA gaming:
-
-- **Persistent shader cache**: Games won't need to recompile shaders on subsequent launches
-- **Enhanced Proton compatibility**: NVAPI support for better Windows game compatibility  
-- **Performance monitoring**: MangoHUD overlay for FPS and system stats
-- **Game streaming**: Firewall configured for Steam Remote Play and local streaming
-
-Launch games with MangoHUD: `mangohud %command%` in Steam launch options.
-
-
-## ⌨️ Hyprland Key Shortcuts
-
-### Window Management
+### Window & Column Management
 | Shortcut | Action |
 |----------|--------|
-| `SUPER + Arrow Keys` | Move focus between windows |
-| `SUPER + SHIFT + Arrow Keys` | Move active window |
-| `SUPER + V` | Toggle floating mode |
-| `SUPER + C` | Close active window |
-| `SUPER + W` | Enter resize mode |
+| `Super + H/L` | Focus column Left/Right |
+| `Super + J/K` | Focus window Down/Up |
+| `Super + Ctrl + H/L` | Move column Left/Right |
+| `Super + Ctrl + J/K` | Move window Down/Up |
+| `Super + D` | Close window |
+| `Super + F` | Fullscreen window |
+| `Super + W` | Toggle floating window |
+| `Super + Minus/Plus` | Decrease/Increase column width |
+| `Super + M` | Maximize column |
+| `Super + Tab` | Switch focus between floating/tiling |
 
-### Resize Mode
-Once in resize mode (activated with `SUPER + W`):
-| Key | Action |
-|-----|--------|
-| `Arrow Keys` | Resize window by 10px |
-| `SHIFT + Arrow Keys` | Resize window by 50px (faster) |
-| `Escape`, `Enter`, or `SUPER + W` | Exit resize mode |
-
-### Workspace Management
+### Workspace Navigation
 | Shortcut | Action |
 |----------|--------|
-| `SUPER + 1-9` | Switch to workspace 1-9 |
-| `SUPER + SHIFT + 1-9` | Move window to workspace 1-9 |
-| `SUPER + S` | Toggle special workspace |
-| `SUPER + SHIFT + S` | Move window to special workspace |
+| `Super + 1-6` | Focus workspace 1-6 |
+| `Super + Shift + 1-6` | Move column to workspace 1-6 |
+| `Super + Shift + Up/Down` | Focus workspace Up/Down |
 
 ### Application Launchers
 | Shortcut | Action |
 |----------|--------|
-| `SUPER + Q` | Open terminal (Ghostty) |
-| `SUPER + F` | Open browser (Chrome) |
-| `SUPER + R` | Application launcher (Walker) |
+| `Super + Return` | Open Terminal (Foot) |
+| `Super + G` | Open Browser (Chrome) |
+| `Super + R` | Application Launcher (Noctalia) |
+| `Super + E` | File Manager (Dolphin) |
+| `Super + Shift + L` | Lock Screen |
+| `Super + Shift + Slash` | Show Hotkey Overlay |
+| `Super + Space` | Open Overview |
 
-### System Controls
+### Screenshots
 | Shortcut | Action |
 |----------|--------|
-| `SUPER + SHIFT + L` | Lock screen |
-| `XF86AudioRaiseVolume` | Increase volume 5% |
-| `XF86AudioLowerVolume` | Decrease volume 5% |
-| `XF86AudioMute` | Toggle mute |
-| `Print` | Screenshot selection (save to ~/Pictures/Screenshots) |
-| `SUPER + Print` | Screenshot full screen (save to ~/Pictures/Screenshots) |
-| `SUPER + SHIFT + R` | Fix monitor resolution (KVM switching) |
+| `Super + P` | Screenshot selection |
+| `Super + Shift + P` | Screenshot full screen |
 
-### Scratchpad Terminals
+## 🍎 Mac-Style Shortcuts (via Xremap)
+
+To ease the transition between macOS and Linux, `Super` (Command) keys are remapped to common actions:
+
 | Shortcut | Action |
 |----------|--------|
-| `SUPER + T` | Toggle terminal scratchpad |
-| `SUPER + E` | Toggle file manager scratchpad (yazi) |
-| `SUPER + M` | Toggle music player scratchpad (ncmpcpp) |
-| `SUPER + Z` | Toggle zoom/magnify |
-
-### Mouse Controls
-| Action | Binding |
-|--------|---------|
-| `SUPER + Left Click` | Move window |
-| `SUPER + Right Click` | Resize window |
-
-## 🛠️ Git Workflow
-
-Enhanced git experience with:
-- `gap` - Interactive patch staging without pressing Enter repeatedly
-- `gl` - Pretty git log with graph and colors
-- `gs` - Git status
-- Pull with rebase enabled by default
-- Rerere for automatic conflict resolution
-
+| `Cmd + C` | Copy |
+| `Cmd + V` | Paste |
+| `Cmd + X` | Cut |
+| `Cmd + Z` | Undo |
+| `Cmd + S` | Save |
+| `Cmd + A` | Select All |
+| `Cmd + Left/Right` | Go to Home/End of line |
+| `Alt + Left/Right` | Go to Previous/Next Word |
+| `Cmd + Backspace` | Delete Line/Word |
 
 ## 📟 Tmux & Terminal Workflow
 
-### Tmux Configuration
-- **Prefix key**: `Ctrl-a` (instead of default `Ctrl-b`)
-- **Mouse support**: Enabled for pane selection and resizing
-- **Session persistence**: Automatic restore with resurrect and continuum plugins
-- **Base index**: Windows and panes start from 1
-- **Theme**: Gruvbox color scheme
-
-### Sessionizer Function
-Quickly create and switch to tmux sessions for your projects:
-
-```fish
-sessionizer [directory]
-```
-
-- **Without arguments**: Opens fzf to select from ~/Code and ~/.config directories
-- **With directory**: Creates/switches to session for specific directory
-- **Features**:
-  - Searches projects up to 2 levels deep in ~/Code
-  - Automatically adds visited directories to zoxide database
-  - Smart session naming (handles dots, dashes, slashes)
-  - Works both inside and outside tmux
-
-### Zoxide Integration
-Smart directory jumping with learning:
-- `z <partial-name>` - Jump to frequently visited directories
-- `zi` - Interactive directory selection with fzf
-- Automatically learns from sessionizer usage
-
-### Key Tmux Shortcuts
-| Shortcut | Action |
-|----------|--------|
-| `Ctrl-a c` | Create new window |
-| `Ctrl-a ,` | Rename current window |
-| `Ctrl-a %` | Split pane horizontally |
-| `Ctrl-a "` | Split pane vertically |
-| `Ctrl-a h/j/k/l` | Navigate panes (if configured) |
-| `Ctrl-a d` | Detach from session |
-| `Ctrl-a s` | List and switch sessions |
-| `Ctrl-a f` | Open sessionizer in new window |
-
-## 📸 BTRFS Snapshots & Data Protection
-
-This configuration uses BTRFS snapshots to automatically protect your user data in `/home`. The `/home` directory is configured as a separate BTRFS subvolume, allowing for efficient snapshots of only user data while the system can be rebuilt from NixOS configuration files.
-
-### Automatic Snapshots
-- **Hourly snapshots**: 24 retained
-- **Daily snapshots**: 7 retained  
-- **Weekly snapshots**: 4 retained
-- **Monthly snapshots**: 3 retained
-- **Total snapshots**: Up to 50 with automatic cleanup
-
-### Snapshot Management Commands
-
-| Command | Action |
-|---------|--------|
-| `snaplist` | List all snapshots |
-| `snapdiff 5..0` | Show changes between snapshot 5 and current |
-| `snapcreate "description"` | Create manual snapshot with description |
-| `snapundo 5..0 /path/to/file` | Restore specific file from snapshot 5 |
-| `snapback 5` | Rollback entire /home to snapshot 5 |
-
-### Common Snapshot Workflows
-
-**Before major changes:**
-```bash
-snapcreate "Before installing new software"
-```
-
-**Check what changed:**
-```bash
-snaplist
-snapdiff 10..0  # Compare snapshot 10 to current
-```
-
-**Restore a deleted file:**
-```bash
-snapundo 5..0 /home/vachicorne/Documents/important.txt
-```
-
-**Full rollback (requires reboot):**
-```bash
-snapback 5
-sudo reboot
-```
-
-## 📦 Included Software
-
-### Development
-- **Neovim** with LSPs for Nix, Python, Rust, Go, TypeScript, Elixir, Zig, OCaml
-- **Debug adapters** for multiple languages (DAP)
-- **Git tools** with diff-so-fancy
-- **Terminal utilities**: yazi, fd, eza, fzf, ripgrep, zoxide, fastfetch
-
-### Gaming & Graphics
-- **Steam** with Proton-GE
-- **MangoHUD** performance overlay
-- **Gamescope** compositor
-- **NVIDIA drivers** (beta branch)
-- **OpenRGB** for RGB peripheral control
-
-### System Monitoring
-- **htop, btop, iotop** for system monitoring
-- **powertop** for power management
-- **Waybar** with CPU temperature display
-
-### Productivity & Media
-- **Application launcher** (Walker) with Gruvbox theme
-- **Terminal emulator** (Ghostty) with modern features
-- **Clipboard manager** (cliphist) for persistent clipboard history
-- **Screen recording** (OBS Studio, wf-recorder) for content creation
-- **PDF viewer** (Zathura) with vim-style keybindings
-- **Container support** (Podman) with Docker compatibility
-
-## 🔧 Customization
-
-This configuration is designed to be easily customizable:
-
-1. **Add new packages**: Edit `packages/default.nix`
-2. **Modify keybindings**: Update `hyprland/binds.nix`  
-3. **Adjust animations**: Customize `hyprland/animations.nix`
-4. **Change themes**: Modify Waybar CSS in `waybar/default.nix`
-5. **Add git aliases**: Update `git/default.nix`
-
-## 📝 System Information
-
-- **OS**: NixOS 25.05
-- **Window Manager**: Hyprland (Wayland)
-- **Status Bar**: Waybar
-- **Terminal**: Ghostty
-- **Shell**: Fish with Starship prompt
-- **Editor**: Neovim (NixVim)
-- **Theme**: Gruvbox
+- **Prefix**: `Ctrl + a`
+- **Sessionizer**: `Ctrl + a + f` (select project from `~/Code`)
+- **Split Horizontal**: `Ctrl + a + "`
+- **Split Vertical**: `Ctrl + a + %`
 
 ## 🤝 Contributing
 
-Feel free to fork this repository and adapt it for your own use! If you find improvements or fixes, pull requests are welcome.
+Feel free to fork this repository and adapt it for your own use!
 
 ## 📜 License
 
-This configuration is provided as-is for educational and personal use. Feel free to use, modify, and distribute according to your needs.
+This configuration is provided as-is for educational and personal use.
 
 ---
 

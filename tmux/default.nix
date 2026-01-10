@@ -33,4 +33,9 @@
       bind-key f run-shell "tmux new-window tms"
     '';
   };
+  xdg.configFile."tms/config.toml".text = ''
+    search_dirs = [
+      { path = "/home/vachicorne/Code", depth = 2 }
+    ]
+  '';
 }
