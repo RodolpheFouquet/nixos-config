@@ -30,6 +30,7 @@ let
     claude-code
     gemini-cli-bin
     antigravity
+    opencode
 
     # System monitoring (cross-platform)
     htop
@@ -91,6 +92,7 @@ let
     zathura
     dig
     busybox
+    usbutils
     ghostscript
     dnslookup
 

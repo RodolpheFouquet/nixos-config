@@ -83,8 +83,8 @@
 
          Mod+D { close-window; }
          Mod+W { toggle-window-floating; }
-         Mod+F { fullscreen-window; }
-         Mod+Shift+L { spawn "hyprlock"; }
+         Mod+Shift+F { fullscreen-window; }
+         Mod+Shift+L { spawn "noctalia-shell" "ipc" "call" "lockScreen" "lock"; }
 
          Mod+Minus { set-column-width "-10%"; }
          Mod+Plus { set-column-width "+10%"; }
@@ -158,6 +158,13 @@
      window-rule {
          match app-id="foot"
          open-on-workspace "browser"
+         default-column-width { proportion 0.33333; }
+     }
+
+    window-rule {
+         match app-id="Antigravity"
+         open-on-workspace "browser"
+         default-column-width { proportion 0.33333; }
      }
 
      window-rule {

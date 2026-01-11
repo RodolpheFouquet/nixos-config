@@ -15,7 +15,6 @@
     ./neovim
     ./tmux
     ./noctalia
-    ./hyprpaper
     ./git
     ./fastfetch
 
