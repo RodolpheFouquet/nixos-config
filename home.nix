@@ -11,6 +11,7 @@
     inputs.nixvim.homeModules.nixvim
 
     ./packages/shared.nix
+    ./emacs
     ./niri
     ./neovim
     ./tmux
@@ -28,6 +29,16 @@
 
   # Add ~/.local/bin to PATH
   home.sessionPath = [ "$HOME/.local/bin" ];
+
+  # Configure NPM to use ~/.local as prefix (binaries go to ~/.local/bin)
+  home.sessionVariables = {
+    NPM_CONFIG_PREFIX = "$HOME/.local";
+  };
+
+  # Ensure ~/.local/bin exists
+  systemd.user.tmpfiles.rules = [
+    "d %h/.local/bin 0755 - - -"
+  ];
 
   # Direnv integration
   programs.direnv = {

@@ -5,4 +5,8 @@
 ;; (package! some-package)
 
 ;; Gruvbox theme
-(package! gruvbox-theme)
+;; Tokyo Night theme
+;; (doom-tokyo-night is included in doom-themes, so no extra package needed)
+
+;; Harpoon
+(package! harpoon)

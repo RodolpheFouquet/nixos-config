@@ -62,6 +62,7 @@
      spawn-sh-at-startup "env DISPLAY=:0 steam"
      spawn-at-startup "foot"
      spawn-at-startup "cider"
+     spawn-at-startup "antigravity"
      spawn-at-startup "openrgb" "--mode" "static" "--color" "8000FF"
 
 
@@ -80,6 +81,7 @@
          Mod+G { spawn "google-chrome-stable"; }
          Mod+R { spawn "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
          Mod+E { spawn "dolphin"; }
+         Mod+Y { switch-preset-column-width; }
 
          Mod+D { close-window; }
          Mod+W { toggle-window-floating; }
@@ -152,7 +154,7 @@
      window-rule {
          match app-id="google-chrome"
          open-on-workspace "browser"
-         default-column-width { proportion 0.5; }
+         default-column-width { proportion 0.33333; }
      }
 
      window-rule {

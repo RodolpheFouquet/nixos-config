@@ -130,11 +130,21 @@ in
                 install -m 444 -D ${contents}/${pname}.desktop -t $out/share/applications
                 substituteInPlace $out/share/applications/${pname}.desktop \
                   --replace 'Exec=AppRun' 'Exec=${pname}'
+                # Ensure Icon matches pname
+                sed -i 's/^Icon=.*/Icon=${pname}/' $out/share/applications/${pname}.desktop
               fi
 
               # Copy icons if they exist
               if [ -d ${contents}/usr/share/icons ]; then
                 cp -r ${contents}/usr/share/icons $out/share
+                chmod -R u+w $out/share
+              fi
+
+              # Fallback: install icon from root if generic path didn't work or just to be safe
+              if [ -f ${contents}/.DirIcon ]; then
+                install -m 444 -D ${contents}/.DirIcon $out/share/icons/hicolor/512x512/apps/${pname}.png
+              elif [ -f ${contents}/${pname}.png ]; then
+                 install -m 444 -D ${contents}/${pname}.png $out/share/icons/hicolor/512x512/apps/${pname}.png
               fi
             '';
 
@@ -218,6 +228,7 @@ in
 
   services.hardware.openrgb.enable = true;
   services.upower.enable = true;
+  services.tuned.enable = true;
 
   # Bluetooth
   hardware.bluetooth.enable = true;

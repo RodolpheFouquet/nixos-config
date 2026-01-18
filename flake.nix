@@ -35,6 +35,12 @@
     };
 
     xremap-flake.url = "github:xremap/nix-flake";
+
+    # Doom Emacs (Unstraightened fork)
+    doom-emacs-unstraightened = {
+      url = "github:marienz/nix-doom-emacs-unstraightened";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -56,7 +62,14 @@
             ./configuration.nix
             ./hosts/desktop/hardware-configuration.nix
             ./hosts/desktop/host.nix
-            inputs.nix-flatpak.nixosModules.nix-flatpak
+            (
+              { pkgs, ... }:
+              {
+                imports = [
+                  inputs.nix-flatpak.nixosModules.nix-flatpak
+                ];
+              }
+            )
 
             home-manager.nixosModules.home-manager
             {

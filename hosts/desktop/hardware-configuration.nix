@@ -40,6 +40,16 @@
     ];
   };
 
+  fileSystems."/mnt/exfat" = {
+    device = "/dev/disk/by-uuid/EEFF-D72D";
+    fsType = "exfat";
+    options = [
+      "uid=1000"
+      "gid=100"
+      "nofail"
+    ];
+  };
+
   swapDevices = [
     { device = "/dev/disk/by-uuid/743706e8-95b3-41c2-bc51-9fd4a7ca0962"; }
   ];

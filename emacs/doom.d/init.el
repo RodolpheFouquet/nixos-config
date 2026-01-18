@@ -44,11 +44,12 @@
        docker
        (eval +overlay)     ; run code, run (also, repls)
        lookup              ; navigate your code and its documentation
-       lsp               ; M-x vscode
+       (lsp +peek)               ; M-x vscode
        magit             ; a git porcelain for Emacs
        make              ; run make tasks from Emacs
        pdf               ; pdf enhancements
        tree-sitter       ; syntax and parsing, sitting in a tree...
+       (dap +lsp)        ; Debug Adapter Protocol
 
        :os
        (:if IS-MAC macos)  ; improve compatibility with macOS
@@ -58,20 +59,20 @@
        data              ; config/data formats
        emacs-lisp        ; drown in parentheses
        json              ; At least it ain't XML
-       (javascript +lsp)        ; all(hope(abandon(ye(who(enter(here))))))
+       (javascript +lsp +tree-sitter)        ; all(hope(abandon(ye(who(enter(here))))))
        markdown          ; writing docs for people to ignore
-       nix               ; I hereby declare "nix geht mehr!"
+       (nix +lsp +tree-sitter)               ; I hereby declare "nix geht mehr!"
        org               ; organize your plain life in plain text
-       (python +lsp)     ; beautiful is better than ugly
-       (rust +lsp)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       (python +lsp +tree-sitter +pyright)     ; beautiful is better than ugly
+       (rust +lsp +tree-sitter)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        sh                ; she sells {ba,z,fi}sh shells on the C xor
-       yaml              ; JSON, but readable
-       web               ; the tubes
-       (cc +lsp)         ; C > C++ == 1
-       (ocaml +lsp)      ; an ML with a type system that actually helps
-       (go +lsp)         ; the hipster dialect
-       (zig +lsp)        ; C, but simpler
-       elixir            ; erlang done right
+       (yaml +lsp)              ; JSON, but readable
+       (web +lsp +tree-sitter)       ; the tubes
+       (cc +lsp +tree-sitter)         ; C > C++ == 1
+       (ocaml +lsp +tree-sitter)      ; an ML with a type system that actually helps
+       (go +lsp +tree-sitter)         ; the hipster dialect
+       (zig +lsp +tree-sitter)        ; C, but simpler
+       (elixir +lsp +tree-sitter)            ; erlang done right
 
        :email
 

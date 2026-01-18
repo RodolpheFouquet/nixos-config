@@ -1,8 +1,14 @@
-{ inputs, config, lib, pkgs, ... }:
+{
+  inputs,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
-    inputs.doom-emacs.homeManagerModules.default
+    inputs.doom-emacs-unstraightened.hmModule
   ];
 
   programs.doom-emacs = {
@@ -13,6 +19,6 @@
   services.emacs = {
     enable = true;
     client.enable = true;
-    defaultEditor = true;
+    defaultEditor = false; # Prefer Neovim as default editor for now
   };
 }

@@ -31,6 +31,9 @@ let
     gemini-cli-bin
     antigravity
     opencode
+    wkhtmltopdf
+    firefox
+    poppler-utils
 
     # System monitoring (cross-platform)
     htop
@@ -73,6 +76,7 @@ let
     ninja
     ccache
     tmux-sessionizer
+    obsidian
   ];
 
   # Linux-specific packages

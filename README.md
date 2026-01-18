@@ -158,6 +158,50 @@ To ease the transition between macOS and Linux, `Super` (Command) keys are remap
 - **Split Horizontal**: `Ctrl + a + "`
 - **Split Vertical**: `Ctrl + a + %`
 
+## 🐲 Doom Emacs Configuration
+    
+The configuration uses **Doom Emacs** via `nix-doom-emacs` for a declarative and reproducible setup. It is configured to replicate the Neovim workflow with strict parity in keybindings and features.
+    
+### Key Features
+- **Evil Mode**: Vim emulation everywhere.
+- **LSP & Tree-sitter**: Full support for Nix, Python, Rust, Go, OCaml, Zig, Elixir, Web/JS.
+- **Tokyo Night Theme**: Consistent with the rest of the system.
+- **Harpoon**: Fast file navigation using the same shortcuts as Neovim.
+- **DAP**: Integrated debugger with generic keybindings.
+    
+### ⌨️ Emacs Key Shortcuts
+    
+Most shortcuts follow standard Doom Emacs conventions (Space leader), but specific modules have been tuned:
+    
+#### Harpoon (Navigation)
+| Shortcut | Action |
+|----------|--------|
+| `Space + a` | Add file to Harpoon |
+| `Space + e` | Open Harpoon Menu |
+| `Space + 1-4` | Go to file 1-4 |
+| `Ctrl + h/j/k/l` | Go to file 1/2/3/4 (Fast Switch) |
+| `Ctrl + e` | Quick Menu |
+    
+#### Debugging (DAP)
+| Shortcut | Action |
+|----------|--------|
+| `Space + d + b` | Toggle Breakpoint |
+| `Space + d + c` | Continue |
+| `Space + d + o` | Step Over |
+| `Space + d + i` | Step Into |
+| `Space + d + r` | Toggle REPL |
+    
+#### General
+| Shortcut | Action |
+|----------|--------|
+| `Space + .` | Find File (Project) |
+| `Space + /` | Search Project (Rg) |
+| `Space + b + [` | Previous Buffer |
+| `Space + b + ]` | Next Buffer |
+| `Space + w` | Window Management (split, close, move) |
+| `g d` | Go to Definition |
+| `K` | Hover Documentation |
+    
 ## 🤝 Contributing
 
 Feel free to fork this repository and adapt it for your own use!

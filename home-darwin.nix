@@ -42,6 +42,7 @@
       bind \cf sessionizer
       fastfetch
       set fish_greeting
+      fish_add_path $HOME/.local/npm/bin
     '';
   };
 

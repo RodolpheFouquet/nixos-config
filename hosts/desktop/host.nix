@@ -26,8 +26,6 @@
             "Super-c" = "Ctrl-c";
             "Super-v" = "Ctrl-v";
             "Super-x" = "Ctrl-x";
-            "Super-z" = "Ctrl-z";
-            "Super-f" = "Ctrl-f";
             "Super-Shift-z" = "Ctrl-Shift-z";
             "Super-s" = "Ctrl-s";
             "Super-a" = "Ctrl-a";
