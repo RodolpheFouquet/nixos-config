@@ -38,6 +38,7 @@
   # Ensure ~/.local/bin exists
   systemd.user.tmpfiles.rules = [
     "d %h/.local/bin 0755 - - -"
+    "d %h/.local/share/nix-doom/straight/build-30.2 0755 - - -"
   ];
 
   # Direnv integration

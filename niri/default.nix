@@ -30,6 +30,7 @@
      }
 
      layout {
+         always-center-single-column
          gaps 16
          center-focused-column "never"
          
@@ -115,6 +116,7 @@
          
          // Column management  
          Mod+M { maximize-column; }
+         Mod+V { switch-focus-between-floating-and-tiling; }
          Mod+Shift+Comma { consume-or-expel-window-left; }
          Mod+Shift+Period { consume-or-expel-window-right; }
          
@@ -187,16 +189,30 @@
      }
      
      window-rule {
+       match title="HELLDIVERS™ 2"
+       open-on-workspace "games"
+       open-fullscreen true
+     }
+     
+     window-rule {
        match app-id=r#"^(Minecraft.*|mincreaft)$"#
-       match app-id=r#"steam_app_.*"#
-       match app-id=r#"^Project Zomboid$"#
+       open-on-workspace "games"
+       open-fullscreen true
+     }
+
+     window-rule {
+
        match app-id=r#"^gamescope$"#
        open-on-workspace "games"
        open-fullscreen true
-
-       exclude title=""
      }
-     
+
+    window-rule {
+       match title="Project Zomboid"
+       open-on-workspace "games"
+       open-fullscreen true
+     }
+
      window-rule {
          match app-id="bambu-studio"
          open-on-workspace "diy"
@@ -225,8 +241,10 @@
      }
 
      window-rule {
-         match app-id="dolphin"
+         match app-id="org.kde.dolphin"
          default-column-width { proportion 0.4; }
+         default-window-height { proportion 0.5; }
+         open-floating true
          opacity 0.9
      }
 

@@ -9,6 +9,9 @@
 ;; Set line numbers
 (setq display-line-numbers-type 'relative)
 
+;; Set shell to bash (fix for Fish shell warning)
+(setq shell-file-name (executable-find "bash"))
+
 ;; Disable mouse
 (when (display-graphic-p)
   (context-menu-mode -1)

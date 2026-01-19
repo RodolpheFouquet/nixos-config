@@ -11,11 +11,20 @@ let
     git
     gh
     wget
+    discount # Markdown compiler
+    html-tidy
+    shellcheck
+    ispell
+    hunspell
+    hunspellDicts.en_US
     fzf
     ripgrep
     direnv
     nodejs_24
     go
+    gomodifytags
+    gotests
+    gore
     killall
     gnumake
     gcc
@@ -72,6 +81,9 @@ let
     # Programming languages and tools
     python3
     python3Packages.pip
+    python3Packages.isort
+    python3Packages.pytest
+    pipenv
     cmake
     ninja
     ccache
@@ -99,6 +111,9 @@ let
     usbutils
     ghostscript
     dnslookup
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+    cobang
 
     # Container tools
     podman
@@ -151,6 +166,18 @@ let
     noctalia-shell
     libsForQt5.qtstyleplugin-kvantum
     kdePackages.qtstyleplugin-kvantum
+
+    # Doom Emacs dependencies
+    rustc
+    cargo
+    rust-analyzer
+    nodePackages.stylelint
+    nodePackages.js-beautify
+    glslang
+    ocamlPackages.dune_3
+    ocamlPackages.utop
+    ocamlPackages.ocp-indent
+    ocamlPackages.merlin
   ];
 
   # macOS-specific packages

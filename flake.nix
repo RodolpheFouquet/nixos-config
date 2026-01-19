@@ -34,8 +34,6 @@
       url = "github:gmodena/nix-flatpak";
     };
 
-    xremap-flake.url = "github:xremap/nix-flake";
-
     # Doom Emacs (Unstraightened fork)
     doom-emacs-unstraightened = {
       url = "github:marienz/nix-doom-emacs-unstraightened";
