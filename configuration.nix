@@ -227,6 +227,7 @@ in
   security.rtkit.enable = true;
 
   services.hardware.openrgb.enable = true;
+  services.gnome.gnome-keyring.enable = true;
   services.upower.enable = true;
   services.tuned.enable = true;
 

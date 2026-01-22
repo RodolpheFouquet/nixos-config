@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   # Niri is configured at system level via configuration.nix
   # This file provides niri config via XDG config files
@@ -56,6 +56,7 @@
 
      spawn-at-startup "xwayland-satellite"
      spawn-at-startup "noctalia-shell"
+     spawn-at-startup "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
 
      spawn-at-startup "blueman-applet"
      spawn-at-startup "google-chrome-stable"
@@ -107,12 +108,12 @@
          Mod+Shift+5 { move-column-to-workspace "diy"; }
          Mod+Shift+6 { move-column-to-workspace "music"; }
 
+        Mod+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }
+        Mod+WheelScrollUp   cooldown-ms=150 { focus-workspace-up; }
+
          // Workspace navigation
          Mod+Shift+Up { focus-workspace-up; }
          Mod+Shift+Down { focus-workspace-down; }
-         
-       //  Mod+Ctrl+Up { move-window-to-workspace-up; }
-      //   Mod+Ctrl+Right { move-column-to-workspace-right; }
          
          // Column management  
          Mod+M { maximize-column; }
@@ -139,181 +140,181 @@
     }
 
 
-     workspace "browser"
-     workspace "chat"
-     workspace "steam"
-     workspace "games"
-     workspace "diy"
-     workspace "music"
+    workspace "browser"
+    workspace "chat"
+    workspace "steam"
+    workspace "games"
+    workspace "diy"
+    workspace "music"
 
-
-     window-rule {
-         clip-to-geometry true
-         geometry-corner-radius 12
-     }
-
-     // Window rules for workspace assignments
-     window-rule {
-         match app-id="google-chrome"
-         open-on-workspace "browser"
-         default-column-width { proportion 0.33333; }
-     }
-
-     window-rule {
-         match app-id="foot"
-         open-on-workspace "browser"
-         default-column-width { proportion 0.33333; }
-     }
 
     window-rule {
-         match app-id="Antigravity"
-         open-on-workspace "browser"
-         default-column-width { proportion 0.33333; }
-     }
+        clip-to-geometry true
+        geometry-corner-radius 12
+    }
 
-     window-rule {
-         match app-id="discord"
-         open-on-workspace "chat"
-     }
+    // Window rules for workspace assignments
+    window-rule {
+        match app-id="google-chrome"
+        open-on-workspace "browser"
+        default-column-width { proportion 0.33333; }
+    }
 
-     window-rule {
-         match app-id="steam"
-         open-on-workspace "steam"
-     }
+    window-rule {
+        match app-id="foot"
+        open-on-workspace "browser"
+        default-column-width { proportion 0.33333; }
+    }
 
-     window-rule {
-         match app-id="org.prismlauncher.PrismLauncher"
-         open-on-workspace "steam"
-         open-maximized false
-         open-maximized-to-edges false
-     }
+    window-rule {
+        match app-id="Antigravity"
+        open-on-workspace "browser"
+        default-column-width { proportion 0.33333; }
+    }
+
+    window-rule {
+        match app-id="discord"
+        open-on-workspace "chat"
+    }
+
+    window-rule {
+        match app-id="steam"
+        open-on-workspace "steam"
+    }
+
+    window-rule {
+        match app-id="org.prismlauncher.PrismLauncher"
+        open-on-workspace "steam"
+        open-maximized false
+        open-maximized-to-edges false
+    }
      
-     window-rule {
+    window-rule {
        match title="HELLDIVERS™ 2"
        open-on-workspace "games"
        open-fullscreen true
-     }
+    }
      
-     window-rule {
+    window-rule {
        match app-id=r#"^(Minecraft.*|mincreaft)$"#
        open-on-workspace "games"
        open-fullscreen true
-     }
+    }
 
-     window-rule {
+    window-rule {
 
        match app-id=r#"^gamescope$"#
        open-on-workspace "games"
        open-fullscreen true
-     }
+    }
 
     window-rule {
        match title="Project Zomboid"
        open-on-workspace "games"
        open-fullscreen true
-     }
+    }
 
-     window-rule {
-         match app-id="bambu-studio"
-         open-on-workspace "diy"
-     }
+    window-rule {
+        match app-id="bambu-studio"
+        open-on-workspace "diy"
+    }
 
-     window-rule {
-         match app-id="Cider"
-         open-on-workspace "music"
-     }
+    window-rule {
+        match app-id="Cider"
+        open-on-workspace "music"
+    }
 
-     // Floating window rules
-     window-rule {
-         match app-id="pavucontrol"
-         open-floating true
-         default-column-width { proportion 0.3; }
-         default-window-height { proportion 0.3; }
-         opacity 0.8
-     }
+    // Floating window rules
+    window-rule {
+        match app-id="pavucontrol"
+        open-floating true
+        default-column-width { proportion 0.3; }
+        default-window-height { proportion 0.3; }
+        opacity 0.8
+    }
 
-     window-rule {
-         match app-id="blueman-manager"
-         open-floating true
-         default-column-width { proportion 0.3; }
-         default-window-height { proportion 0.3; }
-         opacity 0.8
-     }
+    window-rule {
+        match app-id="blueman-manager"
+        open-floating true
+        default-column-width { proportion 0.3; }
+        default-window-height { proportion 0.3; }
+        opacity 0.8
+    }
 
-     window-rule {
-         match app-id="org.kde.dolphin"
-         default-column-width { proportion 0.4; }
-         default-window-height { proportion 0.5; }
-         open-floating true
-         opacity 0.9
-     }
+    window-rule {
+        match app-id="org.kde.dolphin"
+        default-column-width { proportion 0.4; }
+        default-window-height { proportion 0.5; }
+        open-floating true
+        opacity 0.9
+    }
 
-     window-rule {
-         match app-id="bambu-studio"
-         open-on-workspace "diy"
-     }
+    window-rule {
+        match app-id="bambu-studio"
+        open-on-workspace "diy"
+    }
 
-     window-rule {
-         match app-id="Cider"
-         open-on-workspace "music"
-     }
+    window-rule {
+        match app-id="Cider"
+        open-on-workspace "music"
+    }
 
-     // Floating window rules
-     window-rule {
-         match app-id="pavucontrol"
-         open-floating true
-         default-column-width { proportion 0.3; }
-         default-window-height { proportion 0.3; }
-         opacity 0.8
-     }
+    // Floating window rules
+    window-rule {
+        match app-id="pavucontrol"
+        open-floating true
+        default-column-width { proportion 0.3; }
+        default-window-height { proportion 0.3; }
+        opacity 0.8
+    }
 
-     window-rule {
-         match app-id="blueman-manager"
-         open-floating true
-         default-column-width { proportion 0.3; }
-         default-window-height { proportion 0.3; }
-         opacity 0.8
-     }
+    window-rule {
+        match app-id="blueman-manager"
+        open-floating true
+        default-column-width { proportion 0.3; }
+        default-window-height { proportion 0.3; }
+        opacity 0.8
+    }
 
-     window-rule {
-         match app-id="dolphin"
-         default-column-width { proportion 0.4; }
-         opacity 0.9
-     }
+    window-rule {
+        match app-id="dolphin"
+        default-column-width { proportion 0.4; }
+        opacity 0.9
+    }
 
-     animations {
-         slowdown 1.0
+    animations {
+        slowdown 1.0
          
-         window-open {
-             duration-ms 150
-             curve "ease-out-expo"
-         }
+        window-open {
+            duration-ms 150
+            curve "ease-out-expo"
+        }
          
-         window-close {
-             duration-ms 150
-             curve "ease-out-expo"
-         }
+        window-close {
+            duration-ms 150
+            curve "ease-out-expo"
+        }
          
-         horizontal-view-movement {
-             duration-ms 250
-             curve "ease-out-expo"
-         }
+        horizontal-view-movement {
+            duration-ms 250
+            curve "ease-out-expo"
+        }
          
-         workspace-switch {
-             duration-ms 250
-             curve "ease-out-expo"
-         }
-     }
+        workspace-switch {
+            duration-ms 250
+            curve "ease-out-expo"
+        }
+    }
 
-     environment {
-         QT_QPA_PLATFORM "wayland"
-         DISPLAY ":0"
-         WAYLAND_DISPLAY "wayland-1"
-         XDG_SESSION_TYPE "wayland"
-         GDK_BACKEND "wayland,x11"
-         CLUTTER_BACKEND "wayland"
-         SDL_VIDEODRIVER "wayland"
-         _JAVA_AWT_WM_NONREPARENTING "1"
-     }
+    environment {
+        QT_QPA_PLATFORM "wayland"
+        DISPLAY ":0"
+        WAYLAND_DISPLAY "wayland-1"
+        XDG_SESSION_TYPE "wayland"
+        GDK_BACKEND "wayland,x11"
+        CLUTTER_BACKEND "wayland"
+        SDL_VIDEODRIVER "wayland"
+        _JAVA_AWT_WM_NONREPARENTING "1"
+    }
   '';
 }

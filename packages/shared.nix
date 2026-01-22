@@ -114,6 +114,8 @@ let
     nerd-fonts.fira-code
     nerd-fonts.jetbrains-mono
     cobang
+    libreoffice-qt
+    hunspell
 
     # Container tools
     podman

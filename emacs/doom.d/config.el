@@ -25,7 +25,7 @@
 (setq org-directory "~/org/")
 
 ;; Configure projectile
-(setq projectile-project-search-path '("~/Code" "~/.config"))
+(setq projectile-project-search-path '(("~/Code" . 3) "~/.config"))
 
 ;; Configure treemacs
 (setq treemacs-width 30)

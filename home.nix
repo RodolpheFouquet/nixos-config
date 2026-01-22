@@ -103,6 +103,12 @@
     theme=Kvantum-Tokyo-Night
   '';
 
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+  };
+
   home.stateVersion = "25.11";
   programs.home-manager.enable = true;
 }
