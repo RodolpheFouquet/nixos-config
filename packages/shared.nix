@@ -28,6 +28,7 @@ let
     killall
     gnumake
     gcc
+    clang-tools
     zig
     zls
     gopls

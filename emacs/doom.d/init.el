@@ -71,6 +71,7 @@
        (cc +lsp +tree-sitter)         ; C > C++ == 1
        (ocaml +lsp +tree-sitter)      ; an ML with a type system that actually helps
        (go +lsp +tree-sitter)         ; the hipster dialect
+       (gleam +lsp +tree-sitter)
        (zig +lsp +tree-sitter)        ; C, but simpler
        (elixir +lsp +tree-sitter)            ; erlang done right
 

@@ -36,6 +36,37 @@
     plugins = {
       lualine.enable = true;
       web-devicons.enable = true;
+
+      treesitter = {
+        enable = true;
+        settings = {
+          highlight = {
+            enable = true;
+          };
+          indent = {
+            enable = true;
+          };
+          ensure_installed = [
+            "nix"
+            "python"
+            "rust"
+            "gleam"
+            "go"
+            "typescript"
+            "javascript"
+            "lua"
+            "zig"
+            "elixir"
+            "ocaml"
+            "c"
+            "cpp"
+            "markdown"
+            "markdown_inline"
+            "bash"
+          ];
+        };
+      };
+
       lsp = {
         enable = true;
         inlayHints = true;
@@ -61,6 +92,7 @@
           ts_ls.enable = true;
           elixirls.enable = true;
           zls.enable = true;
+          clangd.enable = true;
         };
       };
 
