@@ -12,15 +12,13 @@
 
     ./packages/shared.nix
     ./emacs
-    ./niri
     ./neovim
     ./tmux
-    ./noctalia
+
     ./git
     ./fastfetch
 
     ./foot
-    ./mangowc
     # Import host-specific monitor configuration
     (./hosts + "/${hostType}/monitor.nix")
   ];
@@ -56,8 +54,6 @@
       starship init fish | source
       zoxide init fish | source
       bind \cf tms
-      fastfetch
-      set fish_greeting
     '';
   };
   # WinApps desktop integration

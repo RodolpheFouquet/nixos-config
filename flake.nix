@@ -39,6 +39,16 @@
       url = "github:marienz/nix-doom-emacs-unstraightened";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    dms = {
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -53,21 +63,18 @@
       nixosConfigurations = {
         # Desktop configuration
         desktop = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs; };
+          specialArgs = { inherit inputs; hostName = "vachicorne-desktop"; };
 
           modules = [
             { nixpkgs.hostPlatform = "x86_64-linux"; }
             ./configuration.nix
             ./hosts/desktop/hardware-configuration.nix
             ./hosts/desktop/host.nix
-            (
-              { pkgs, ... }:
-              {
-                imports = [
-                  inputs.nix-flatpak.nixosModules.nix-flatpak
-                ];
-              }
-            )
+            ({
+              imports = [
+                inputs.nix-flatpak.nixosModules.nix-flatpak
+              ];
+            })
 
             home-manager.nixosModules.home-manager
             {
@@ -82,6 +89,32 @@
           ];
         };
 
+        laptopnul = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs; hostName = "laptopnul"; };
+
+          modules = [
+            { nixpkgs.hostPlatform = "x86_64-linux"; }
+            ./configuration.nix
+            ./hosts/laptop/hardware-configuration.nix
+            ./hosts/laptop/host.nix
+            ({
+              imports = [
+                inputs.nix-flatpak.nixosModules.nix-flatpak
+              ];
+            })
+
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.vachicorne = import ./home.nix;
+              home-manager.extraSpecialArgs = {
+                inherit inputs;
+                hostType = "laptop";
+              };
+            }
+          ];
+        };
       };
 
       # Darwin configurations

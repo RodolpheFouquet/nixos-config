@@ -38,7 +38,6 @@
     go
     killall
     gnumake
-    gcc15
     font-awesome
     zig
     zls
@@ -59,6 +58,7 @@
     btop
     iotop
     powertop
+    alacritty
 
     # File management
     yazi
@@ -103,7 +103,6 @@
 
     mangohud
     gamescope
-
 
     prismlauncher
 

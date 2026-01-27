@@ -12,6 +12,7 @@ in
 
 {
   imports = [
+    inputs.dms.nixosModules.dank-material-shell
     # Hardware-specific configuration is now imported in flake.nix per host
     # Your other custom modules
     ./steam
@@ -164,6 +165,7 @@ in
   # Hostname is now set in individual host configurations
   # networking.hostName will be set per host
   networking.networkmanager.enable = true;
+  networking.firewall.allowedTCPPorts = [ 22 ];
 
   # Avahi for network device discovery
   services.avahi = {
@@ -180,6 +182,29 @@ in
     };
   };
 
+  services.openssh = {
+    enable = true;
+    ports = [ 22 ];
+    settings = {
+      PasswordAuthentication = true;
+      AllowUsers = null; # Allows all users by default. Can be [ "user1" "user2" ]
+      UseDns = true;
+      X11Forwarding = false;
+      PermitRootLogin = "prohibit-password"; # "yes", "without-password", "prohibit-password", "forced-commands-only", "no"
+    };
+  };
+
+  programs.dank-material-shell = {
+    enable = true;
+    systemd.enable = true;
+    # Core features
+    enableSystemMonitoring = true; # System monitoring widgets (dgop)
+    enableVPN = true; # VPN management widget
+    enableDynamicTheming = true; # Wallpaper-based theming (matugen)
+    enableAudioWavelength = true; # Audio visualizer (cava)
+    enableCalendarEvents = true; # Calendar integration (khal)
+    enableClipboardPaste = true; # Pasting items from the clipboard (wtype)
+  };
   # --- Localization ---
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";
@@ -195,7 +220,6 @@ in
     LC_TELEPHONE = "en_GB.UTF-8";
     LC_TIME = "en_GB.UTF-8";
   };
-  console.keyMap = "us";
 
   # Udev rule for monitor hotplug detection
   services.udev.extraRules = ''
@@ -311,7 +335,15 @@ in
   programs.fish.enable = true;
   programs.niri.enable = true;
   programs.xwayland.enable = true;
+  programs.dsearch = {
+    enable = true;
 
+    systemd = {
+      enable = true;
+      target = "default.target";
+    };
+ };
+  
   # Set dolphin as default file manager
   xdg.mime.defaultApplications = {
     "inode/directory" = "org.kde.dolphin.desktop";
@@ -445,24 +477,6 @@ in
 
     xwayland-satellite
     niri
-    niriswitcher
-    mangowc
-  ];
-
-  services.displayManager.sessionPackages = [
-    (pkgs.writeTextFile {
-      name = "mangowc-session";
-      destination = "/share/wayland-sessions/mangowc.desktop";
-      text = ''
-        [Desktop Entry]
-        Name=MangoWC
-        Exec=mango
-        Type=Application
-      '';
-      derivationArgs = {
-        passthru.providedSessions = [ "mangowc" ];
-      };
-    })
   ];
 
 }

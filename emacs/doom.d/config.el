@@ -10,7 +10,7 @@
 (setq display-line-numbers-type 'relative)
 
 ;; Set shell to bash (fix for Fish shell warning)
-(setq shell-file-name (executable-find "bash"))
+;;(setq shell-file-name (executable-find "bash"))
 
 ;; Disable mouse
 (when (display-graphic-p)
@@ -25,7 +25,7 @@
 (setq org-directory "~/org/")
 
 ;; Configure projectile
-(setq projectile-project-search-path '(("~/Code" . 3) "~/.config"))
+(setq projectile-project-search-path '(("~/Code" . 1) "~/.config"))
 
 ;; Configure treemacs
 (setq treemacs-width 30)

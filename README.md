@@ -42,7 +42,6 @@ The configuration follows a modular architecture where each component is separat
 ├── niri/                     # Niri compositor configuration and keybinds
 ├── noctalia/                 # Noctalia shell configuration
 ├── hyprpaper/                # Wallpaper management
-├── mangowc/                  # MangoWC session
 ├── neovim/                   # Neovim configuration with LSPs and DAP
 ├── packages/                 # System and user packages
 ├── scripts/                  # Utility scripts
@@ -93,6 +92,23 @@ The configuration follows a modular architecture where each component is separat
 3. **Apply Configuration**:
    ```bash
    sudo nixos-rebuild switch --flake .#desktop
+   ```
+
+### Laptop Setup
+1. **Clone this repository**:
+   ```bash
+   git clone https://github.com/RodolpheFouquet/nixos-config.git /home/$USER/.config/nixos
+   ```
+
+2. **Generate Hardware Config**:
+   ```bash
+   sudo nixos-generate-config --root /mnt
+   cp /mnt/etc/nixos/hardware-configuration.nix /home/$USER/.config/nixos/hosts/laptop/
+   ```
+
+3. **Apply Configuration**:
+   ```bash
+   sudo nixos-rebuild switch --flake .#laptop
    ```
 
 ## ⌨️ Niri Key Shortcuts
