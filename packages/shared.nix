@@ -149,7 +149,12 @@ let
     prismlauncher
     rpi-imager
     protonvpn-gui
+    adw-gtk3
     kdePackages.dolphin
+    kdePackages.qt6ct
+    kdePackages.qtstyleplugin-kvantum
+    libsForQt5.qtstyleplugin-kvantum
+    libsForQt5.qt5ct
 
     # ZMK firmware build toolchain (Linux-specific)
     python3Packages.west
@@ -167,8 +172,6 @@ let
     python3Packages.pyyaml
     python3Packages.zcbor
     noctalia-shell
-    libsForQt5.qtstyleplugin-kvantum
-    kdePackages.qtstyleplugin-kvantum
 
     # Doom Emacs dependencies
     rustc
