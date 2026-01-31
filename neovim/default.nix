@@ -39,6 +39,25 @@
 
       treesitter = {
         enable = true;
+        nixGrammars = true;
+        ensureInstalled = [
+          "nix"
+          "python"
+          "rust"
+          "gleam"
+          "go"
+          "typescript"
+          "javascript"
+          "lua"
+          "zig"
+          "elixir"
+          "ocaml"
+          "c"
+          "cpp"
+          "markdown"
+          "markdown_inline"
+          "bash"
+        ];
         settings = {
           highlight = {
             enable = true;
@@ -46,24 +65,6 @@
           indent = {
             enable = true;
           };
-          ensure_installed = [
-            "nix"
-            "python"
-            "rust"
-            "gleam"
-            "go"
-            "typescript"
-            "javascript"
-            "lua"
-            "zig"
-            "elixir"
-            "ocaml"
-            "c"
-            "cpp"
-            "markdown"
-            "markdown_inline"
-            "bash"
-          ];
         };
       };
 
@@ -337,6 +338,7 @@
       telescope.load_extension('dap')
 
       -- Configure debug adapters
+      require('dap-go').setup()
       dap.adapters.pwa_node = {
         type = "server",
         host = "localhost",
