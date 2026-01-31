@@ -3,7 +3,7 @@
 {
   programs.nixvim = {
     enable = true;
-    defaultEditor = true;
+    defaultEditor = false;
 
     opts = {
       number = true;

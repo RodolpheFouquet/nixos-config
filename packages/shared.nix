@@ -25,6 +25,9 @@ let
     gomodifytags
     gotests
     gore
+    golangci-lint
+    delve
+    impl
     killall
     gnumake
     gcc

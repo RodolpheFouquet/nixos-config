@@ -34,7 +34,8 @@ The configuration follows a modular architecture where each component is separat
 ├── flake.nix                 # Flake configuration with inputs
 ├── hosts/                    # Host-specific configurations
 │   ├── desktop/             # Desktop machine configuration
-│   └── laptop/              # Laptop machine configuration
+│   ├── laptop/              # Laptop machine configuration
+│   └── t440p/               # Lenovo T440p configuration
 ├── display/                  # Display and graphics configuration
 ├── fastfetch/                # System information display configuration
 ├── foot/                     # Foot terminal configuration
@@ -110,6 +111,43 @@ The configuration follows a modular architecture where each component is separat
    ```bash
    sudo nixos-rebuild switch --flake .#laptop
    ```
+
+### Lenovo T440p Installation Guide
+1. **Boot from NixOS ISO**.
+2. **Partition the disk** (assuming UEFI):
+   ```bash
+   # Create GPT partition table
+   parted /dev/sda -- mklabel gpt
+   # ESP partition (512MB)
+   parted /dev/sda -- mkpart ESP fat32 1MiB 512MiB
+   parted /dev/sda -- set 1 esp on
+   # Root partition (remainder)
+   parted /dev/sda -- mkpart primary ext4 512MiB 100%
+   ```
+3. **Format partitions**:
+   ```bash
+   mkfs.vfat -F 32 -n boot /dev/sda1
+   mkfs.ext4 -L nixos /dev/sda2
+   ```
+4. **Mount partitions**:
+   ```bash
+   mount /dev/disk/by-label/nixos /mnt
+   mkdir -p /mnt/boot
+   mount /dev/disk/by-label/boot /mnt/boot
+   ```
+5. **Clone this repository**:
+   ```bash
+   git clone https://github.com/RodolpheFouquet/nixos-config.git /mnt/etc/nixos
+   ```
+6. **Generate Hardware Config**:
+   ```bash
+   nixos-generate-config --root /mnt --show-hardware-config > /mnt/etc/nixos/hosts/t440p/hardware-configuration.nix
+   ```
+7. **Install NixOS**:
+   ```bash
+   nixos-install --flake /mnt/etc/nixos#t440p
+   ```
+8. **Reboot and enjoy!**
 
 ## ⌨️ Niri Key Shortcuts
 
@@ -217,7 +255,32 @@ Most shortcuts follow standard Doom Emacs conventions (Space leader), but specif
 | `Space + w` | Window Management (split, close, move) |
 | `g d` | Go to Definition |
 | `K` | Hover Documentation |
-    
+
+## 🐹 Go Configuration
+
+A comprehensive Go development environment is set up for both Neovim and Emacs, ensuring a consistent experience across editors.
+
+### Features
+- **LSP**: `gopls` provides robust auto-completion, navigation (`gd`), and refactoring.
+- **Formatting**: `goimports` runs on save to format code and manage imports automatically.
+- **Debugging**: Full **DAP** (Debug Adapter Protocol) support via `delve` and `dap-go`/`dap-mode`.
+- **Testing**: Integrated `gotests` for generating table-driven tests.
+- **Linting**: `golangci-lint` available for static analysis.
+- **Tools**: `gomodifytags` (struct tags), `impl` (interface stubs), `gore` (REPL).
+
+### Debugging (DAP)
+Both editors share similar mnemonic keybindings for debugging Go applications:
+
+| Action | Neovim (`<leader>d...`) | Emacs (`SPC d...`) |
+|--------|-------------------------|--------------------|
+| **Toggle Breakpoint** | `b` | `b` |
+| **Continue** | `c` | `c` |
+| **Step Over** | `o` | `o` |
+| **Step Into** | `i` | `i` |
+| **Step Out** | `u` | `u` |
+| **REPL** | `r` | `r` |
+| **Terminate** | `t` | `t` |
+
 ## 🤝 Contributing
 
 Feel free to fork this repository and adapt it for your own use!

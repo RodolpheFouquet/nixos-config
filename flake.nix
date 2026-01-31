@@ -115,6 +115,33 @@
             }
           ];
         };
+
+        t440p = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs; hostName = "t440p"; };
+
+          modules = [
+            { nixpkgs.hostPlatform = "x86_64-linux"; }
+            ./configuration.nix
+            ./hosts/t440p/hardware-configuration.nix
+            ./hosts/t440p/host.nix
+            ({
+              imports = [
+                inputs.nix-flatpak.nixosModules.nix-flatpak
+              ];
+            })
+
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.vachicorne = import ./home.nix;
+              home-manager.extraSpecialArgs = {
+                inherit inputs;
+                hostType = "laptop";
+              };
+            }
+          ];
+        };
       };
 
       # Darwin configurations

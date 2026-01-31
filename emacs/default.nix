@@ -14,11 +14,12 @@
   programs.doom-emacs = {
     enable = true;
     doomDir = ./doom.d;
+    emacs = pkgs.emacs-pgtk;
   };
 
   services.emacs = {
     enable = true;
     client.enable = true;
-    defaultEditor = false; # Prefer Neovim as default editor for now
+    defaultEditor = true;
   };
 }

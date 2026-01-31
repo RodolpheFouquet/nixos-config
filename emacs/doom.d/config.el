@@ -25,7 +25,11 @@
 (setq org-directory "~/org/")
 
 ;; Configure projectile
-(setq projectile-project-search-path '(("~/Code" . 1) "~/.config"))
+(setq projectile-project-search-path '("~/Code" "~/.config"))
+(after! projectile
+  (setq projectile-globally-ignored-directories
+        (append projectile-globally-ignored-directories '("node_modules"))))
+
 
 ;; Configure treemacs
 (setq treemacs-width 30)
@@ -47,6 +51,30 @@
 
 (after! lsp-mode
   (setq lsp-headerline-breadcrumb-enable nil))
+
+;; -----------------------------------------------------------------------------
+;; Go Configuration
+;; -----------------------------------------------------------------------------
+;; Doom Emacs 'go' module (+lsp +tree-sitter) handles most things.
+;; - LSP: gopls (configured in init.el)
+;; - Formatting: gofmt/goimports (on save by default with +lsp)
+;; - Debugging: delve (dap-mode)
+;; - Testing: gotests
+
+(after! go-mode
+  (setq gofmt-command "goimports") ; Use goimports for formatting to handle imports
+  (setq go-fontify-function 'go-mode-fontify) ; Better syntax highlighting
+  
+  ;; keybindings for Go
+  (map! :map go-mode-map
+        :localleader
+        "t" #'go-test-current-test
+        "f" #'go-test-current-file
+        "a" #'go-test-current-project
+        "c" #'go-coverage
+        "i" #'go-goto-imports
+        "r" #'go-remove-unused-imports
+        "R" (cmd! (compile "go run ."))))
 
 ;; Harpoon Keybindings
 (map! :leader
