@@ -10,3 +10,6 @@
 
 ;; Harpoon
 (package! harpoon)
+
+;; Go testing
+(package! gotest)

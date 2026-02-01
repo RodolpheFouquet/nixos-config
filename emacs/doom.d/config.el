@@ -10,7 +10,12 @@
 (setq display-line-numbers-type 'relative)
 
 ;; Set shell to bash (fix for Fish shell warning)
-;;(setq shell-file-name (executable-find "bash"))
+(setq shell-file-name (executable-find "bash"))
+
+(setq-default vterm-shell "/run/current-system/sw/bin/fish")
+(setq-default explicit-shell-file-name
+    "/run/current-system/sw/bin/fish")
+    
 
 ;; Disable mouse
 (when (display-graphic-p)
@@ -20,6 +25,10 @@
 ;; Configure Evil
 (setq evil-want-fine-undo t)
 (setq evil-want-C-u-scroll t)
+
+;; Set default indentation to 2 spaces
+(setq-default tab-width 2
+              standard-indent 2)
 
 ;; Configure org-mode
 (setq org-directory "~/org/")
@@ -63,18 +72,19 @@
 
 (after! go-mode
   (setq gofmt-command "goimports") ; Use goimports for formatting to handle imports
-  (setq go-fontify-function 'go-mode-fontify) ; Better syntax highlighting
+  (setq go-fontify-function 'go-mode-fontify)) ; Better syntax highlighting
   
-  ;; keybindings for Go
-  (map! :map go-mode-map
-        :localleader
-        "t" #'go-test-current-test
-        "f" #'go-test-current-file
-        "a" #'go-test-current-project
-        "c" #'go-coverage
-        "i" #'go-goto-imports
-        "r" #'go-remove-unused-imports
-        "R" (cmd! (compile "go run ."))))
+;; keybindings for Go
+(map! :after go-mode
+      :map (go-mode-map go-ts-mode-map)
+      :localleader
+      "t" #'go-test-current-test
+      "f" #'go-test-current-file
+      "a" #'go-test-current-project
+      "c" #'go-coverage
+      "i" #'go-goto-imports
+      "r" #'go-remove-unused-imports
+      "R" (cmd! (compile "go run .")))
 
 ;; Harpoon Keybindings
 (map! :leader
@@ -106,3 +116,12 @@
 ;; Keybindings
 (map! :leader
       :desc "Toggle treemacs" "t t" #'treemacs)
+
+;; Save buffer before running Go tests
+(defadvice! +go--save-before-test-current-test-a (&rest _)
+  :before #'go-test-current-test
+  (save-buffer))
+
+(defadvice! +go--save-before-test-current-file-a (&rest _)
+  :before #'go-test-current-file
+  (save-buffer))

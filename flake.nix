@@ -59,15 +59,18 @@
       darwin,
       ...
     }@inputs:
+    let 
+      dendriticLoader = import ./lib/dendritic.nix { inherit (nixpkgs) lib; } ./.;
+    in
     {
       nixosConfigurations = {
         # Desktop configuration
         desktop = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs; hostName = "vachicorne-desktop"; };
+          specialArgs = { inherit inputs; hostName = "vachicorne-desktop"; systemType = "nixos"; };
 
           modules = [
             { nixpkgs.hostPlatform = "x86_64-linux"; }
-            ./configuration.nix
+            # ./configuration.nix # Loaded by dendritic
             ./hosts/desktop/hardware-configuration.nix
             ./hosts/desktop/host.nix
             ({
@@ -80,48 +83,49 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.vachicorne = import ./home.nix;
+              home-manager.sharedModules = [ inputs.walker.homeManagerModules.default ];
+              # home-manager.users.vachicorne = import ./home.nix; # Loaded by dendritic
               home-manager.extraSpecialArgs = {
                 inherit inputs;
                 hostType = "desktop";
               };
             }
-          ];
+          ] ++ dendriticLoader;
         };
 
         laptopnul = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs; hostName = "laptopnul"; };
-
-          modules = [
-            { nixpkgs.hostPlatform = "x86_64-linux"; }
-            ./configuration.nix
-            ./hosts/laptop/hardware-configuration.nix
-            ./hosts/laptop/host.nix
-            ({
-              imports = [
-                inputs.nix-flatpak.nixosModules.nix-flatpak
-              ];
-            })
-
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.vachicorne = import ./home.nix;
-              home-manager.extraSpecialArgs = {
-                inherit inputs;
-                hostType = "laptop";
-              };
-            }
-          ];
+                        specialArgs = { inherit inputs; hostName = "laptopnul"; systemType = "nixos"; };
+          
+                        modules = [
+                          { nixpkgs.hostPlatform = "x86_64-linux"; }
+                          # ./configuration.nix # Loaded by dendritic
+                          ./hosts/laptop/hardware-configuration.nix
+                          ./hosts/laptop/host.nix
+                          ({
+                            imports = [
+                              inputs.nix-flatpak.nixosModules.nix-flatpak
+                            ];
+                          })
+          
+                          home-manager.nixosModules.home-manager
+                          {
+                            home-manager.useGlobalPkgs = true;
+                            home-manager.useUserPackages = true;
+                            home-manager.sharedModules = [ inputs.walker.homeManagerModules.default ];
+                            # home-manager.users.vachicorne = import ./home.nix; # Loaded by dendritic
+                            home-manager.extraSpecialArgs = {
+                              inherit inputs;
+                              hostType = "laptop";
+                            };
+                          }          ] ++ dendriticLoader;
         };
 
         t440p = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs; hostName = "t440p"; };
+          specialArgs = { inherit inputs; hostName = "t440p"; systemType = "nixos"; };
 
           modules = [
             { nixpkgs.hostPlatform = "x86_64-linux"; }
-            ./configuration.nix
+            # ./configuration.nix # Loaded by dendritic
             ./hosts/t440p/hardware-configuration.nix
             ./hosts/t440p/host.nix
             ({
@@ -134,13 +138,14 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.vachicorne = import ./home.nix;
+              home-manager.sharedModules = [ inputs.walker.homeManagerModules.default ];
+              # home-manager.users.vachicorne = import ./home.nix; # Loaded by dendritic
               home-manager.extraSpecialArgs = {
                 inherit inputs;
                 hostType = "laptop";
               };
             }
-          ];
+          ] ++ dendriticLoader;
         };
       };
 
@@ -148,7 +153,7 @@
       darwinConfigurations = {
         # Mac Mini configuration
         mac-mini = darwin.lib.darwinSystem {
-          specialArgs = { inherit inputs; };
+          specialArgs = { inherit inputs; hostName = "vachicorne-mac-mini"; systemType = "darwin"; };
 
           modules = [
             { nixpkgs.hostPlatform = "aarch64-darwin"; }
@@ -158,13 +163,14 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.vachicorne = import ./home-darwin.nix;
+              home-manager.sharedModules = [ inputs.walker.homeManagerModules.default ];
+              # home-manager.users.vachicorne = import ./home-darwin.nix; # Loaded by dendritic
               home-manager.extraSpecialArgs = {
                 inherit inputs;
                 hostType = "mac-mini";
               };
             }
-          ];
+          ] ++ dendriticLoader;
         };
       };
     };

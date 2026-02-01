@@ -1,25 +1,20 @@
+{ config, inputs, pkgs, lib, ... }:
 {
-  inputs,
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+  home-manager.users.${config.var.username} = { inputs, pkgs, lib, config, ... }: {
+    imports = [
+      inputs.doom-emacs-unstraightened.hmModule
+    ];
 
-{
-  imports = [
-    inputs.doom-emacs-unstraightened.hmModule
-  ];
+    programs.doom-emacs = {
+      enable = true;
+      doomDir = ./doom.d;
+      emacs = if pkgs.stdenv.isLinux then pkgs.emacs-pgtk else pkgs.emacs;
+    };
 
-  programs.doom-emacs = {
-    enable = true;
-    doomDir = ./doom.d;
-    emacs = pkgs.emacs-pgtk;
-  };
-
-  services.emacs = {
-    enable = true;
-    client.enable = true;
-    defaultEditor = true;
+    services.emacs = lib.mkIf pkgs.stdenv.isLinux {
+      enable = true;
+      client.enable = true;
+      defaultEditor = true;
+    };
   };
 }

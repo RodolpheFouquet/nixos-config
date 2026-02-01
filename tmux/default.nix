@@ -1,41 +1,42 @@
-{ pkgs, ... }:
-
+{ config, pkgs, ... }:
 {
-  programs.tmux = {
-    enable = true;
-    terminal = "screen-256color";
-    historyLimit = 10000;
-    baseIndex = 1;
-    mouse = true;
-    escapeTime = 10;
-    focusEvents = true;
+  home-manager.users.${config.var.username} = { pkgs, ... }: {
+    programs.tmux = {
+      enable = true;
+      terminal = "screen-256color";
+      historyLimit = 10000;
+      baseIndex = 1;
+      mouse = true;
+      escapeTime = 10;
+      focusEvents = true;
 
-    plugins = with pkgs.tmuxPlugins; [
-      sensible
-      resurrect
-      continuum
-      tokyo-night-tmux
-    ];
+      plugins = with pkgs.tmuxPlugins; [
+        sensible
+        resurrect
+        continuum
+        tokyo-night-tmux
+      ];
 
-    extraConfig = ''
-      # Set custom prefix
-      set -g prefix C-a
-      unbind C-b
-      bind-key C-a send-prefix
+      extraConfig = ''
+        # Set custom prefix
+        set -g prefix C-a
+        unbind C-b
+        bind-key C-a send-prefix
 
-      # Set pane numbering to start from 1
-      set-option -g pane-base-index 1
+        # Set pane numbering to start from 1
+        set-option -g pane-base-index 1
 
-      # Configure continuum plugin
-      set -g @continuum-restore 'on'
+        # Configure continuum plugin
+        set -g @continuum-restore 'on'
 
-      # Sessionizer shortcut
-      bind-key f run-shell "tmux new-window tms"
+        # Sessionizer shortcut
+        bind-key f run-shell "tmux new-window tms"
+      '';
+    };
+    xdg.configFile."tms/config.toml".text = ''
+      search_dirs = [
+        { path = "${config.var.userHome}/Code", depth = 2 }
+      ]
     '';
   };
-  xdg.configFile."tms/config.toml".text = ''
-    search_dirs = [
-      { path = "/home/vachicorne/Code", depth = 2 }
-    ]
-  '';
 }

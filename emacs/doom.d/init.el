@@ -22,6 +22,7 @@
        (evil +everywhere); come to the dark side, we have cookies
        file-templates    ; auto-snippets for empty files
        fold              ; (nigh) universal code folding
+       (format +onsave)  ; automated prettiness
        multiple-cursors  ; editing in many places at once
        snippets          ; my elves. They type so I don't have to
 
@@ -42,6 +43,7 @@
        :tools
        direnv
        docker
+       editorconfig      ; let someone else argue about tabs vs spaces
        (eval +overlay)     ; run code, run (also, repls)
        lookup              ; navigate your code and its documentation
        (lsp +peek)               ; M-x vscode

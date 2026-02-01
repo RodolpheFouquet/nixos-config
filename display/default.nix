@@ -3,7 +3,7 @@
 let
   isDesktop = hostName == "vachicorne-desktop";
 in
-{
+lib.mkIf pkgs.stdenv.isLinux {
   services.xserver.videoDrivers = lib.mkIf isDesktop [ "nvidia" ];
   services.xserver.enable = true;
 

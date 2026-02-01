@@ -1,11 +1,8 @@
-{ pkgs, lib, ... }:
-let
-  vars = import ../variables.nix;
-in
-{
+{ config, pkgs, lib, ... }:
+lib.mkIf pkgs.stdenv.isLinux {
   programs.virt-manager.enable = true;
 
-  users.groups.libvirtd.members = [ "${vars.username}" ];
+  users.groups.libvirtd.members = [ "${config.var.username}" ];
 
   virtualisation.libvirtd.enable = true;
 
@@ -20,25 +17,4 @@ in
     libguestfs-with-appliance
     guestfs-tools
   ];
-
-  # VM Memory Manager Service
-  #  systemd.services.vm-memory-manager = {
-  #    description = "VM Memory Manager - Automatic memory ballooning";
-  #    after = [ "libvirtd.service" ];
-  #    wantedBy = [ "multi-user.target" ];
-  #
-  #    serviceConfig = {
-  #      Type = "simple";
-  #      ExecStart = "${pkgs.bash}/bin/bash /home/vachicorne/.config/nixos/scripts/vm-memory-manager.sh";
-  #      Restart = "always";
-  #      RestartSec = "10";
-  #      User = "root";
-  #      Group = "libvirtd";
-  #    };
-  #
-  #    environment = {
-  #      PATH = lib.mkForce "${pkgs.libvirt}/bin:${pkgs.coreutils}/bin:${pkgs.gawk}/bin:${pkgs.gnugrep}/bin";
-  #    };
-  #  };
-
 }
