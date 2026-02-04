@@ -9,10 +9,12 @@
       ./monitor.nix
     ];
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # Bootloader
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.useOSProber = true; # Useful for dual booting if needed
 
+  # Networking.
   networking.hostName = "t440p";
 
   # Enable networking

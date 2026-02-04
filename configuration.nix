@@ -20,37 +20,6 @@
       "nix-command"
       "flakes"
     ];
-    boot.loader.systemd-boot.enable = true;
-    boot.loader.efi.canTouchEfiVariables = true;
-
-    # Dual boot configuration
-    boot.loader.grub = {
-      enable = false; # We're using systemd-boot, not GRUB
-    };
-
-    # Configure systemd-boot for dual boot
-    boot.loader.systemd-boot.configurationLimit = 10;
-    boot.loader.timeout = 10;
-
-    # Add Windows boot entry
-    boot.loader.systemd-boot.extraEntries."windows.conf" = ''
-      title Windows 11
-      efi /EFI/Microsoft/Boot/bootmgfw.efi
-    '';
-
-    # Mount Windows EFI partition to make it available
-    fileSystems."/boot/windows-efi" = {
-      device = "/dev/nvme1n1p1";
-      fsType = "vfat";
-      options = [
-        "umask=0077"
-        "dmask=0077"
-        "fmask=0177"
-        "uid=1000"
-        "gid=1000"
-        "nofail"
-      ];
-    };
 
     # TrueNAS SMB share mount for backups
     fileSystems."/mnt/truenas_backup" = {
