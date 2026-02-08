@@ -27,9 +27,15 @@ lib.mkIf pkgs.stdenv.isLinux {
   ]);
 
   services.displayManager.dms-greeter = {
-    enable = true;
+    enable = config.var.desktop == "niri";
     compositor.name = "niri"; # Or "hyprland" or "sway"
   };
+
+  services.displayManager.sddm = {
+    enable = config.var.desktop == "kde";
+    wayland.enable = true;
+  };
+  services.desktopManager.plasma6.enable = config.var.desktop == "kde";
 
   # NVIDIA application profiles for niri compositor optimization
   environment.etc."nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool-in-wayland-compositors.json" =

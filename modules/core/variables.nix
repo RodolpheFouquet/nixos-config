@@ -14,5 +14,10 @@ in
       default = if pkgs.stdenv.isDarwin then "/Users/${cfg.username}" else "/home/${cfg.username}";
       description = "The home directory of the primary user";
     };
+    desktop = lib.mkOption {
+      type = lib.types.enum [ "niri" "kde" ];
+      default = "niri";
+      description = "The desktop environment to use";
+    };
   };
 }

@@ -160,7 +160,7 @@
     };
 
     programs.dank-material-shell = {
-      enable = true;
+      enable = config.var.desktop == "niri";
       systemd.enable = true;
       # Core features
       enableSystemMonitoring = true; # System monitoring widgets (dgop)
@@ -298,7 +298,7 @@
       };
     };
     programs.fish.enable = true;
-    programs.niri.enable = true;
+    programs.niri.enable = config.var.desktop == "niri";
     programs.xwayland.enable = true;
     programs.dsearch = {
       enable = true;
