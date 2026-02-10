@@ -9,7 +9,6 @@
 
 {
   imports = lib.optionals (systemType == "nixos") [
-    inputs.dms.nixosModules.dank-material-shell
     # Hardware-specific configuration is now imported in flake.nix per host
     # Your other custom modules
   ];
@@ -48,6 +47,7 @@
       "exfat"
       "ntfs"
     ];
+    boot.kernelParams = [ "nvidia-drm.fbdev=1" ];
 
     # Enable cross compilation for ARM64 and other architectures
     boot.binfmt.emulatedSystems = [
@@ -120,8 +120,7 @@
               platforms = [ "x86_64-linux" ];
             };
           }
-        )
-        { };
+        ) { };
 
       })
     ];
@@ -159,17 +158,20 @@
       };
     };
 
-    programs.dank-material-shell = {
-      enable = config.var.desktop == "niri";
-      systemd.enable = true;
-      # Core features
-      enableSystemMonitoring = true; # System monitoring widgets (dgop)
-      enableVPN = true; # VPN management widget
-      enableDynamicTheming = true; # Wallpaper-based theming (matugen)
-      enableAudioWavelength = true; # Audio visualizer (cava)
-      enableCalendarEvents = true; # Calendar integration (khal)
-      enableClipboardPaste = true; # Pasting items from the clipboard (wtype)
+    # Enable Plasma
+    services.desktopManager.plasma6.enable = true;
+
+    # Default display manager for Plasma
+    services.displayManager.sddm = {
+      enable = true;
+
+      # To use Wayland (Experimental for SDDM)
+      wayland.enable = true;
     };
+
+    # Optionally enable xserver
+    services.xserver.enable = true;
+
     # --- Localization ---
     time.timeZone = "Europe/London";
     i18n.defaultLocale = "en_GB.UTF-8";
@@ -298,7 +300,7 @@
       };
     };
     programs.fish.enable = true;
-    programs.niri.enable = config.var.desktop == "niri";
+    programs.dconf.enable = true;
     programs.xwayland.enable = true;
     programs.dsearch = {
       enable = true;
@@ -307,8 +309,8 @@
         enable = true;
         target = "default.target";
       };
-   };
-    
+    };
+
     # Set dolphin as default file manager
     xdg.mime.defaultApplications = {
       "inode/directory" = "org.kde.dolphin.desktop";
@@ -320,7 +322,7 @@
       Type=Application
       Name=Yazi File Manager
       Comment=Blazing fast terminal file manager
-      Exec=foot yazi %f
+      Exec=ghostty -e yazi %f
       Icon=folder
       Terminal=false
       MimeType=inode/directory;
@@ -439,9 +441,6 @@
       cifs-utils
       samba
       cider
-
-      xwayland-satellite
-      niri
     ];
   };
 }

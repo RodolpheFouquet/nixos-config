@@ -16,7 +16,6 @@ Welcome to my personal VachixOS configuration! This repository contains a compre
 
 This configuration transforms a standard NixOS installation into a powerful, secure, and efficient workstation featuring:
 
-- **Niri** as the Scrollable Tiling Wayland Compositor
 - **Noctalia** for the desktop shell and panel
 - **NVIDIA gaming optimizations** with persistent shader caching
 - **Security hardening** with automatic screen locking and system protections
@@ -38,26 +37,20 @@ The configuration follows a modular architecture where each component is separat
 │   └── t440p/               # Lenovo T440p configuration
 ├── display/                  # Display and graphics configuration
 ├── fastfetch/                # System information display configuration
-├── foot/                     # Foot terminal configuration
+├── ghostty/                  # Ghostty terminal configuration
 ├── git/                      # Git configuration and aliases
-├── niri/                     # Niri compositor configuration and keybinds
 ├── noctalia/                 # Noctalia shell configuration
 ├── hyprpaper/                # Wallpaper management
 ├── neovim/                   # Neovim configuration with LSPs and DAP
 ├── packages/                 # System and user packages
 ├── scripts/                  # Utility scripts
 ├── steam/                    # Gaming and Steam optimizations
-└── tmux/                     # Terminal multiplexer setup
+├── tmux/                     # Terminal multiplexer setup
+├── xmonad/                   # XMonad window manager configuration
+└── walker/                   # Walker application launcher
 ```
 
 ## ✨ Key Features
-
-### 💻 Niri Desktop Experience
-- **Infinite Scrollable Tiling**: Windows are arranged in columns on an infinite horizontal strip.
-- **Noctalia Shell**: Provides the top panel, launcher, and system indicators.
-- **XWayland Satellite**: For excellent X11 application support.
-- **Kvantum Theming**: Tokyo Night theme applied to Qt applications.
-- **Animations**: Smooth window opening, closing, and movement.
 
 ### 🔒 Security & Privacy
 - **Automatic screen locking** (Hyprlock)
@@ -74,7 +67,7 @@ The configuration follows a modular architecture where each component is separat
 - **NixVim** with comprehensive LSP support
 - **Git workflow optimizations** with diff-so-fancy and smart aliases
 - **Tmux** with sessionizer for rapid project switching
-- **Foot** terminal with fast GPU acceleration
+- **Ghostty** terminal with fast GPU acceleration
 
 ## 🚀 Quick Start
 
@@ -148,46 +141,6 @@ The configuration follows a modular architecture where each component is separat
    nixos-install --flake /mnt/etc/nixos#t440p
    ```
 8. **Reboot and enjoy!**
-
-## ⌨️ Niri Key Shortcuts
-
-### Window & Column Management
-| Shortcut | Action |
-|----------|--------|
-| `Super + H/L` | Focus column Left/Right |
-| `Super + J/K` | Focus window Down/Up |
-| `Super + Ctrl + H/L` | Move column Left/Right |
-| `Super + Ctrl + J/K` | Move window Down/Up |
-| `Super + D` | Close window |
-| `Super + F` | Fullscreen window |
-| `Super + W` | Toggle floating window |
-| `Super + Minus/Plus` | Decrease/Increase column width |
-| `Super + M` | Maximize column |
-| `Super + Tab` | Switch focus between floating/tiling |
-
-### Workspace Navigation
-| Shortcut | Action |
-|----------|--------|
-| `Super + 1-6` | Focus workspace 1-6 |
-| `Super + Shift + 1-6` | Move column to workspace 1-6 |
-| `Super + Shift + Up/Down` | Focus workspace Up/Down |
-
-### Application Launchers
-| Shortcut | Action |
-|----------|--------|
-| `Super + Return` | Open Terminal (Foot) |
-| `Super + G` | Open Browser (Chrome) |
-| `Super + R` | Application Launcher (Noctalia) |
-| `Super + E` | File Manager (Dolphin) |
-| `Super + Shift + L` | Lock Screen |
-| `Super + Shift + Slash` | Show Hotkey Overlay |
-| `Super + Space` | Open Overview |
-
-### Screenshots
-| Shortcut | Action |
-|----------|--------|
-| `Super + P` | Screenshot selection |
-| `Super + Shift + P` | Screenshot full screen |
 
 ## 🍎 Mac-Style Shortcuts (via Xremap)
 

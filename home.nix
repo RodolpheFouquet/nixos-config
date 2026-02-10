@@ -73,28 +73,8 @@ lib.mkIf pkgs.stdenv.isLinux {
 
     qt = {
       enable = true;
-      platformTheme.name = "kvantum";
-      style.name = "kvantum";
-    };
-
-    xdg.configFile."Kvantum/TokyoNight".source = "${
-      pkgs.fetchFromGitHub {
-        owner = "Fausto-Korpsvart";
-        repo = "Tokyo-Night-GTK-Theme";
-        rev = "master";
-        sha256 = "sha256-7H2n9wTaW8Db1RejWK071ITV1j5KIuzfql0Tx9WT6zM=";
-      }
-    }/themes/Tokyo-Night/kvantum";
-
-    xdg.configFile."Kvantum/kvantum.kvconfig".text = ''
-      [General]
-      theme=Kvantum-Tokyo-Night
-    '';
-
-    dconf.settings = {
-      "org/gnome/desktop/interface" = {
-        color-scheme = "prefer-dark";
-      };
+      platformTheme.name = "kde";
+      style.name = "breeze";
     };
 
     home.stateVersion = "25.11";

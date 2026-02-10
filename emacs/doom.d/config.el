@@ -27,8 +27,28 @@
 (setq evil-want-C-u-scroll t)
 
 ;; Set default indentation to 2 spaces
-(setq-default tab-width 2
+(setq-default indent-tabs-mode nil
+              tab-width 2
               standard-indent 2)
+(setq js-indent-level 2
+      typescript-indent-level 2
+      json-indent-level 2
+      c-basic-offset 2
+      nix-indent-level 2
+      python-indent-offset 2
+      coffee-tab-width 2
+      web-mode-markup-indent-offset 2
+      web-mode-css-indent-offset 2
+      web-mode-code-indent-offset 2
+      css-indent-offset 2
+      sh-basic-offset 2
+      sh-indentation 2
+      rust-indent-offset 2
+      elixir-ts-indent-offset 2
+      ocaml-indent-level 2
+      lua-indent-level 2
+      zig-indent-offset 2
+      cmake-tab-width 2)
 
 ;; Configure org-mode
 (setq org-directory "~/org/")
@@ -46,6 +66,12 @@
 ;; Configure which-key
 (setq which-key-idle-delay 0.3)
 
+;; Configure Vertico to allow creating files with similar names
+;; When the input doesn't exactly match, RET will use the input (create new file)
+;; instead of selecting the fuzzy match
+(after! vertico
+  (setq vertico-preselect 'prompt))
+
 ;; Configure company
 (setq company-idle-delay 0.2)
 (setq company-minimum-prefix-length 2)
@@ -56,7 +82,9 @@
 (setq lsp-ui-doc-show-with-mouse nil)
 (setq lsp-signature-auto-activate nil)
 (setq lsp-eldoc-render-all nil)
-(setq lsp-ui-sideline-enable nil)
+(setq lsp-ui-sideline-enable t)
+(setq lsp-ui-sideline-show-diagnostics t)
+(setq lsp-lens-enable t)
 
 (after! lsp-mode
   (setq lsp-headerline-breadcrumb-enable nil))
@@ -71,8 +99,14 @@
 ;; - Testing: gotests
 
 (after! go-mode
+  (setq tab-width 2)
   (setq gofmt-command "goimports") ; Use goimports for formatting to handle imports
   (setq go-fontify-function 'go-mode-fontify)) ; Better syntax highlighting
+
+;; Configure Apheleia to use goimports
+(after! apheleia
+  (setf (alist-get 'go-mode apheleia-mode-alist) '(goimports))
+  (setf (alist-get 'go-ts-mode apheleia-mode-alist) '(goimports)))
   
 ;; keybindings for Go
 (map! :after go-mode
@@ -113,15 +147,35 @@
       :desc "Terminate" "t" #'dap-disconnect
       :desc "REPL" "r" #'dap-ui-repl)
 
+;; File creation helper function
+(defun create-new-file (filename)
+  "Create a new file with FILENAME and open it for editing."
+  (interactive "FCreate file: ")
+  (let ((dir (file-name-directory filename)))
+    (when (and dir (not (file-exists-p dir)))
+      (make-directory dir t)))
+  (find-file filename))
+
 ;; Keybindings
 (map! :leader
-      :desc "Toggle treemacs" "t t" #'treemacs)
+      :desc "Toggle treemacs" "t t" #'treemacs
+      :desc "Create new file" "f n" #'create-new-file)
 
-;; Save buffer before running Go tests
+;; Alternative: Use C-c n to create new file quickly
+(map! :map global-map
+      :desc "Create new file" "C-c n" #'create-new-file)
+
+;; Save all buffers before running Go tests (fixes "All files must be saved" error from gopls)
 (defadvice! +go--save-before-test-current-test-a (&rest _)
   :before #'go-test-current-test
-  (save-buffer))
+  (save-some-buffers t))
 
 (defadvice! +go--save-before-test-current-file-a (&rest _)
   :before #'go-test-current-file
-  (save-buffer))
+  (save-some-buffers t))
+
+;; Save all buffers when clicking LSP Code Lenses (e.g. "Run test")
+(after! lsp-mode
+  (defadvice! +lsp--save-before-lens-click-a (&rest _)
+    :before #'lsp-lens-click
+    (save-some-buffers t)))

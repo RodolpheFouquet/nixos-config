@@ -15,8 +15,8 @@ in
       description = "The home directory of the primary user";
     };
     desktop = lib.mkOption {
-      type = lib.types.enum [ "niri" "kde" ];
-      default = "niri";
+      type = lib.types.enum [ "kde" ];
+      default = "kde";
       description = "The desktop environment to use";
     };
   };

@@ -141,7 +141,16 @@
 
 ;; Additional settings
 (setq-default indent-tabs-mode nil
-              tab-width 2)
+              tab-width 2
+              standard-indent 2)
+(setq js-indent-level 2
+      typescript-indent-level 2
+      json-indent-level 2
+      c-basic-offset 2
+      nix-indent-level 2
+      python-indent-offset 2
+      sh-basic-offset 2
+      sh-indentation 2)
 (electric-pair-mode 1)
 (show-paren-mode 1)
 (global-auto-revert-mode 1)
