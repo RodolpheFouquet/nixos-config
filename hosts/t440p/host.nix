@@ -1,13 +1,17 @@
 # Lenovo T440p specific configuration
 
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
-  imports =
-    [ 
-      ./hardware-configuration.nix
-      ./monitor.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ./monitor.nix
+  ];
 
   # Bootloader
   boot.loader.grub.enable = true;
@@ -20,6 +24,39 @@
   # Enable networking
   networking.networkmanager.enable = true;
   networking.firewall.allowedTCPPorts = [ 22 ];
+  environment.systemPackages = with pkgs; [
+    intel-undervolt
+    stress-ng # Added for testing
+    pciutils # Useful for verifying hardware
+    neovim
+    wget
+    git
+    undervolt
+    s-tui
+    lm_sensors
+  ];
+
+  # Create a custom service to apply your tuned settings
+  systemd.services.undervolt-tuning = {
+    description = "Apply custom undervolt and power limits to i7-4980HQ";
+
+    # Run after the system is initialized and after waking from sleep
+    after = [
+      "multi-user.target"
+      "post-resume.target"
+    ];
+    wantedBy = [
+      "multi-user.target"
+      "post-resume.target"
+    ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      # The exact command you verified, using the absolute path to the binary
+      ExecStart = "${pkgs.undervolt}/bin/undervolt -v --core -85 --cache -85 --gpu -40 -p1 55 120 -p2 60 0.002";
+      StandardOutput = "journal";
+    };
+  };
 
   services.openssh = {
     enable = true;
@@ -64,17 +101,16 @@
   users.users.vachicorne = {
     isNormalUser = true;
     description = "vachicorne";
-    extraGroups = [ "networkmanager" "wheel" "video" "audio" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "video"
+      "audio"
+    ];
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  environment.systemPackages = with pkgs; [
-    neovim
-    wget
-    git
-  ];
 
   # T440p specific tweaks
   # Enable touch pad support (libinput is default)

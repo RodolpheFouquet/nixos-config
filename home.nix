@@ -23,6 +23,7 @@ lib.mkIf pkgs.stdenv.isLinux {
     # Configure NPM to use ~/.local as prefix (binaries go to ~/.local/bin)
     home.sessionVariables = {
       NPM_CONFIG_PREFIX = "$HOME/.local";
+      DOCKER_HOST = "unix:///run/user/1000/podman/podman.sock";
     };
 
     # Ensure ~/.local/bin exists
