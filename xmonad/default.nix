@@ -7,7 +7,9 @@
   };
 
   # Configure PAM for betterlockscreen
-  security.pam.services.betterlockscreen = {};
+  security.pam.services.betterlockscreen.text = "auth include login";
+  security.pam.services.i3lock.text = "auth include login";
+  security.pam.services.i3lock-color.text = "auth include login";
 
   # Configure XMonad and Xmobar via Home Manager
   home-manager.users.${config.var.username} = { pkgs, ... }: {
