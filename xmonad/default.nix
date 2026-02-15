@@ -12,7 +12,11 @@
   security.pam.services.i3lock-color.text = "auth include login";
 
   # Configure XMonad and Xmobar via Home Manager
-  home-manager.users.${config.var.username} = { pkgs, ... }: {
+  home-manager.users.${config.var.username} = { pkgs, hostType, ... }:
+    let
+      barWidth = if hostType == "desktop" then "3720" else "1800";
+    in
+    {
     
     xsession.windowManager.xmonad = {
       enable = true;
@@ -128,7 +132,7 @@
 
     programs.xmobar = {
       enable = true;
-      extraConfig = builtins.readFile ./xmobarrc;
+      extraConfig = builtins.replaceStrings [ "width = 3720" ] [ "width = ${barWidth}" ] (builtins.readFile ./xmobarrc);
     };
 
     services.picom = {
