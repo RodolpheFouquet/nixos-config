@@ -21,6 +21,7 @@
         import XMonad
         import XMonad.Hooks.DynamicLog
         import XMonad.Hooks.ManageDocks
+        import XMonad.Hooks.ManageHelpers
         import XMonad.Util.Run(spawnPipe)
         import XMonad.Util.EZConfig(additionalKeys, additionalKeysP)
         import XMonad.Util.SpawnOnce
@@ -59,9 +60,9 @@
             , className =? "Discord"     --> doShift "chat"
             , className =? "Cider"       --> doShift "music"
             , className =? "cider"       --> doShift "music"
-            , className =? "gamescope"   --> doShift "games"
+            , className =? "gamescope"   --> (doShift "games" <+> doFullFloat)
             , className =? "snapmaker-orca" --> doShift "diy"
-            , isSteamGame                --> doShift "games"
+            , isSteamGame                --> (doShift "games" <+> doFullFloat)
             ] <+> namedScratchpadManageHook scratchpads
           where
             isSteamGame = className >>= \c -> return ("steam_app_" `isPrefixOf` c)
