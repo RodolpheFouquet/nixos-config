@@ -12,7 +12,6 @@
   };
   # Configure PAM for betterlockscreen
 
-  services.betterlockscreen.enable = true;
   security.pam.services.betterlockscreen = { };
 
   # Configure XMonad and Xmobar via Home Manager
