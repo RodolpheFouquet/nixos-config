@@ -32,7 +32,7 @@
         impl
         killall
         gnumake
-        gcc
+        # gcc (Removed to avoid conflict with clang)
         clang-tools
         zig
         zls
@@ -107,6 +107,7 @@
         discord
         ghostty
         google-chrome
+        clang
         orca-slicer
         pavucontrol
         grim
@@ -188,6 +189,9 @@
         python3Packages.pyyaml
         python3Packages.zcbor
         noctalia-shell
+        rofi
+        feh
+        betterlockscreen
 
         # Doom Emacs dependencies
         rustc

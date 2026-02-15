@@ -78,6 +78,19 @@ lib.mkIf pkgs.stdenv.isLinux {
       style.name = "breeze";
     };
 
+    home.pointerCursor = {
+      name = "Bibata-Modern-Classic";
+      package = pkgs.bibata-cursors;
+      size = 24;
+      gtk.enable = true;
+      x11.enable = true;
+    };
+
+    xresources.properties = {
+      "Xcursor.size" = 24;
+      "Xft.dpi" = 96;
+    };
+
     home.stateVersion = "25.11";
     programs.home-manager.enable = true;
   };

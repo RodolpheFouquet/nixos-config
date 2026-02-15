@@ -13,6 +13,13 @@
     variant = "alt-intl";
   };
 
+  # Monitor hotplug management (X11)
+  services.autorandr.enable = true;
+
+  imports = [
+    ../../modules/services/backup.nix
+  ];
+
   # BTRFS autoscrub configuration
   # services.btrfs.autoScrub = {
   #   enable = true;

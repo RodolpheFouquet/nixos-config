@@ -188,12 +188,6 @@
       LC_TIME = "en_GB.UTF-8";
     };
 
-    # Udev rule for monitor hotplug detection
-    services.udev.extraRules = ''
-      # KVM monitor hotplug detection
-      SUBSYSTEM=="drm", ACTION=="change", RUN+="${pkgs.systemd}/bin/systemd-run --user --no-block ${config.var.userHome}/.config/nixos/scripts/monitor-hotplug.sh"
-    '';
-
     # --- User Definition ---
     users.users.${config.var.username} = {
       isNormalUser = true;
@@ -401,33 +395,6 @@
 
     # Faster boot
     boot.tmp.cleanOnBoot = true;
-
-    # Restic backup service
-    systemd.services.restic-backup = {
-      description = "Restic Home Directory Backup";
-      serviceConfig = {
-        Type = "oneshot";
-        User = "root";
-        ExecStart = "${config.var.userHome}/.config/nixos/scripts/restic-backup.sh";
-      };
-      path = with pkgs; [
-        restic
-        cifs-utils
-        bash
-        coreutils
-      ];
-    };
-
-    # Restic backup timer (daily at 2 AM)
-    systemd.timers.restic-backup = {
-      description = "Run Restic backup daily";
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnCalendar = "02:00";
-        Persistent = true;
-        RandomizedDelaySec = "30m";
-      };
-    };
 
     # Set the system state version
     system.stateVersion = "25.11";

@@ -1,12 +1,12 @@
-Config { font = "xft:FiraCode Nerd Font:pixelsize=11:antialias=true:hinting=true"
+Config { font = "xft:FiraCode Nerd Font:pixelsize=12:antialias=true:hinting=true"
        , additionalFonts = []
        , borderColor = "#1a1b26"
-       , border = BottomB
+       , border = FullB
+       , borderWidth = 2
        , bgColor = "#1a1b26"
        , fgColor = "#a9b1d6"
-       , alpha = 255
-       , position = Top
-       , textOffset = -1
+       , alpha = 240
+       , position = Static { xpos = 60, ypos = 15, width = 3720, height = 30 }
        , iconOffset = -1
        , lowerOnStart = True
        , pickBroadest = False
@@ -15,14 +15,15 @@ Config { font = "xft:FiraCode Nerd Font:pixelsize=11:antialias=true:hinting=true
        , iconRoot = "."
        , allDesktops = True
        , overrideRedirect = True
-       , commands = [ Run Cpu ["-L","3","-H","50",
-                               "--normal","#9ece6a","--high","#f7768e"] 10
+       , commands = [ Run Cpu ["-L","3","-H","50","--normal","#9ece6a","--high","#f7768e"] 10
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
                     , Run Swap [] 10
+                    , Run DynNetwork ["-t","<dev>: <rx>|<tx>"] 10
+                    , Run Volume "default" "Master" ["-t", "Vol: <volume>% <status>"] 10
                     , Run Date "%a %b %_d %H:%M" "date" 10
                     , Run StdinReader
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %cpu% | %memory% | <fc=#7aa2f7>%date%</fc>"
+       , template = "    %StdinReader% }{ %cpu% | %memory% | %dynnetwork% | %default:Master% | <fc=#7aa2f7>%date%</fc>    "
        }

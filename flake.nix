@@ -20,11 +20,6 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    walker = {
-      url = "github:abenz1267/walker";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     winapps = {
       url = "github:winapps-org/winapps";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -73,7 +68,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.sharedModules = [ inputs.walker.homeManagerModules.default ];
+              home-manager.backupFileExtension = "backup";
               # home-manager.users.vachicorne = import ./home.nix; # Loaded by dendritic
               home-manager.extraSpecialArgs = {
                 inherit inputs;
@@ -101,7 +96,6 @@
                           {
                             home-manager.useGlobalPkgs = true;
                             home-manager.useUserPackages = true;
-                            home-manager.sharedModules = [ inputs.walker.homeManagerModules.default ];
                             # home-manager.users.vachicorne = import ./home.nix; # Loaded by dendritic
                             home-manager.extraSpecialArgs = {
                               inherit inputs;
@@ -128,7 +122,6 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.sharedModules = [ inputs.walker.homeManagerModules.default ];
               # home-manager.users.vachicorne = import ./home.nix; # Loaded by dendritic
               home-manager.extraSpecialArgs = {
                 inherit inputs;
@@ -153,7 +146,6 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.sharedModules = [ inputs.walker.homeManagerModules.default ];
               # home-manager.users.vachicorne = import ./home-darwin.nix; # Loaded by dendritic
               home-manager.extraSpecialArgs = {
                 inherit inputs;

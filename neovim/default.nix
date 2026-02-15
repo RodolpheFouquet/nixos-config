@@ -1,44 +1,49 @@
 { config, pkgs, ... }:
 {
-  home-manager.users.${config.var.username} = { pkgs, ... }: {
-    programs.nixvim = {
-      enable = true;
-      defaultEditor = false;
-
-      opts = {
-        number = true;
-        relativenumber = true;
-        mouse = "";
-        clipboard = "unnamedplus";
-        tabstop = 2;
-        shiftwidth = 2;
-        expandtab = true;
-      };
-
-      colorschemes.gruvbox = {
-        enable = false;
-      };
-
-      colorschemes.tokyonight = {
-        enable = true;
-      };
-
-      diagnostic.settings = {
-        virtualText = {
+      home-manager.users.${config.var.username} = { pkgs, ... }: {
+        xdg.configFile."clangd/config.yaml".text = ''
+          CompileFlags:
+            Add: [-std=c++23]
+        '';
+  
+        programs.nixvim = {
           enable = true;
-          # Show virtual text for warnings and errors
-          severityMin = "Warn";
-        };
-        signs.enable = true;
-        underline.enable = true;
-      };
-
-      plugins = {
-        lualine.enable = true;
-        web-devicons.enable = true;
-
-        treesitter = {
-          enable = true;
+          defaultEditor = false;
+  
+          opts = {
+            number = true;
+            relativenumber = true;
+            mouse = "";
+            clipboard = "unnamedplus";
+            tabstop = 2;
+            shiftwidth = 2;
+            expandtab = true;
+          };
+  
+          colorschemes.gruvbox = {
+            enable = false;
+          };
+  
+          colorschemes.tokyonight = {
+            enable = true;
+          };
+  
+          diagnostic.settings = {
+            virtualText = {
+              enable = false;
+              # Show virtual text for warnings and errors
+              severityMin = "Warn";
+            };
+            signs.enable = true;
+            underline.enable = true;
+          };
+  
+          plugins = {
+            lualine.enable = true;
+            web-devicons.enable = true;
+            lsp-lines.enable = true;
+  
+            treesitter = {          enable = true;
           nixGrammars = true;
           ensureInstalled = [
             "nix"
@@ -93,7 +98,12 @@
             ts_ls.enable = true;
             elixirls.enable = true;
             zls.enable = true;
-            clangd.enable = true;
+            clangd = {
+              enable = true;
+              extraArgs = [
+                "--query-driver=${pkgs.clang}/bin/clang++"
+              ];
+            };
           };
         };
 
@@ -112,6 +122,8 @@
             typescript = [ "prettier" ];
             elixir = [ "mix" ];
             zig = [ "zig" ];
+            c = [ "clang-format" ];
+            cpp = [ "clang-format" ];
           };
         };
 
