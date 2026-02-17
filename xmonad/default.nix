@@ -10,9 +10,26 @@
     enable = true;
     enableContribAndExtras = true;
   };
-  # Configure PAM for betterlockscreen
 
+  # Enable i3lock program (handles PAM configuration automatically)
+  programs.i3lock = {
+    enable = true;
+    package = pkgs.i3lock-color;
+  };
+
+  # Configure PAM for betterlockscreen (i3lock PAM is handled by programs.i3lock)
   security.pam.services.betterlockscreen = { };
+
+  # Also create PAM service for i3lock-color (betterlockscreen may use this name)
+  security.pam.services.i3lock-color = { };
+
+  # Configure security wrapper for i3lock-color (needed for PAM authentication without U2F)
+  security.wrappers.i3lock-color = {
+    owner = "root";
+    group = "root";
+    source = "${pkgs.i3lock-color}/bin/i3lock-color";
+    setuid = true;
+  };
 
   # Configure XMonad and Xmobar via Home Manager
   home-manager.users.${config.var.username} =
@@ -85,6 +102,7 @@
                threeCol = magnifiercz' 1.3 $ ThreeColMid nmaster delta ratio
 
           myStartupHook = do
+              spawnOnce "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
               spawnOnce "${pkgs.firefox}/bin/firefox"
               spawnOnce "${pkgs.ghostty}/bin/ghostty"
               spawnOnce "steam"

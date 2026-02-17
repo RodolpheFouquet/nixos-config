@@ -17,7 +17,7 @@
     # Fix cursor on root window
     ${pkgs.xorg.xsetroot}/bin/xsetroot -cursor_name left_ptr
 
-    # Initialize betterlockscreen cache
-    ${pkgs.betterlockscreen}/bin/betterlockscreen -u ~/.background-image
+    # Initialize betterlockscreen cache in background
+    ${pkgs.betterlockscreen}/bin/betterlockscreen -u ~/.background-image &
   '';
 }

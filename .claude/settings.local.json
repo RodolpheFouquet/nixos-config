@@ -6,7 +6,18 @@
       "Bash(true)",
       "Bash(niri validate:*)",
       "Bash(rg:*)",
-      "Bash(nix flake check:*)"
+      "Bash(nix flake check:*)",
+      "Bash(setxkbmap:*)",
+      "Bash(betterlockscreen:*)",
+      "Bash(journalctl:*)",
+      "Bash(i3lock-color:*)",
+      "Bash(strace:*)",
+      "Bash(getcap:*)",
+      "Bash(echo:*)",
+      "Bash(cat:*)",
+      "Bash(ls:*)",
+      "WebSearch",
+      "WebFetch(domain:github.com)"
     ],
     "deny": []
   }

@@ -36,6 +36,10 @@ in
   networking.networkmanager.enable = true;
   networking.firewall.allowedTCPPorts = [22];
 
+  # Configure laptop lid behavior - suspend when lid is closed
+  services.logind.lidSwitch = "suspend";
+  services.logind.lidSwitchDocked = "suspend";
+
   services.openssh = {
     enable = true;
     ports = [22];
