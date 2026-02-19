@@ -87,10 +87,12 @@
               , className =? "cider"       --> doShift "music"
               , className =? "gamescope"   --> (doShift "games" <+> doFullFloat)
               , className =? "snapmaker-orca" --> doShift "diy"
+              , isSteamAntiCheat           --> doShift "steam"
               , isSteamGame                --> (doShift "games" <+> doFullFloat)
               ] <+> namedScratchpadManageHook scratchpads
             where
-              isSteamGame = className >>= \c -> return ("steam_app_" `isPrefixOf` c)
+              isSteamGame = className >>= \c -> title >>= \t -> return ("steam_app_" `isPrefixOf` c && t /= "")
+              isSteamAntiCheat = className >>= \c -> title >>= \t -> return ("steam_app_" `isPrefixOf` c && t == "")
 
           myLayout = mkToggle (NBFULL ?? EOT) $ avoidStruts $ spacingRaw False (Border 10 10 10 10) True (Border 10 10 10 10) True $
                      tiled ||| Mirror tiled ||| Full ||| threeCol ||| Grid
