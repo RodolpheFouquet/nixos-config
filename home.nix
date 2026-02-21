@@ -62,6 +62,22 @@ lib.mkIf pkgs.stdenv.isLinux {
       terminal = true;
     };
 
+    # Cider AppImage
+    home.packages = [ pkgs.appimage-run ];
+    xdg.desktopEntries.cider = {
+      name = "Cider";
+      comment = "Apple Music client";
+      exec = "${pkgs.appimage-run}/bin/appimage-run /home/${config.var.username}/.local/bin/cider.AppImage";
+      icon = "cider";
+      categories = [
+        "AudioVideo"
+        "Audio"
+        "Music"
+        "Player"
+      ];
+      terminal = false;
+    };
+
     programs.bash = {
       initExtra = ''
         if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]

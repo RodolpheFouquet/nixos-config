@@ -59,6 +59,8 @@
           import XMonad.Layout.Magnifier
           import XMonad.Layout.MultiToggle
           import XMonad.Layout.MultiToggle.Instances
+          import XMonad.Layout.NoBorders
+          import XMonad.Hooks.EwmhDesktops
           import qualified XMonad.StackSet as W
           import Data.List (isPrefixOf)
           import qualified Data.Map as M
@@ -94,7 +96,7 @@
               isSteamGame = className >>= \c -> title >>= \t -> return ("steam_app_" `isPrefixOf` c && t /= "")
               isSteamAntiCheat = className >>= \c -> title >>= \t -> return ("steam_app_" `isPrefixOf` c && t == "")
 
-          myLayout = mkToggle (NBFULL ?? EOT) $ avoidStruts $ spacingRaw False (Border 10 10 10 10) True (Border 10 10 10 10) True $
+          myLayout = lessBorders OnlyScreenFloat $ mkToggle (NBFULL ?? EOT) $ avoidStruts $ spacingRaw False (Border 10 10 10 10) True (Border 10 10 10 10) True $
                      tiled ||| Mirror tiled ||| Full ||| threeCol ||| Grid
             where
                tiled   = Tall nmaster delta ratio
@@ -113,7 +115,7 @@
 
           main = do
               xmproc <- spawnPipe "${pkgs.xmobar}/bin/xmobar"
-              xmonad $ docks def
+              xmonad $ ewmhFullscreen . ewmh $ docks def
                   { layoutHook = myLayout
                   , workspaces = myWorkspaces
                   , manageHook = myManageHook <+> manageDocks <+> manageHook def
@@ -174,6 +176,8 @@
           };
           rounded-corners-exclude = [
             "window_type = 'desktop'"
+            "class_g = 'gamescope'"
+            "class_g ~= 'steam_app_.*'"
           ];
         };
       };
