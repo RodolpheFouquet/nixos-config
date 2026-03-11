@@ -119,7 +119,12 @@
 
   # T440p specific tweaks
   # Enable touch pad support (libinput is default)
-  services.libinput.enable = true;
+  services.libinput = {
+    enable = true;
+    touchpad = {
+      naturalScrolling = true;
+    };
+  };
 
   system.stateVersion = "25.11";
 }
