@@ -2,9 +2,10 @@
   config,
   pkgs,
   lib,
+  systemType ? null,
   ...
 }:
-{
+lib.optionalAttrs (systemType == "nixos") {
   # Enable XMonad in NixOS
   services.xserver.windowManager.xmonad = {
     enable = true;

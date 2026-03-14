@@ -18,6 +18,7 @@ let
         (isNix || isDir) &&
         name != "flake.nix" &&
         name != "flake.lock" &&
+        name != "mac-flake.nix" &&
         name != ".git" &&
         name != "hosts" &&
         name != "lib" &&

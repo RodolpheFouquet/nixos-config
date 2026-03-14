@@ -1,5 +1,5 @@
-{ config, pkgs, lib, ... }:
-lib.mkIf pkgs.stdenv.isLinux {
+{ config, pkgs, lib, systemType ? null, ... }:
+lib.optionalAttrs (systemType == "nixos") {
   programs.virt-manager.enable = true;
 
   users.groups.libvirtd.members = [ "${config.var.username}" ];

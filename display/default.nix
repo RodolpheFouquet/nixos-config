@@ -3,13 +3,14 @@
   pkgs,
   lib,
   hostName,
+  systemType ? null,
   ...
 }:
 
 let
   isDesktop = hostName == "vachicorne-desktop";
 in
-lib.mkIf pkgs.stdenv.isLinux {
+lib.optionalAttrs (systemType == "nixos") {
   services.xserver.videoDrivers = lib.mkIf isDesktop [ "nvidia" ];
   services.xserver.enable = true;
 

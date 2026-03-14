@@ -13,7 +13,7 @@
     # Your other custom modules
   ];
 
-  config = lib.mkIf (systemType == "nixos") {
+  config = lib.optionalAttrs (systemType == "nixos") {
     # --- System Settings ---
     nix.settings.experimental-features = [
       "nix-command"

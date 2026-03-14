@@ -17,7 +17,13 @@
       "Bash(cat:*)",
       "Bash(ls:*)",
       "WebSearch",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(wc:*)",
+      "Bash(nvim --version:*)",
+      "Bash(readlink:*)",
+      "Bash(nvim:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": []
   }

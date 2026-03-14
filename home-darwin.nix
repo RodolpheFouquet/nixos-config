@@ -2,7 +2,7 @@
 lib.mkIf pkgs.stdenv.isDarwin {
   home-manager.users.${config.var.username} = { inputs, pkgs, hostType ? "mac-mini", ... }: {
     imports = [
-      inputs.nixvim.homeManagerModules.nixvim
+      inputs.nixvim.homeModules.nixvim
       
       # Import host-specific monitor configuration
       (./hosts + "/${hostType}/monitor.nix")
@@ -83,6 +83,8 @@ lib.mkIf pkgs.stdenv.isDarwin {
       '';
     };
 
+    home.username = config.var.username;
+    home.homeDirectory = config.var.userHome;
     home.stateVersion = "25.05";
     programs.home-manager.enable = true;
   };

@@ -48,8 +48,6 @@
         gemini-cli-bin
         antigravity
         opencode
-        wkhtmltopdf
-        firefox
         poppler-utils
 
         # System monitoring (cross-platform)
@@ -102,6 +100,9 @@
 
       # Linux-specific packages
       linuxPackages = with pkgs; [
+        wkhtmltopdf
+        firefox
+
         # GUI applications
         vscode
         discord
@@ -207,13 +208,10 @@
       ];
 
       # macOS-specific packages
+      # Note: most macOS GUI apps (raycast, rectangle, etc.) are installed
+      # via Homebrew casks in hosts/mac-mini/host.nix
       macPackages = with pkgs; [
-        # macOS-compatible alternatives
-        rectangle # Window management
-        raycast # Spotlight alternative (if available in nixpkgs)
-
-        # Development tools that work well on macOS
-        # Most GUI apps on macOS should be installed via Homebrew casks
+        starship
       ];
 
     in

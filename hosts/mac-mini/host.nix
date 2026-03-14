@@ -1,8 +1,14 @@
-{ ... }:
+{ config, ... }:
 
 {
   # Mac Mini specific host configuration
   networking.hostName = "vachicorne-mac-mini";
+  nixpkgs.config.allowUnfree = true;
+
+  # Define the primary user (needed for home-manager integration)
+  users.users.${config.var.username} = {
+    home = "/Users/${config.var.username}";
+  };
   
   # macOS specific settings
   system.defaults = {
@@ -40,10 +46,13 @@
   };
   
   # Enable Touch ID for sudo
-  security.pam.enableSudoTouchIdAuth = true;
-  
-  # Auto upgrade the nix package and the daemon service
-  services.nix-daemon.enable = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
+
+  # State version for nix-darwin
+  system.stateVersion = 6;
+
+  # Primary user (required for homebrew, system.defaults, etc.)
+  system.primaryUser = config.var.username;
   
   # Homebrew integration for packages not available in Nix
   homebrew = {
@@ -53,7 +62,6 @@
     onActivation.upgrade = true;
     
     taps = [
-      "homebrew/services"
     ];
     
     brews = [
@@ -68,6 +76,7 @@
       "1password"
       "obsidian"
       "visual-studio-code"
+      "ghostty"
     ];
   };
 }

@@ -1,5 +1,5 @@
-{ config, pkgs, lib, ... }:
-{
+{ config, pkgs, lib, systemType ? null, ... }:
+lib.optionalAttrs (systemType == "nixos") {
   services.restic.backups.daily = {
     initialize = true;
     repository = "/mnt/truenas_backup/restic-backups/vachicorne-desktop";

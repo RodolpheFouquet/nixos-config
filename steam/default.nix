@@ -1,5 +1,5 @@
-{ pkgs, lib, ... }:
-lib.mkIf pkgs.stdenv.isLinux {
+{ pkgs, lib, systemType ? null, ... }:
+lib.optionalAttrs (systemType == "nixos") {
   programs = {
     steam = {
       enable = true;
