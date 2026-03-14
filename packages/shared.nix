@@ -212,6 +212,7 @@
       # via Homebrew casks in hosts/mac-mini/host.nix
       macPackages = with pkgs; [
         starship
+        llvmPackages_19.clang
       ];
 
     in

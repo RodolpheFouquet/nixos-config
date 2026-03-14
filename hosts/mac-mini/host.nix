@@ -13,7 +13,7 @@
   # macOS specific settings
   system.defaults = {
     dock = {
-      autohide = true;
+      autohide = false;
       orientation = "bottom";
       showhidden = true;
       mineffect = "genie";
