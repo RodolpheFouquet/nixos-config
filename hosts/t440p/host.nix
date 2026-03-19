@@ -10,7 +10,6 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./monitor.nix
   ];
 
   # Bootloader

@@ -76,8 +76,8 @@
     '';
   };
 
-  home.username = config.var.username;
-  home.homeDirectory = config.var.userHome;
+  home.username = "vachicorne";
+  home.homeDirectory = "/Users/vachicorne";
   home.stateVersion = "25.05";
   programs.home-manager.enable = true;
 }

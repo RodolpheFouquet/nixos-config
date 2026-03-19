@@ -14,6 +14,7 @@ in
   imports = [
     inputs.nixvim.homeModules.nixvim
     ./packages/shared.nix
+    (./hosts + "/${hostType}/monitor.nix")
   ];
 
   home.sessionPath = [ "$HOME/.local/bin" ];
@@ -50,7 +51,7 @@ in
   xdg.desktopEntries.cider = lib.mkIf isLinux {
     name = "Cider";
     comment = "Apple Music client";
-    exec = "${appimage-run}/bin/appimage-run ${config.var.userHome}/.local/bin/cider.AppImage";
+    exec = "${pkgs.appimage-run}/bin/appimage-run ${config.var.userHome}/.local/bin/cider.AppImage";
     icon = "cider";
     categories = [
       "AudioVideo"

@@ -2,7 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs,lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   mt7902_wm = pkgs.fetchurl {
     url = "https://github.com/ArynKumr/mt7902driverforlinux/raw/main/WIFI_RAM_CODE_MT7902_1.bin";
@@ -15,11 +20,10 @@ let
   };
 in
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./monitor.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -34,7 +38,7 @@ in
 
   # Enable networking
   networking.networkmanager.enable = true;
-  networking.firewall.allowedTCPPorts = [22];
+  networking.firewall.allowedTCPPorts = [ 22 ];
 
   # Configure laptop lid behavior - suspend when lid is closed
   services.logind.lidSwitch = "suspend";
@@ -42,7 +46,7 @@ in
 
   services.openssh = {
     enable = true;
-    ports = [22];
+    ports = [ 22 ];
 
     settings = {
       PasswordAuthentication = true;
@@ -85,8 +89,11 @@ in
   users.users.vachicorne = {
     isNormalUser = true;
     description = "vachicorne";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
+    packages = with pkgs; [ ];
   };
 
   # Allow unfree packages
@@ -95,8 +102,8 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  wget
     neovim
   ];
 
@@ -134,24 +141,22 @@ in
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.11"; # Did you read the comment?
-  
+
   # 2. Add the firmware (Corrected direct copy)
   hardware.firmware = [
-    (pkgs.runCommand "mt7902-firmware" {} ''
+    (pkgs.runCommand "mt7902-firmware" { } ''
       mkdir -p $out/lib/firmware/mediatek
       cp ${mt7902_wm} $out/lib/firmware/mediatek/mt7902_wm.bin
       cp ${mt7902_rom} $out/lib/firmware/mediatek/mt7902_rom_patch.bin
     '')
   ];
 
-
-  # 4. Optional: If the card still isn't seen, we force the ID 
+  # 4. Optional: If the card still isn't seen, we force the ID
   # This tells the mt7921e driver to handle the mt7902 hardware ID (14c3:7902)
   boot.extraModprobeConfig = ''
     install mt7921e /run/current-system/sw/bin/modprobe --ignore-install mt7921e; /run/current-system/sw/bin/modprobe --ignore-install mt7921e; echo "14c3 7902" > /sys/bus/pci/drivers/mt7921e/new_id
   '';
 
   boot.kernelModules = [ "mt7921e" ];
-
 
 }

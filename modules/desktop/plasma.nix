@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  systemType ? null,
   ...
 }:
 
@@ -34,11 +35,5 @@ lib.optionalAttrs (systemType == "nixos") {
 
   xdg.mime.defaultApplications = {
     "inode/directory" = "org.kde.dolphin.desktop";
-  };
-
-  qt = {
-    enable = true;
-    platformTheme.name = "kde";
-    style.name = "breeze";
   };
 }

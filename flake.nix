@@ -43,8 +43,8 @@
       dendriticLoader = import ./lib/dendritic.nix { inherit (nixpkgs) lib; } ./.;
 
       commonDarwinModules = [
+        { nixpkgs.hostPlatform = "aarch64-darwin"; }
         ./hosts/mac-mini/host.nix
-        ./hosts/mac-mini/monitor.nix
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -119,7 +119,14 @@
             systemType = "darwin";
           };
 
-          modules = commonDarwinModules ++ dendriticLoader;
+          modules =
+            commonDarwinModules
+            ++ [
+              {
+                home-manager.users.vachicorne = import ./home-darwin.nix;
+              }
+            ]
+            ++ dendriticLoader;
         };
       };
     };
