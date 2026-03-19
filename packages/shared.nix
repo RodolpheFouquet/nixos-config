@@ -1,224 +1,199 @@
-{ config, pkgs, ... }:
 {
-  home-manager.users.${config.var.username} =
-    {
-      pkgs,
-      hostType ? "desktop",
-      ...
-    }:
-    let
-      # Packages that work on both Linux and macOS
-      commonPackages = with pkgs; [
-        # Core development tools
-        git
-        gh
-        wget
-        discount # Markdown compiler
-        html-tidy
-        shellcheck
-        ispell
-        hunspell
-        hunspellDicts.en_US
-        fzf
-        ripgrep
-        direnv
-        nodejs_24
-        go
-        gomodifytags
-        gotests
-        gore
-        golangci-lint
-        delve
-        impl
-        killall
-        gnumake
-        # gcc (Removed to avoid conflict with clang)
-        clang-tools
-        zig
-        zls
-        gopls
-        nodePackages.typescript-language-server
-        nodePackages.typescript
-        elixir-ls
-        gleam
-        nixfmt-rfc-style
-        nil
-        gotools
-        claude-code
-        gemini-cli-bin
-        antigravity
-        opencode
-        poppler-utils
+  config,
+  pkgs,
+  hostType ? "desktop",
+  ...
+}:
+let
+  commonPackages = with pkgs; [
+    git
+    gh
+    wget
+    discount
+    html-tidy
+    shellcheck
+    ispell
+    hunspell
+    hunspellDicts.en_US
+    fzf
+    ripgrep
+    direnv
+    nodejs_24
+    go
+    gomodifytags
+    gotests
+    gore
+    golangci-lint
+    delve
+    impl
+    killall
+    gnumake
+    clang-tools
+    zig
+    zls
+    gopls
+    nodePackages.typescript-language-server
+    nodePackages.typescript
+    elixir-ls
+    gleam
+    nixfmt-rfc-style
+    nil
+    gotools
+    claude-code
+    gemini-cli-bin
+    antigravity
+    opencode
+    poppler-utils
 
-        # System monitoring (cross-platform)
-        htop
-        btop
+    htop
+    btop
 
-        # File management
-        yazi
-        fd
-        eza
-        zoxide
-        ncdu
+    yazi
+    fd
+    eza
+    zoxide
+    ncdu
 
-        # Network tools
-        nmap
-        tcpdump
+    nmap
+    tcpdump
 
-        # Security tools
-        pass
-        gnupg
+    pass
+    gnupg
 
-        # Development utilities
-        jq
-        yq
-        tree
-        unzip
-        zip
-        diff-so-fancy
-        diffutils
-        bc
-        bacon
+    jq
+    yq
+    tree
+    unzip
+    zip
+    diff-so-fancy
+    diffutils
+    bc
+    bacon
 
-        # Media tools
-        yt-dlp
-        ffmpeg
-        fastfetch
+    yt-dlp
+    ffmpeg
+    fastfetch
 
-        # Programming languages and tools
-        python3
-        python3Packages.pip
-        python3Packages.isort
-        python3Packages.pytest
-        pipenv
-        cmake
-        ninja
-        ccache
-        tmux-sessionizer
-        obsidian
-      ];
+    python3
+    python3Packages.pip
+    python3Packages.isort
+    python3Packages.pytest
+    pipenv
+    cmake
+    ninja
+    ccache
+    tmux-sessionizer
+    obsidian
+  ];
 
-      # Linux-specific packages
-      linuxPackages = with pkgs; [
-        wkhtmltopdf
-        firefox
+  linuxPackages = with pkgs; [
+    wkhtmltopdf
+    firefox
 
-        # GUI applications
-        vscode
-        discord
-        ghostty
-        google-chrome
-        clang
-        orca-slicer
-        pavucontrol
-        grim
-        slurp
-        wl-clipboard
-        cliphist
-        obs-studio
-        wf-recorder
-        zathura
-        dig
-        busybox
-        usbutils
-        ghostscript
-        dnslookup
-        nerd-fonts.fira-code
-        nerd-fonts.jetbrains-mono
-        cobang
-        libreoffice-qt
-        hunspell
+    vscode
+    discord
+    ghostty
+    google-chrome
+    clang
+    orca-slicer
+    pavucontrol
+    grim
+    slurp
+    wl-clipboard
+    cliphist
+    obs-studio
+    wf-recorder
+    zathura
+    dig
+    busybox
+    usbutils
+    ghostscript
+    dnslookup
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+    cobang
+    libreoffice-qt
+    hunspell
 
-        # Container tools
-        podman
-        podman-compose
-        freerdp
+    podman
+    podman-compose
+    freerdp
 
-        # BTRFS tools
-        btrfs-progs
+    btrfs-progs
 
-        # Fonts
-        font-awesome
-        pkgs.nerd-fonts.droid-sans-mono
-        pkgs.nerd-fonts.fira-code
-        bibata-cursors
+    font-awesome
+    pkgs.nerd-fonts.droid-sans-mono
+    pkgs.nerd-fonts.fira-code
+    bibata-cursors
 
-        # Additional system tools
-        iotop
-        powertop
-        wireshark
-        _1password-gui
-        proton-pass
-        bluez
-        bluez-tools
-        blueman
-        libnotify
-        simple-scan
-        system-config-printer
-        mangohud
-        gamescope
-        prismlauncher
-        rpi-imager
-        protonvpn-gui
-        adw-gtk3
-        kdePackages.dolphin
-        kdePackages.qt6ct
-        kdePackages.qttools # for qdbus6
-        kdePackages.ark
-        kdePackages.okular
-        kdePackages.gwenview
-        kdePackages.spectacle
-        kdePackages.kcalc
-        kdePackages.kate
-        kdePackages.konsole
-        kdePackages.partitionmanager
-        libsForQt5.qt5ct
+    iotop
+    powertop
+    wireshark
+    _1password-gui
+    proton-pass
+    bluez
+    bluez-tools
+    blueman
+    libnotify
+    simple-scan
+    system-config-printer
+    mangohud
+    gamescope
+    prismlauncher
+    rpi-imager
+    protonvpn-gui
+    adw-gtk3
+    kdePackages.dolphin
+    kdePackages.qt6ct
+    kdePackages.qttools
+    kdePackages.ark
+    kdePackages.okular
+    kdePackages.gwenview
+    kdePackages.spectacle
+    kdePackages.kcalc
+    kdePackages.kate
+    kdePackages.konsole
+    kdePackages.partitionmanager
+    libsForQt5.qt5ct
 
-        # ZMK firmware build toolchain (Linux-specific)
-        python3Packages.west
-        dtc
-        gcc-arm-embedded
-        gperf
-        python3Packages.pyelftools
-        python3Packages.pykwalify
-        python3Packages.canopen
-        python3Packages.packaging
-        python3Packages.progress
-        python3Packages.psutil
-        python3Packages.pylink-square
-        python3Packages.pyserial
-        python3Packages.pyyaml
-        python3Packages.zcbor
-        noctalia-shell
-        rofi
-        feh
-        betterlockscreen
+    python3Packages.west
+    dtc
+    gcc-arm-embedded
+    gperf
+    python3Packages.pyelftools
+    python3Packages.pykwalify
+    python3Packages.canopen
+    python3Packages.packaging
+    python3Packages.progress
+    python3Packages.psutil
+    python3Packages.pylink-square
+    python3Packages.pyserial
+    python3Packages.pyyaml
+    python3Packages.zcbor
+    noctalia-shell
+    rofi
+    feh
+    betterlockscreen
 
-        # Doom Emacs dependencies
-        rustc
-        cargo
-        rust-analyzer
-        nodePackages.stylelint
-        nodePackages.js-beautify
-        glslang
-        ocamlPackages.dune_3
-        ocamlPackages.utop
-        ocamlPackages.ocp-indent
-        ocamlPackages.merlin
-      ];
+    rustc
+    cargo
+    rust-analyzer
+    nodePackages.stylelint
+    nodePackages.js-beautify
+    glslang
+    ocamlPackages.dune_3
+    ocamlPackages.utop
+    ocamlPackages.ocp-indent
+    ocamlPackages.merlin
+  ];
 
-      # macOS-specific packages
-      # Note: most macOS GUI apps (raycast, rectangle, etc.) are installed
-      # via Homebrew casks in hosts/mac-mini/host.nix
-      macPackages = with pkgs; [
-        starship
-        llvmPackages_19.clang
-      ];
+  macPackages = with pkgs; [
+    starship
+    llvmPackages_19.clang
+  ];
+in
+{
+  home.packages = commonPackages ++ (if hostType == "mac-mini" then macPackages else linuxPackages);
 
-    in
-    {
-      home.packages = commonPackages ++ (if hostType == "mac-mini" then macPackages else linuxPackages);
-
-      fonts.fontconfig.enable = true;
-    };
+  fonts.fontconfig.enable = true;
 }

@@ -21,6 +21,11 @@
       show-process-indicators = true;
       tilesize = 48;
       static-only = true;
+      mru-spaces = false;
+    };
+
+    spaces = {
+      spans-displays = false;
     };
     
     finder = {
