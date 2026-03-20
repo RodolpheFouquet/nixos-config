@@ -35,9 +35,6 @@ lib.optionalAttrs (systemType == "nixos") {
   # Configure XMonad and Xmobar via Home Manager
   home-manager.users.${config.var.username} =
     { pkgs, hostType, ... }:
-    let
-      barWidth = if hostType == "desktop" then "3720" else "1800";
-    in
     {
 
       xsession.windowManager.xmonad = {
@@ -159,9 +156,7 @@ lib.optionalAttrs (systemType == "nixos") {
 
       programs.xmobar = {
         enable = true;
-        extraConfig = builtins.replaceStrings [ "width = 3720" ] [ "width = ${barWidth}" ] (
-          builtins.readFile ./xmobarrc
-        );
+        extraConfig = builtins.readFile (if hostType == "desktop" then ./xmobarrc else ./xmobarrc-laptop);
       };
 
       services.picom = {
